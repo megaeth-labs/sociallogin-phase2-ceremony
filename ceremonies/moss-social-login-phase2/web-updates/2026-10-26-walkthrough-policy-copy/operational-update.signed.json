@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "keyId": "moss-social-login-root-2026-10",
+  "payload": {
+    "reason": "Remove the verifier policy row from the walkthrough.",
+    "webRelease": {
+      "sha256": "fba9ef15e132bceccfc3ff3d37955afbf3968728d7158f62ca0aff41c6192696",
+      "byteLength": 8701,
+      "urls": [
+        "https://d1xydbco3b83a0.cloudfront.net/inputs/sha256/fba9ef15e132bceccfc3ff3d37955afbf3968728d7158f62ca0aff41c6192696/web-release.json?versionId=qXTOBXz0EzvGe2w2zErnpboKxNnlz1Yh"
+      ],
+      "sourceCommit": "2cc6198b052048f419aa9cecc778cdcf7ec92298"
+    },
+    "schemaVersion": 1,
+    "type": "moss.phase2.operational-update.v1",
+    "ceremonyId": "38200f3f-58a7-4054-a29d-91fa89dc1f22",
+    "manifestSha256": "441ccbe64b84b22c3e443c6d67e7f6f2f6186910c4d47cea61817540359cfa58",
+    "sequence": 5,
+    "previousUpdateSha256": "90a91776d9cbaad1b44cedd1d1ec3d988452aac06fd71de254f1d14acae2dade",
+    "authorizedAt": "2026-10-26T21:33:02.701Z"
+  },
+  "signature": "-PLdZomZaNoqLR3FiqPe__HZtogYD3v28TnmLHB6BgLRrPfzpbJ-8ttwhHppMJqsSyv5Yej87IEU_t_TJmnSDA"
+}

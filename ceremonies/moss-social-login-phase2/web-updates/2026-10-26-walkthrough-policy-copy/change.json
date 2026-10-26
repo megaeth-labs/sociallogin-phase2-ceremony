@@ -1,0 +1,11 @@
+{
+  "reason": "Remove the verifier policy row from the walkthrough.",
+  "webRelease": {
+    "sha256": "fba9ef15e132bceccfc3ff3d37955afbf3968728d7158f62ca0aff41c6192696",
+    "byteLength": 8701,
+    "urls": [
+      "https://d1xydbco3b83a0.cloudfront.net/inputs/sha256/fba9ef15e132bceccfc3ff3d37955afbf3968728d7158f62ca0aff41c6192696/web-release.json?versionId=qXTOBXz0EzvGe2w2zErnpboKxNnlz1Yh"
+    ],
+    "sourceCommit": "2cc6198b052048f419aa9cecc778cdcf7ec92298"
+  }
+}
