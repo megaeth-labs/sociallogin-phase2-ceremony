@@ -129,6 +129,21 @@ export class PgCeremonyStore {
     });
   }
 
+  /**
+   * One-based place of a waiting ticket: 1 means next in line. The ticket's own
+   * timestamp is read inside SQL because a JavaScript Date drops PostgreSQL's
+   * microseconds, which would exclude the ticket from its own count.
+   */
+  async queuePosition(ceremonyId: string, ticketId: string): Promise<number> {
+    const result = await this.pool.query<{ count: string }>(
+      `SELECT count(*)::text AS count FROM queue_tickets q, queue_tickets me
+       WHERE me.id=$2 AND q.ceremony_id=$1 AND q.status='QUEUED'
+         AND (q.enqueued_at,q.id)<=(me.enqueued_at,me.id)`,
+      [ceremonyId, ticketId],
+    );
+    return Number(result.rows[0]?.count ?? 0);
+  }
+
   async issueNextOffer(input: {
     ceremonyId: string;
     leaseId: string;

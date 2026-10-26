@@ -349,11 +349,7 @@ export class PostgresCoordinatorOperations implements CoordinatorOperations {
       };
     }
     const position = row.ticket_status === "QUEUED"
-      ? Number((await this.options.pool.query<{ count: string }>(
-        `SELECT count(*)::text AS count FROM queue_tickets
-         WHERE ceremony_id=$1 AND status='QUEUED' AND (enqueued_at,id)<=($2,$3)`,
-        [this.manifest.ceremonyId, row.ticket_enqueued_at, row.ticket_id],
-      )).rows[0]?.count ?? 0)
+      ? await this.database.queuePosition(this.manifest.ceremonyId, string(row.ticket_id))
       : 0;
     const offer = row.lease_id ? {
       leaseId: string(row.lease_id),
@@ -943,11 +939,9 @@ export class PostgresCoordinatorOperations implements CoordinatorOperations {
        WHERE q.ceremony_id=$1 AND q.participant_id=$2 AND q.status IN ('QUEUED','OFFERED','LEASED')
        ORDER BY q.enqueued_at DESC LIMIT 1`, [this.manifest.ceremonyId, participantId],
     )).rows[0], "queue ticket not found");
-    const position = ticket.status === "QUEUED" ? Number((await this.options.pool.query<{ count: string }>(
-      `SELECT count(*)::text AS count FROM queue_tickets
-       WHERE ceremony_id=$1 AND status='QUEUED' AND (enqueued_at,id)<=($2,$3)`,
-      [this.manifest.ceremonyId, ticket.enqueued_at, ticket.id],
-    )).rows[0]?.count ?? 0) : 0;
+    const position = ticket.status === "QUEUED"
+      ? await this.database.queuePosition(this.manifest.ceremonyId, string(ticket.id))
+      : 0;
     return { ticketId: ticket.id, status: ticket.status, position,
       offer: ticket.lease_id ? await this.offerPayload(ticket) : null };
   }
