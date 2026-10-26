@@ -29,7 +29,7 @@
     "@types/snarkjs": "0.7.9",
     "esbuild": "0.25.12",
     "typescript": "5.9.3",
-    "vitest": "4.1.2"
+    "vitest": "4.1.12"
   },
   "license": "MIT"
 }
