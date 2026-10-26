@@ -35,12 +35,12 @@ the website in a desktop browser, or from the command line below.
 ## Contribute from the CLI
 
 The CLI suits a terminal, a headless machine, or a long unattended wait in the
-queue. You need Node.js 24 or newer, Git, and about 1 GB of free disk space.
+queue. You need Node.js 24 or newer, Git, pnpm and about 1 GB of free disk
+space. If you don't have pnpm, install it with `npm install --global pnpm@10.29.2`.
 
 ```sh
 git clone https://github.com/megaeth-labs/sociallogin-phase2-ceremony.git
 cd sociallogin-phase2-ceremony
-corepack enable
 pnpm install --frozen-lockfile
 pnpm --filter "@moss/phase2-ceremony-cli..." build
 ./status.sh
@@ -76,9 +76,11 @@ the CLI:
 
 Keep the machine awake and online until the receipt is saved. Pressing Ctrl-C
 while still queued leaves the queue. After the slot is claimed, rerunning
-`./contribute.sh` resumes it. A failed run keeps its working files under
-`~/.moss-phase2-ceremony/work/` so a rerun can reuse them; they hold
-proof-system material, so delete them once you have your receipt.
+`./contribute.sh` resumes it; a contribution that was already computed is
+uploaded without being recomputed. Your secret randomness is generated in
+memory, used once and wiped; it is never written to disk. The downloaded file
+and your result are kept under `~/.moss-phase2-ceremony/work/` until the
+contribution is accepted, then deleted.
 
 The manifest names the commit the CLI release was built from,
 `e827b61f581c721f71628c4cd89dfbad4c8cb9d8`; building that commit gives the same

@@ -90,12 +90,14 @@ line. Once a claim has been sent, an interrupt leaves the slot reserved until it
 lapses, and rerunning the command resumes it. A second Ctrl-C exits without
 waiting for the leave request.
 
-The temporary workspace is retained on failure. If the CLI stops after
-computing but before the coordinator holds the upload, rerunning it on the
-same lease re-hashes the retained predecessor and successor against the
-journal and uploads that successor without drawing new randomness or
-recomputing; any mismatch discards it and computes afresh. It contains proof-system material and should be
-handled as sensitive until deliberately removed.
+The temporary workspace holds the downloaded predecessor and the computed
+successor, both public once uploaded. The contribution's randomness exists only
+in the worker's memory and is wiped after use; it is never written to disk. The
+workspace is deleted when the contribution is accepted, and retained on
+failure: if the CLI stops after computing but before the coordinator holds the
+upload, rerunning it on the same lease re-hashes the retained predecessor and
+successor against the journal and uploads that successor without drawing new
+randomness or recomputing; any mismatch discards it and computes afresh.
 
 Queue-ticket, lease, upload, submission, receipt, and local verification
 identifiers are atomically journaled under

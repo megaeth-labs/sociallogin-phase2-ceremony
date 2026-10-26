@@ -62,6 +62,18 @@ describe.skipIf(!url)("per-account queue limits against PostgreSQL", () => {
     }
   });
 
+  it("counts a waiting ticket in its own one-based position", async () => {
+    const first = await join();
+    const other = { participantId: randomUUID(), authSubjectHash: hash() };
+    const second = await store.joinQueue({ ceremonyId, ...other, publicPseudonym: "other-participant",
+      ticketId: randomUUID(), idempotencyKey: randomUUID() });
+    // Production timestamps carry microseconds, which a JavaScript Date drops.
+    await pool.query("UPDATE queue_tickets SET enqueued_at=$1 WHERE id=$2", ["2026-10-26 22:25:28.123456+00", first.id]);
+    await pool.query("UPDATE queue_tickets SET enqueued_at=$1 WHERE id=$2", ["2026-10-26 22:25:28.123789+00", second.id]);
+    expect(await store.queuePosition(ceremonyId, first.id)).toBe(1);
+    expect(await store.queuePosition(ceremonyId, second.id)).toBe(2);
+  });
+
   it.each(["EXPIRED", "REJECTED", "CANCELLED"])("allows retry after %s before acceptance", async (state) => {
     const first = await join();
     const lease = (await offer())!;

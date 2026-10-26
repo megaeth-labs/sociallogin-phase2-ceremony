@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "keyId": "moss-social-login-root-2026-10",
+  "payload": {
+    "reason": "Upgrade Next.js and its image library to versions without published security advisories.",
+    "webRelease": {
+      "sha256": "43b817c9b05af3fc96a4ee73cd00088c434da9c03988d4fb22a8effc21265839",
+      "byteLength": 8701,
+      "urls": [
+        "https://d1xydbco3b83a0.cloudfront.net/inputs/sha256/43b817c9b05af3fc96a4ee73cd00088c434da9c03988d4fb22a8effc21265839/web-release.json?versionId=USUd7fcU0Ebzg.DUcSF6kgcgQ9ZHvOMT"
+      ],
+      "sourceCommit": "a64470e75b03592431caeb57e0877b560df0b7f9"
+    },
+    "schemaVersion": 1,
+    "type": "moss.phase2.operational-update.v1",
+    "ceremonyId": "38200f3f-58a7-4054-a29d-91fa89dc1f22",
+    "manifestSha256": "441ccbe64b84b22c3e443c6d67e7f6f2f6186910c4d47cea61817540359cfa58",
+    "sequence": 6,
+    "previousUpdateSha256": "f58eb32445e2206647e5dfacec30f40929f540ff3c498fa864ec1941f2b48ca1",
+    "authorizedAt": "2026-10-26T22:09:50.502Z"
+  },
+  "signature": "j_HU6X_xFayPZmPNe05V6Nz-p8nIL3mMMfiHp81fhBMCkyp8caZUYRBc2nsDTFl2tS1B0AdBYPynVBhgU_JABQ"
+}
