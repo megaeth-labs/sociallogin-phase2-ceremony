@@ -23,9 +23,8 @@ Bellman does not embed contributor names. Identity/name attribution belongs in
 the signed receipt, linked to this independently observed hash and index.
 The byte-level inspector is only structural; it MUST NOT replace this verifier.
 
-The signed `bellman-transition-v1` policy now connects this verifier to worker
-reports and canonical acceptance. See [integration status](../../BELLMAN_INTEGRATION.md)
-for the remaining release gates. No existing epoch may switch formats midway.
+The signed `bellman-transition-v1` policy connects this verifier to worker
+reports and canonical acceptance. No existing epoch may switch formats midway.
 Retain the original pinned genesis zkey, R1CS/PTAU, Bellman genesis and all accepted
 Bellman snapshots for independent replay.
 
