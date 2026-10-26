@@ -113,7 +113,7 @@ export function Readiness({
           </Button>
           {checked && (
             <p role="status" className={`${journey.result} ${journey.enter}`}>
-              Required browser APIs and available storage passed.
+              Required browser APIs and available storage passed. Proceed to contribution below.
             </p>
           )}
           {error && (

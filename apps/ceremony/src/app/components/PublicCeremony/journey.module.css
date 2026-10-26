@@ -280,19 +280,24 @@
 .guide dt { font-size: 1rem; font-weight: 500; line-height: 1.35; color: var(--color-night-text); }
 .guide dd { margin: 0; font-size: .875rem; line-height: 1.6; color: var(--color-night-muted); }
 
+/* A passed check: a quiet green box with a check mark. */
 .result {
   display: flex;
-  gap: .625rem;
-  align-items: baseline;
+  gap: .75rem;
+  align-items: flex-start;
+  padding: .875rem 1.125rem;
+  border-radius: 1rem;
+  background: var(--color-accent-a12);
+  box-shadow: inset 0 0 0 1px var(--color-accent-a25);
 }
 .result::before {
   content: "";
   flex-shrink: 0;
-  width: .5rem;
-  height: .5rem;
-  border-radius: 50%;
+  width: 1.125rem;
+  height: 1.125rem;
+  margin-top: .125rem;
   background: var(--color-accent);
-  transform: translateY(-.1rem);
+  mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'><mask id='m'><rect width='20' height='20' fill='white'/><path d='M6 10.5l2.6 2.6L14 7.7' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/></mask><circle cx='10' cy='10' r='10' fill='white' mask='url(%23m)'/></svg>") center / contain no-repeat;
 }
 .plate .result { color: var(--color-text); }
 .plate .error p { color: var(--color-text); }
