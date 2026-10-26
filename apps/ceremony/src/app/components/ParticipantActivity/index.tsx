@@ -26,11 +26,17 @@ export function ParticipantActivityCard({ activity, abandoned = null, closedNoti
     {stage === "pending" && <>
       <h2>Your contribution is being verified.</h2>
       <p>The server is checking your contribution. View its progress below.</p>
-      <Button onClick={onViewProgress}>View contribution progress</Button>
+      <div className={styles.actions}>
+        <Button onClick={onViewProgress}>View contribution progress</Button>
+        <a className={styles.link} href="/how-it-works">How it works</a>
+      </div>
     </>}
     {stage === "accepted" && <p role="status">Your contribution was accepted. Your signed receipt is ready below.</p>}
     {stage === "unconfirmed" && <p role="status">We haven’t confirmed acceptance. Open your contribution to check again.</p>}
-    {stage === "unconfirmed" && <Button onClick={onViewProgress}>Check contribution status</Button>}
+    {stage === "unconfirmed" && <div className={styles.actions}>
+      <Button onClick={onViewProgress}>Check contribution status</Button>
+      <a className={styles.link} href="/how-it-works">How it works</a>
+    </div>}
     {stage === "failed" && !showClosed && <p>Your last attempt ended without acceptance ({activity.state.submission?.state.toLowerCase()}). You can start a new attempt if contributions are open.</p>}
     {stage === "active" && <p role="status">
       {abandoned === "running"

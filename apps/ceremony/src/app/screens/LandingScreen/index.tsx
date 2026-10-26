@@ -131,15 +131,13 @@ export function LandingScreen({
             Contribute now
           </ContributeButton>
         </>
-      ) : contributed ? null : (
+      ) : contributed || hasPendingContribution ? null : (
         <>
           <h2>Welcome{participantName ? `, ${participantName}` : " back"}.</h2>
           {/* Eligible and ready: the welcome and the button say enough. */}
           {!(eligibility?.hasEligibleCircuits && !hasPendingContribution && !eligibilityLoading && !eligibilityError) && (
             <p>
-              {hasPendingContribution
-                ? "Your contribution is already in progress. Check its status above."
-                : eligibilityLoading
+              {eligibilityLoading
                 ? "Checking your participation…"
                 : eligibilityError
                   ? "We couldn’t confirm your eligibility. Please wait for the next status update."
@@ -183,7 +181,7 @@ export function LandingScreen({
       collectiblesEnabled={collectiblesEnabled}
       status={status}
       participation={participation}
-      hideHeroLink={contributed}
+      hideHeroLink={contributed || hasPendingContribution}
       history={<ContributionHistory />}
       onVerify={onVerify}
       details={process.env.NODE_ENV === "development" ? (
