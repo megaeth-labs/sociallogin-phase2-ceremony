@@ -76,9 +76,11 @@ the CLI:
 
 Keep the machine awake and online until the receipt is saved. Pressing Ctrl-C
 while still queued leaves the queue. After the slot is claimed, rerunning
-`./contribute.sh` resumes it. A failed run keeps its working files under
-`~/.moss-phase2-ceremony/work/` so a rerun can reuse them; they hold
-proof-system material, so delete them once you have your receipt.
+`./contribute.sh` resumes it; a contribution that was already computed is
+uploaded without being recomputed. Your secret randomness is generated in
+memory, used once and wiped; it is never written to disk. The downloaded file
+and your result are kept under `~/.moss-phase2-ceremony/work/` until the
+contribution is accepted, then deleted.
 
 The manifest names the commit the CLI release was built from,
 `e827b61f581c721f71628c4cd89dfbad4c8cb9d8`; building that commit gives the same
