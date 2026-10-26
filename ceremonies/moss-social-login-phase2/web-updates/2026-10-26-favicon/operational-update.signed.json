@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "keyId": "moss-social-login-root-2026-10",
+  "payload": {
+    "reason": "Serve the favicon as a PNG icon so browsers display it.",
+    "webRelease": {
+      "sha256": "3f20d525c2db9f1eb0fb4664971df295e58c2f8cfc61f25789c8d12f5be04ce5",
+      "byteLength": 8701,
+      "urls": [
+        "https://d1xydbco3b83a0.cloudfront.net/inputs/sha256/3f20d525c2db9f1eb0fb4664971df295e58c2f8cfc61f25789c8d12f5be04ce5/web-release.json?versionId=POsJjIjmLSeR3E2ByxUqK22miUEsObPX"
+      ],
+      "sourceCommit": "d32a5b062505e97ddf7ca0fcf5a9b31b32366e53"
+    },
+    "schemaVersion": 1,
+    "type": "moss.phase2.operational-update.v1",
+    "ceremonyId": "38200f3f-58a7-4054-a29d-91fa89dc1f22",
+    "manifestSha256": "441ccbe64b84b22c3e443c6d67e7f6f2f6186910c4d47cea61817540359cfa58",
+    "sequence": 1,
+    "previousUpdateSha256": null,
+    "authorizedAt": "2026-10-26T20:27:59.039Z"
+  },
+  "signature": "zROek_d-p_MZaiSvd_REEDkjGuwwU062ynW6iSyaMMCpmfPdfZcTDSNlBc4hln9cwTiwZq9KZlaYtwi3XBw4DQ"
+}

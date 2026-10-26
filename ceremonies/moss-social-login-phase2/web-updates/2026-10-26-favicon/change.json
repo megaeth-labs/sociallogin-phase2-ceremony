@@ -1,0 +1,11 @@
+{
+  "reason": "Serve the favicon as a PNG icon so browsers display it.",
+  "webRelease": {
+    "sha256": "3f20d525c2db9f1eb0fb4664971df295e58c2f8cfc61f25789c8d12f5be04ce5",
+    "byteLength": 8701,
+    "urls": [
+      "https://d1xydbco3b83a0.cloudfront.net/inputs/sha256/3f20d525c2db9f1eb0fb4664971df295e58c2f8cfc61f25789c8d12f5be04ce5/web-release.json?versionId=POsJjIjmLSeR3E2ByxUqK22miUEsObPX"
+    ],
+    "sourceCommit": "d32a5b062505e97ddf7ca0fcf5a9b31b32366e53"
+  }
+}
