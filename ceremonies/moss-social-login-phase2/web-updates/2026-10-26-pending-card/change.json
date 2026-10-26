@@ -1,0 +1,11 @@
+{
+  "reason": "While a contribution is in progress, show only its card, with the walkthrough link beside the button.",
+  "webRelease": {
+    "sha256": "3e1d40fa38348c5a8b1caffa5358ddbea0a0bc820d5ce3e0255652876cd028b0",
+    "byteLength": 8701,
+    "urls": [
+      "https://d1xydbco3b83a0.cloudfront.net/inputs/sha256/3e1d40fa38348c5a8b1caffa5358ddbea0a0bc820d5ce3e0255652876cd028b0/web-release.json?versionId=iIoBxOLTNeJUdTMB2j.6dKmzwR06JYQF"
+    ],
+    "sourceCommit": "a8170bfa21392fdef088a6e98a5387ff8f9dda20"
+  }
+}
