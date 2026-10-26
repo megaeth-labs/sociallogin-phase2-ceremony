@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "keyId": "moss-social-login-root-2026-10",
+  "payload": {
+    "reason": "After the browser check passes, point to the contribution step, in a green confirmation box.",
+    "webRelease": {
+      "sha256": "5c3c7559b44218374937c75bc59cc0ab96bf54147be39583b37228a188a9f01b",
+      "byteLength": 8701,
+      "urls": [
+        "https://d1xydbco3b83a0.cloudfront.net/inputs/sha256/5c3c7559b44218374937c75bc59cc0ab96bf54147be39583b37228a188a9f01b/web-release.json?versionId=N92lNib1T62x3YSPnTKYfHCiMMLWuygw"
+      ],
+      "sourceCommit": "58987b10359a10d4096fecfd5864e30ff9cad0c6"
+    },
+    "schemaVersion": 1,
+    "type": "moss.phase2.operational-update.v1",
+    "ceremonyId": "38200f3f-58a7-4054-a29d-91fa89dc1f22",
+    "manifestSha256": "441ccbe64b84b22c3e443c6d67e7f6f2f6186910c4d47cea61817540359cfa58",
+    "sequence": 2,
+    "previousUpdateSha256": "e7ac91e1aaccf0a5ee3eb734b231cd0c8db24d925f73f74b26a70c8c911dbb9a",
+    "authorizedAt": "2026-10-26T20:33:51.023Z"
+  },
+  "signature": "YRC322IQTfYqBCNRUpAwiC59hXLZKmOrDORtB58HEYqwDxAaqMi8LEWPmtIpuDAEeo4j-2udLRDS4xNTK1OoDQ"
+}
