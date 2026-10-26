@@ -1,0 +1,11 @@
+{
+  "reason": "Remove the verifier policy sentences from each contribution card.",
+  "webRelease": {
+    "sha256": "8afa67f7c6994f266b36f47481075dc8b2ff79a683209a77f6c4f838f9a83615",
+    "byteLength": 8701,
+    "urls": [
+      "https://d1xydbco3b83a0.cloudfront.net/inputs/sha256/8afa67f7c6994f266b36f47481075dc8b2ff79a683209a77f6c4f838f9a83615/web-release.json?versionId=9YDYkZQCWKFJtH1GjxkWAdd53idFhUYr"
+    ],
+    "sourceCommit": "a16cb8b4381e682d776e8c41ebb007b3e1b7333d"
+  }
+}
