@@ -1,0 +1,11 @@
+{
+  "reason": "Upgrade Next.js and its image library to versions without published security advisories.",
+  "webRelease": {
+    "sha256": "43b817c9b05af3fc96a4ee73cd00088c434da9c03988d4fb22a8effc21265839",
+    "byteLength": 8701,
+    "urls": [
+      "https://d1xydbco3b83a0.cloudfront.net/inputs/sha256/43b817c9b05af3fc96a4ee73cd00088c434da9c03988d4fb22a8effc21265839/web-release.json?versionId=USUd7fcU0Ebzg.DUcSF6kgcgQ9ZHvOMT"
+    ],
+    "sourceCommit": "a64470e75b03592431caeb57e0877b560df0b7f9"
+  }
+}
