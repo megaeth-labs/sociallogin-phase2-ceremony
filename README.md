@@ -35,12 +35,12 @@ the website in a desktop browser, or from the command line below.
 ## Contribute from the CLI
 
 The CLI suits a terminal, a headless machine, or a long unattended wait in the
-queue. You need Node.js 24 or newer, Git, and about 1 GB of free disk space.
+queue. You need Node.js 24 or newer, Git, pnpm and about 1 GB of free disk
+space. If you don't have pnpm, install it with `npm install --global pnpm@10.29.2`.
 
 ```sh
 git clone https://github.com/megaeth-labs/sociallogin-phase2-ceremony.git
 cd sociallogin-phase2-ceremony
-corepack enable
 pnpm install --frozen-lockfile
 pnpm --filter "@moss/phase2-ceremony-cli..." build
 ./status.sh
