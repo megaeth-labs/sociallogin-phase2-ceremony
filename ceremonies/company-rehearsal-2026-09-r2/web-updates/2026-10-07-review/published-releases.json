@@ -1,0 +1,16 @@
+{
+  "web-release.json": {
+    "sha256": "393377d301dce8cba6f87c129b9dd5df5cdc8fc366bd57b98d272c4d3b4fe069",
+    "byteLength": 7962,
+    "urls": [
+      "https://d1lqbpxesw1yqu.cloudfront.net/inputs/sha256/393377d301dce8cba6f87c129b9dd5df5cdc8fc366bd57b98d272c4d3b4fe069/web-release.json?versionId=PPJlYSsC4SoiRNm9kNCAymtajABS_BRX"
+    ]
+  },
+  "web-reproduction.json": {
+    "sha256": "85b2e1b4f1ab30a4af5da9b8387383d775a5c8f80a173ca56e99df4f3d72d188",
+    "byteLength": 1044,
+    "urls": [
+      "https://d1lqbpxesw1yqu.cloudfront.net/inputs/sha256/85b2e1b4f1ab30a4af5da9b8387383d775a5c8f80a173ca56e99df4f3d72d188/web-reproduction.json?versionId=VD9nEPDwEe4o6uwAze8.WoZI4.5XMJ9t"
+    ]
+  }
+}

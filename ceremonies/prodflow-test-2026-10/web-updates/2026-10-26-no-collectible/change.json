@@ -1,0 +1,9 @@
+{
+  "reason": "Remove the contribution collectible from the site, and ship the resume, queue and copy fixes found during this test.",
+  "webRelease": {
+    "sha256": "677c1ff94f1d095a28257d4a82ee7fcf87d7d45f5a7247411d6c4efa31b41559",
+    "byteLength": 8701,
+    "urls": ["https://d1xydbco3b83a0.cloudfront.net/inputs/sha256/677c1ff94f1d095a28257d4a82ee7fcf87d7d45f5a7247411d6c4efa31b41559/web-release.json?versionId=u3I34tXyjfnMjNXhNKCpYO73g61x40ED"],
+    "sourceCommit": "b61f9c0576ebf0376f78c37a65112f046e4c4cb5"
+  }
+}

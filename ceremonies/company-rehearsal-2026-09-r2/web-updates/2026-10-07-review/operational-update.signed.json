@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "keyId": "moss-rehearsal-root-2026-09",
+  "payload": {
+    "reason": "Add a rehearsal-only screen review gallery with isolated wallet previews. No contribution, beacon or acceptance policy changes.",
+    "webRelease": {
+      "sha256": "393377d301dce8cba6f87c129b9dd5df5cdc8fc366bd57b98d272c4d3b4fe069",
+      "byteLength": 7962,
+      "urls": [
+        "https://d1lqbpxesw1yqu.cloudfront.net/inputs/sha256/393377d301dce8cba6f87c129b9dd5df5cdc8fc366bd57b98d272c4d3b4fe069/web-release.json?versionId=PPJlYSsC4SoiRNm9kNCAymtajABS_BRX"
+      ],
+      "sourceCommit": "318511dc35d62b2aa592e159695817b192d08d68"
+    },
+    "schemaVersion": 1,
+    "type": "moss.phase2.operational-update.v1",
+    "ceremonyId": "bf4e9f78-441b-4a24-96c1-b7990e77e150",
+    "manifestSha256": "b6fd9543e3ebacfb8fab7b43ccdbb3670d1e16552bf6a8b494c44efdc65a6289",
+    "sequence": 3,
+    "previousUpdateSha256": "8b7a60f18355b79ffdeb723c907ea9601d49b7bc95dfaa63f139f9556c41ed08",
+    "authorizedAt": "2026-10-07T15:38:53.332Z"
+  },
+  "signature": "VnscDl9UnZfIgPBjEDAdjQXy2sb_nwwA2T6gwQyDXOqMni1KI4Pes3w_VqGXCJX3vyON17zuAV945Mj4M4uDAg"
+}

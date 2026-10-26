@@ -1,0 +1,16 @@
+# Reproduce a Vercel release using only a git archive, never the working tree.
+# Build context must contain source.tar and this Dockerfile, with no secrets.
+ARG NODE_IMAGE=node:24-bookworm-slim
+FROM ${NODE_IMAGE}
+RUN corepack enable && corepack prepare pnpm@10.29.2 --activate
+WORKDIR /vercel/path0
+ADD source.tar .
+RUN pnpm install --frozen-lockfile
+ARG MOSS_WEB_BUILD_ID
+ARG NEXT_DEPLOYMENT_ID
+ARG COORDINATOR_BASE_URL
+ARG ARTIFACT_ORIGINS
+ARG NEXT_PUBLIC_BROWSER_CONTRIBUTIONS_ENABLED=true
+RUN test -n "$MOSS_WEB_BUILD_ID" && test -n "$NEXT_DEPLOYMENT_ID" \
+    && pnpm --filter @moss/phase2-ceremony-web... build
+RUN node infra/web-release.mjs --describe apps/ceremony/.next --out /web-release.json

@@ -1,0 +1,98 @@
+{
+  "_README": [
+    "Production-flow test ceremony on the mainnet stack (owner go-ahead 2026-10-26).",
+    "purpose production, so the one-contribution-per-account rule and the signed heartbeat apply.",
+    "Throwaway root prodflow-test-root-2026-10; keys live outside the repository."
+  ],
+  "purpose": "production",
+  "slug": "moss-phase2-prodflow-test-2026-10",
+  "operationalPolicy": {
+    "minHeartbeatGraceSeconds": 30,
+    "maxHeartbeatGraceSeconds": 600,
+    "allowWebReleaseUpdates": true,
+    "allowCliReleaseUpdates": true
+  },
+  "primaryPublication": {
+    "archiveBaseUrl": "https://d1xydbco3b83a0.cloudfront.net"
+  },
+  "ceremonyId": "bd40e300-5034-4139-9576-ce162da9aca3",
+  "schedule": {
+    "opensAt": "2026-10-26T15:30:00.000Z",
+    "sealsAt": "2026-10-26T16:30:00.000Z"
+  },
+  "beacon": {
+    "source": "ethereum-block",
+    "chainId": 1,
+    "blockNumber": 26278142,
+    "expectedAt": "2026-10-26T16:45:00.000Z",
+    "numIterationsExp": 10,
+    "contributionName": "final",
+    "_note": "Head 26277599 at 2026-10-26T14:56:35Z; +543 slots of 12 s puts block 26278142 no earlier than 16:45:11Z."
+  },
+  "genesisBellman": {
+    "sha256": "600950f4831a93c7907cca96c8e722c4d319401925c353f4ad2ed6aae82d173e",
+    "byteLength": 368440348,
+    "urls": [
+      "https://d1xydbco3b83a0.cloudfront.net/inputs/sha256/600950f4831a93c7907cca96c8e722c4d319401925c353f4ad2ed6aae82d173e/genesis.params?versionId=6XHF2OBn0LXLKfJWQM6A2q3jLbbW1C9I"
+    ]
+  },
+  "artifactUrls": {
+    "r1cs": [
+      "https://d1xydbco3b83a0.cloudfront.net/inputs/sha256/173eba6b9b7883bb8e761f69f902c334b14cea61a094eba7466f0f548d601692/circuit.r1cs?versionId=NSqeKG.vaZcg9QnQSp_OaJEcpcPDPRZw"
+    ],
+    "ptau": [
+      "https://d1xydbco3b83a0.cloudfront.net/inputs/sha256/032647abe127f4562f8118dd5f866ab595c1f2bbd03d0a85ff3739a4a967d9be/powersoftau.ptau?versionId=7loKBCkcC4D3OWLmrKdWClX1yU4bc8MH"
+    ],
+    "genesisZkey": [
+      "https://d1xydbco3b83a0.cloudfront.net/inputs/sha256/f23c5dadb27613ec3d819c3cb59060804a0dc506fb6d873ab6d3ca5f8357090d/genesis.zkey?versionId=n8WbeAChgauldwbbBZ3.C8c3PkpGl5Tm"
+    ]
+  },
+  "coordinatorKeys": [
+    {
+      "keyId": "coordinator-1",
+      "publicKeyFile": "../../../moss-phase2-secrets/prodflow-test-2026-10/coordinator-1.pub"
+    }
+  ],
+  "verifierKeys": [
+    {
+      "keyId": "verifier-a",
+      "publicKeyFile": "../../../moss-phase2-secrets/prodflow-test-2026-10/verifier-a.pub",
+      "verifierImageDigest": "sha256:87d4d980849476bfe583baf0786c3ff63ff65296c70a8c8ed66d770a1f308643"
+    }
+  ],
+  "verifierPolicy": {
+    "verificationMethod": "bellman-transition-v1",
+    "requiredOperators": 1,
+    "passesPerOperator": 1
+  },
+  "contributionPolicy": {
+    "targetContributions": 2,
+    "maxArtifactByteLength": 620000000,
+    "requirePinnedClientRelease": true,
+    "lease": {
+      "offerSeconds": 120,
+      "heartbeatSeconds": 300,
+      "absoluteSeconds": 5400
+    },
+    "verifierJobSeconds": 1800,
+    "verifierMaxAttempts": 3
+  },
+  "webRelease": {
+    "sha256": "2862e3059fd8ff4d6aed849b7eae2730bfce611384d02a0dd8670a3fedf10477",
+    "byteLength": 8701,
+    "urls": [
+      "https://d1xydbco3b83a0.cloudfront.net/inputs/sha256/2862e3059fd8ff4d6aed849b7eae2730bfce611384d02a0dd8670a3fedf10477/web-release.json?versionId=bHMk9m858YvBqZ5ciIuF_IgZJhXpkSs3"
+    ],
+    "sourceCommit": "4d867e1c2b3c88498e7e90d501af959028f49a85"
+  },
+  "cliReleases": [
+    {
+      "sha256": "62bcd42a3e9a28e8e0d1adcfba3000710c758d7b2eb961f2a8520abaf53722da",
+      "byteLength": 261681,
+      "urls": [
+        "https://d1xydbco3b83a0.cloudfront.net/inputs/sha256/62bcd42a3e9a28e8e0d1adcfba3000710c758d7b2eb961f2a8520abaf53722da/moss-phase2-cli.js?versionId=5B8J1E8wvLhY04IOnrR7KVUV5gjICLfk"
+      ],
+      "sourceCommit": "4d867e1c2b3c88498e7e90d501af959028f49a85"
+    }
+  ]
+}

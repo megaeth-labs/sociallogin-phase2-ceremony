@@ -1,0 +1,11 @@
+{
+  "reason": "Homepage: end the contribution chain at the last contribution once closed; walkthrough tile leads with its heading over a compact step rail.",
+  "webRelease": {
+    "sha256": "554dcafb4bbb62a84709f3b4abb604b3a42f0dab29bee934b0d2e4133cbf310a",
+    "byteLength": 8701,
+    "urls": [
+      "https://d1xydbco3b83a0.cloudfront.net/inputs/sha256/554dcafb4bbb62a84709f3b4abb604b3a42f0dab29bee934b0d2e4133cbf310a/web-release.json?versionId=11lcHpXLqLenfXyjya2uUJbsHVH8Zb.W"
+    ],
+    "sourceCommit": "d5aa20eed83b346e5e45d334f907aebde485f466"
+  }
+}

@@ -1,0 +1,61 @@
+name: Publish MOSS Ceremony CLI
+
+on:
+  workflow_call:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  publish:
+    if: github.event_name == 'workflow_call' || github.event_name == 'workflow_dispatch' || (github.event_name == 'release' && github.event.release.draft == false)
+    environment: Publisher
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: packages/cli
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+
+      - name: Update npm (for OIDC support)
+        run: npm install -g npm@11.5.2
+
+      - name: Install dependencies
+        working-directory: .
+        run: pnpm install --frozen-lockfile
+
+      - name: Build
+        working-directory: .
+        run: pnpm --filter @moss/phase2-ceremony-cli... build
+
+      - name: Update version (dev branch)
+        if: github.ref == 'refs/heads/dev'
+        run: npm version --new-version "0.0.0-snapshot.${GITHUB_SHA::8}.${{ github.run_id }}" --no-git-tag-version
+
+      - name: Publish snapshot (dev branch)
+        if: github.ref == 'refs/heads/dev'
+        run: npm publish --access public --tag snapshot
+
+      - name: Publish stable (main branch or release)
+        if: github.ref == 'refs/heads/main' || (startsWith(github.ref, 'refs/tags/release-') && github.event.release.target_commitish == 'main')
+        run: |
+          VERSION=$(node -p "require('./package.json').version")
+          if [[ "$VERSION" == *-* ]]; then
+            TAG="${VERSION#*-}"
+            TAG="${TAG%%.*}"
+            npm publish --access public --tag "$TAG"
+          else
+            npm publish --access public
+          fi

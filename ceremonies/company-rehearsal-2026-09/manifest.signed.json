@@ -1,0 +1,122 @@
+{
+  "schemaVersion": 1,
+  "keyId": "moss-rehearsal-root-2026-09",
+  "payload": {
+    "schemaVersion": 1,
+    "purpose": "rehearsal",
+    "primaryPublication": {
+      "archiveBaseUrl": "https://d1lqbpxesw1yqu.cloudfront.net"
+    },
+    "ceremonyId": "1e582132-51c9-40f0-baba-21d345cf9088",
+    "slug": "moss-phase2-company-rehearsal-2026-09",
+    "relation": {
+      "profile": "google-rs256-zksync-v3",
+      "relationId": "google-rs256-zksync-v3-groth16-bn254-2",
+      "verifierVersion": 4,
+      "proofSystem": "groth16",
+      "curve": "bn254",
+      "sourceRepository": "https://github.com/Moonsong-Labs/zksync-social-login-circuit",
+      "sourceCommit": "5461ae81208d7e9d6331865b4a8c841546134018",
+      "sourceClosureSha256": "53268998b4edd328bc5b8e205760a95f9a601c012f4ace741418a3bc0bdf2ac0",
+      "circomVersion": "2.2.3",
+      "snarkjsVersion": "0.7.6",
+      "r1cs": {
+        "sha256": "173eba6b9b7883bb8e761f69f902c334b14cea61a094eba7466f0f548d601692",
+        "byteLength": 232099260,
+        "urls": [
+          "https://d1lqbpxesw1yqu.cloudfront.net/inputs/sha256/173eba6b9b7883bb8e761f69f902c334b14cea61a094eba7466f0f548d601692/circuit.r1cs?versionId=_3DnGFLDg2hJY5JjDHP8t7YvfdXMia01"
+        ]
+      },
+      "ptau": {
+        "sha256": "032647abe127f4562f8118dd5f866ab595c1f2bbd03d0a85ff3739a4a967d9be",
+        "byteLength": 19327435928,
+        "urls": [
+          "https://d1lqbpxesw1yqu.cloudfront.net/inputs/sha256/032647abe127f4562f8118dd5f866ab595c1f2bbd03d0a85ff3739a4a967d9be/powersoftau.ptau?versionId=wkdMa2unhWGOv6pUDzS9mPWbuLG5aEBe"
+        ],
+        "blake2b512": "fa404d140d5819d39984833ca5ec3632cd4995f81e82db402371a4de7c2eae8687c62bc632a95b0c6aadba3fb02680a94e09174b7233ccd26d78baca2647c733"
+      },
+      "genesisBellman": {
+        "sha256": "600950f4831a93c7907cca96c8e722c4d319401925c353f4ad2ed6aae82d173e",
+        "byteLength": 368440348,
+        "urls": [
+          "https://d1lqbpxesw1yqu.cloudfront.net/inputs/sha256/600950f4831a93c7907cca96c8e722c4d319401925c353f4ad2ed6aae82d173e/genesis.params?versionId=u7H4QXGeX2s3RFU0P9FpUvAP4no1cQzr"
+        ]
+      },
+      "genesisZkey": {
+        "sha256": "f23c5dadb27613ec3d819c3cb59060804a0dc506fb6d873ab6d3ca5f8357090d",
+        "byteLength": 567402188,
+        "urls": [
+          "https://d1lqbpxesw1yqu.cloudfront.net/inputs/sha256/f23c5dadb27613ec3d819c3cb59060804a0dc506fb6d873ab6d3ca5f8357090d/genesis.zkey?versionId=7ocYg73Rx5b6AMyyNMAvR94.seLqQJc2"
+        ]
+      }
+    },
+    "schedule": {
+      "opensAt": "2026-09-26T04:16:30.090Z",
+      "sealsAt": "2026-10-02T18:00:00.000Z"
+    },
+    "beacon": {
+      "source": "ethereum-block",
+      "chainId": 1,
+      "blockNumber": 26108000,
+      "expectedAt": "2026-10-02T22:58:23.000Z",
+      "numIterationsExp": 32,
+      "contributionName": "MOSS rehearsal final beacon",
+      "derivation": "MOSS_PHASE2_BEACON_V1"
+    },
+    "coordinatorKeys": [
+      {
+        "keyId": "moss-rehearsal-coordinator-2026-09",
+        "algorithm": "Ed25519",
+        "publicKeyPem": "-----BEGIN PUBLIC KEY-----\nMCowBQYDK2VwAyEAfx42uNMmxi45DuraND00PpvvBQHgWKE7fo+npQE/M1I=\n-----END PUBLIC KEY-----\n"
+      }
+    ],
+    "verifierKeys": [
+      {
+        "keyId": "moss-rehearsal-verifier-2026-09",
+        "algorithm": "Ed25519",
+        "publicKeyPem": "-----BEGIN PUBLIC KEY-----\nMCowBQYDK2VwAyEANP1RxfN5g/2bH5YJG6BLLdKfTnc9UMigGj5wrIbgtd8=\n-----END PUBLIC KEY-----\n",
+        "verifierImageDigest": "sha256:60d6933b2f66f3060e4abefee02237f2c37567a0042e887c0c6856fee316a834"
+      }
+    ],
+    "verifierPolicy": {
+      "verificationMethod": "bellman-transition-v1",
+      "operatorKeyIds": [
+        "moss-rehearsal-verifier-2026-09"
+      ],
+      "requiredOperators": 1,
+      "passesPerOperator": 1
+    },
+    "contributionPolicy": {
+      "targetContributions": 10,
+      "maxArtifactByteLength": 600000000,
+      "requirePinnedClientRelease": true,
+      "lease": {
+        "offerSeconds": 120,
+        "heartbeatSeconds": 15,
+        "absoluteSeconds": 5400
+      },
+      "verifierJobSeconds": 1800,
+      "verifierMaxAttempts": 3,
+      "maximumContributions": 10
+    },
+    "webRelease": {
+      "sha256": "a911bc9557068208eb1a1d3bed6acc5c6d8eab0185914469527777a6c275a5d1",
+      "byteLength": 11440,
+      "urls": [
+        "https://d1lqbpxesw1yqu.cloudfront.net/inputs/sha256/a911bc9557068208eb1a1d3bed6acc5c6d8eab0185914469527777a6c275a5d1/web-release.json?versionId=sKTkZKlhNNNn_ebp6lZWRGSmTReIArai"
+      ],
+      "sourceCommit": "2dbebd340d20565465c721dd01c784b8aaee5490"
+    },
+    "cliReleases": [
+      {
+        "sha256": "1bd9d12e87ff1981ce62a4155476c5ce467ae3acb910f2f17ab58f40413a7adc",
+        "byteLength": 238775,
+        "urls": [
+          "https://d1lqbpxesw1yqu.cloudfront.net/inputs/sha256/1bd9d12e87ff1981ce62a4155476c5ce467ae3acb910f2f17ab58f40413a7adc/moss-phase2-cli.js?versionId=lQBfqs2gVg5VWwcWpUZzpZPoiKuVKyL_"
+        ],
+        "sourceCommit": "2dbebd340d20565465c721dd01c784b8aaee5490"
+      }
+    ]
+  },
+  "signature": "I_zbRV3erS_ZYXICLdwtedqttOmd1-MAAxJ8OHwXK_YlhHtpMJ34tHJqLzNo2k3Najn6hrI-ngt4DEQsP3_aBw"
+}

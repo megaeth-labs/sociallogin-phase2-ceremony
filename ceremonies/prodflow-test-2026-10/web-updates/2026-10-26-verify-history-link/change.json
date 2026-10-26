@@ -1,0 +1,11 @@
+{
+  "reason": "Verify guide: link Contribution history back to the homepage table and remove the scope caveat.",
+  "webRelease": {
+    "sha256": "25e723c42b2eedb7e1c845fd2cca3583cd5e126376868783622c7549f4df12b6",
+    "byteLength": 8701,
+    "urls": [
+      "https://d1xydbco3b83a0.cloudfront.net/inputs/sha256/25e723c42b2eedb7e1c845fd2cca3583cd5e126376868783622c7549f4df12b6/web-release.json?versionId=qzUiyHoTAtSG6DBHSs9ZZipItTtddUnK"
+    ],
+    "sourceCommit": "70908046122dd222bd5a722d1fb8cfa71ad09101"
+  }
+}

@@ -1,0 +1,919 @@
+/* Primary call to action: a frost pill inside a 2px ring that a mint light
+ * runs around (a rotating conic gradient, clipped by the ring), with the
+ * arrow cut out of its own disc. */
+.ctaRing {
+  position: relative;
+  isolation: isolate;
+  display: inline-flex;
+  padding: 3px;
+  border-radius: var(--radius-control);
+  overflow: hidden;
+  background: color-mix(in oklch, var(--color-frost) 22%, transparent);
+  box-shadow: 0 0 2.5rem -.5rem var(--color-neon-a40), 0 0 0 1px var(--color-neon-a20);
+}
+.ctaRing::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  top: 50%;
+  left: 50%;
+  width: 150%;
+  aspect-ratio: 1;
+  translate: -50% -50%;
+  background: conic-gradient(from 0deg, transparent 0 48%, var(--color-neon-a20) 60%, var(--color-neon) 78%, var(--color-frost) 82%, var(--color-neon) 86%, transparent 96%);
+  animation: orbit 3.6s linear infinite;
+}
+.ctaRing[data-disabled] { box-shadow: none; }
+.ctaRing[data-disabled]::before { opacity: 0; animation-play-state: paused; }
+@keyframes orbit { to { transform: rotate(1turn); } }
+
+.ctaRing > [data-variant="accent"] {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  min-height: 3.5rem;
+  padding: .5rem .5rem .5rem 1.75rem;
+  gap: 1.25rem;
+  font-size: 1rem;
+  width: auto;
+  min-width: 13rem;
+}
+/* A sheen that crosses the pill when the pointer arrives. */
+.ctaRing > [data-variant="accent"]::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  background: linear-gradient(105deg, transparent 30%, color-mix(in oklch, var(--color-neon) 35%, transparent) 50%, transparent 70%);
+  transform: translateX(-110%);
+  transition: transform 300ms var(--ease-out-soft);
+}
+.ctaRing > [data-variant="accent"]:hover:not(:disabled)::before { transform: translateX(110%); }
+.ctaRing > [data-variant="accent"]:active:not(:disabled) { transform: scale(.98); }
+.ctaRing > [data-variant="accent"]::after {
+  content: "";
+  width: 2.5rem;
+  height: 2.5rem;
+  flex-shrink: 0;
+  background: var(--color-night);
+  mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'><mask id='m'><rect width='40' height='40' fill='white'/><path d='M14 20h11m-4.5-4.5L25 20l-4.5 4.5' fill='none' stroke='black' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'/></mask><circle cx='20' cy='20' r='20' fill='white' mask='url(%23m)'/></svg>") center / contain no-repeat;
+  transition: transform var(--duration-quick) var(--ease-out-soft);
+}
+.ctaRing > [data-variant="accent"]:hover:not(:disabled)::after { transform: translateX(.1875rem); }
+.ctaRing > [data-variant="accent"]:disabled::after { opacity: .4; }
+.ctaRing:has(:focus-visible) { overflow: visible; }
+
+/* Public lobby: hero window, ceremony traits, history and evidence.
+ * Night tokens frame the hero and footer; reading surfaces stay on the
+ * daytime wallet palette. */
+
+.lobby {
+  /* Shared with style.module.css panels rendered inside the lobby. */
+  --ink: var(--color-text);
+  --muted: var(--color-text-secondary);
+  --paper: var(--color-surface);
+  --line: var(--color-border);
+  --gutter: clamp(1rem, 4vw, 3rem);
+  --window-inset: clamp(.5rem, 1vw, .875rem);
+  display: grid;
+  gap: clamp(4rem, 9vw, 8rem);
+  min-width: 0;
+  color: var(--color-text);
+}
+
+.container {
+  display: grid;
+  gap: clamp(4rem, 9vw, 8rem);
+  width: min(78rem, 100% - 2 * var(--gutter));
+  margin-inline: auto;
+  min-width: 0;
+}
+
+/* ── Hero band: full width under the header ──────────────────── */
+
+.hero {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background: var(--color-night);
+  color: var(--color-night-text);
+  min-height: min(60rem, calc(100dvh - 5rem));
+  display: grid;
+}
+
+.heroBg {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Keeps the headline legible over the brightest frames of the footage. */
+.hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background:
+    linear-gradient(90deg, color-mix(in oklch, var(--color-night) 82%, transparent) 0%, color-mix(in oklch, var(--color-night) 35%, transparent) 55%, transparent 80%),
+    linear-gradient(0deg, color-mix(in oklch, var(--color-night) 90%, transparent) 0%, transparent 32%);
+  pointer-events: none;
+}
+
+.heroInner {
+  width: min(78rem, 100% - 2 * var(--gutter));
+  margin-inline: auto;
+  display: grid;
+  grid-template-columns: minmax(0, 6fr) minmax(0, 6fr);
+  /* Spare height is split above the headline and below the stats, so the
+   * content block sits roughly centred instead of hugging the bottom. */
+  grid-template-rows: minmax(0, 1fr) auto auto auto auto minmax(0, .6fr);
+  grid-template-areas:
+    ".      ."
+    "title  title"
+    "copy   ."
+    "cta    ."
+    "stats  ."
+    ".      .";
+  column-gap: 2rem;
+  position: relative;
+  padding-top: clamp(1.25rem, 3vw, 2.25rem);
+}
+
+
+
+.heroCopy {
+  display: contents;
+}
+.heroCopy > .heroLede, .heroCta { position: relative; z-index: 1; }
+.heroLede { grid-area: copy; padding-top: clamp(1.25rem, 3vh, 2.25rem); }
+.heroCopy > .heroCta { grid-area: cta; align-self: start; padding-block: clamp(1.25rem, 3vh, 2rem) clamp(1.25rem, 2.5vh, 2rem); }
+
+.heroTitle {
+  grid-area: title;
+  position: relative;
+  z-index: 1;
+  display: grid;
+  padding-top: clamp(1rem, 2.5vh, 2rem);
+  font-size: clamp(3rem, min(7.6vw, 12vh), 7.5rem);
+  font-weight: 700;
+  line-height: .86;
+  letter-spacing: -.045em;
+  text-transform: uppercase;
+}
+/* A soft night halo keeps the caps legible where they overlap the plate. */
+.heroTitle { text-shadow: 0 .125rem 1.75rem color-mix(in oklch, var(--color-night) 70%, transparent); }
+.heroTitle span {
+  display: block;
+  animation: rise var(--duration-settle) var(--ease-out-soft) both;
+}
+.heroTitle span + span { animation-delay: 70ms; }
+/* "Contributions" is one long word; it shrinks with the viewport so it never clips. */
+.heroTitleLong { font-size: min(clamp(3rem, min(7.6vw, 12vh), 7.5rem), 9.4vw); }
+
+/* The lede carries the ask, so it reads as a strong subheading, not body copy. */
+.heroLede {
+  max-width: 42ch;
+  font-size: clamp(1.0625rem, 1.4vw, 1.3125rem);
+  font-weight: 500;
+  line-height: 1.45;
+  letter-spacing: -.01em;
+  text-wrap: pretty;
+  color: var(--color-night-text);
+  animation: rise var(--duration-settle) var(--ease-out-soft) 140ms both;
+}
+
+@keyframes rise {
+  from { opacity: 0; transform: translateY(.75rem); }
+  to { opacity: 1; transform: none; }
+}
+
+/* The participation slot carries whatever the current stage needs: a sign-in
+ * button, a welcome, a closed notice. Only its direct text is restyled, so a
+ * nested activity card keeps the daytime palette it was designed for. */
+.heroCta {
+  --button-accent-bg: linear-gradient(100deg, var(--color-frost) 45%, color-mix(in oklch, var(--color-neon) 30%, var(--color-frost)));
+  --button-accent-bg-hover: linear-gradient(100deg, var(--color-surface) 40%, color-mix(in oklch, var(--color-neon) 45%, var(--color-frost)));
+  --button-accent-fg: var(--color-text);
+  --button-secondary-bg: transparent;
+  --button-secondary-bg-hover: color-mix(in oklch, var(--color-night-text) 10%, transparent);
+  --button-secondary-line: var(--color-night-line);
+  --button-secondary-fg: var(--color-night-text);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: .875rem 1rem;
+  max-width: 36rem;
+  animation: rise var(--duration-settle) var(--ease-out-soft) 200ms both;
+}
+.heroCta > h2 {
+  flex-basis: 100%;
+  font-size: 1.375rem;
+  font-weight: 500;
+  letter-spacing: -.02em;
+}
+.heroCta > p {
+  flex-basis: 100%;
+  max-width: 32rem;
+  font-size: .875rem;
+  line-height: 1.6;
+  color: var(--color-night-muted);
+}
+/* A prompt that carries the ask matches the lede's subheading weight. */
+.heroCta > p[data-emphasis] {
+  font-size: clamp(1.0625rem, 1.4vw, 1.3125rem);
+  font-weight: 500;
+  line-height: 1.45;
+  letter-spacing: -.01em;
+  color: var(--color-night-text);
+}
+.heroCta > p { order: 3; }
+.heroCta > p:has(+ :is(button, .ctaRing)) { order: -1; }
+.heroCta > h2 { order: -2; }
+.heroCta > p:has(+ h2) { order: -3; }
+/* A leading label (e.g. a stage eyebrow) stays first. */
+.heroCta > p:first-child:not(:has(+ :is(button, .ctaRing))) { order: -3; }
+/* Closed states lead with a heading; keep their explanation with it, above the links. */
+.heroCta > h2 ~ p { order: -1; }
+.heroLink { order: 1; }
+.heroCta > button { width: auto; min-width: 11rem; }
+.heroCta > a:not(.heroLink) { color: var(--color-neon); }
+.heroCta > section {
+  --button-accent-bg: initial;
+  --button-accent-bg-hover: initial;
+  --button-accent-fg: initial;
+  --button-secondary-bg: initial;
+  --button-secondary-bg-hover: initial;
+  --button-secondary-line: initial;
+  --button-secondary-fg: initial;
+  flex-basis: 100%;
+  order: -3;
+  color: var(--color-text);
+}
+
+/* Primary call to action: the arrow sits in its own disc, cut out of it. */
+.heroCta > [data-variant="accent"] {
+  min-height: 3.5rem;
+  padding: .5rem .5rem .5rem 1.75rem;
+  gap: 1.25rem;
+  font-size: 1rem;
+}
+.heroCta > [data-variant="accent"]::after {
+  content: "";
+  width: 2.5rem;
+  height: 2.5rem;
+  flex-shrink: 0;
+  background: var(--color-night);
+  mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'><mask id='m'><rect width='40' height='40' fill='white'/><path d='M14 20h11m-4.5-4.5L25 20l-4.5 4.5' fill='none' stroke='black' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'/></mask><circle cx='20' cy='20' r='20' fill='white' mask='url(%23m)'/></svg>") center / contain no-repeat;
+  transition: transform var(--duration-quick) var(--ease-out-soft);
+}
+.heroCta > [data-variant="accent"]:hover:not(:disabled)::after { transform: translateX(.1875rem); }
+.heroCta > [data-variant="accent"]:disabled::after { opacity: .4; }
+
+.heroLink {
+  display: inline-flex;
+  align-items: center;
+  min-height: 3rem;
+  padding-inline: .5rem;
+  color: var(--color-night-text);
+  font-size: .9375rem;
+  text-decoration: underline;
+  text-decoration-color: var(--color-night-line);
+  text-underline-offset: .375rem;
+}
+.heroLink:hover { text-decoration-color: var(--color-neon); }
+
+.hero :is(a, button, summary):focus-visible {
+  outline: 2px solid var(--color-neon);
+  outline-offset: 4px;
+}
+
+/* Oversized on purpose: the plate runs off the bottom of the window and
+ * fills the right-hand side, behind the headline's last letters. */
+.heroRabbit {
+  position: absolute;
+  z-index: 0;
+  right: -6rem;
+  bottom: -7rem;
+  width: min(60vw, 56rem, 96vh);
+  pointer-events: none;
+  animation: settle var(--duration-settle) var(--ease-out-soft) 120ms both;
+}
+/* A periodic scan. The beam grows vertically from its midpoint just left of
+ * the art, sweeps to just past its right edge, then collapses again. A mint
+ * band trails it, masked to the rabbit and plate so only they are lit. */
+.scan, .scanBeam {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+.scan {
+  mask: url("/brand/rabbit-browsing-poster.webp") center / 100% 100% no-repeat;
+  mix-blend-mode: screen;
+}
+/* The beam only draws over the art, so it never crosses the headline. */
+.scanBeam {
+  mask: url("/brand/rabbit-browsing-poster.webp") center / 100% 100% no-repeat;
+}
+/* Full-width track, so translateX percentages are fractions of the art box. */
+.scanTrack {
+  position: absolute;
+  top: 2%;
+  bottom: 4%;
+  left: 0;
+  width: 100%;
+  animation: scanMove 7s cubic-bezier(.45, 0, .55, 1) 1.2s infinite both;
+}
+.scanTrack::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  transform-origin: center;
+  animation: scanGrow 7s linear 1.2s infinite both;
+}
+.scanLine::before {
+  left: -1px;
+  width: 2px;
+  background: linear-gradient(180deg, transparent, var(--color-neon) 12%, var(--color-frost) 50%, var(--color-neon) 88%, transparent);
+  box-shadow: 0 0 .5rem var(--color-neon), 0 0 1.5rem var(--color-neon-a40);
+}
+/* End caps: short ticks riding the top and bottom of the beam. */
+.scanLine::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: -.5rem;
+  width: 1rem;
+  border-block: 2px solid var(--color-neon);
+  transform-origin: center;
+  animation: scanGrow 7s linear 1.2s infinite both;
+}
+.scanBand::before {
+  right: 100%;
+  width: 18%;
+  background: linear-gradient(90deg, transparent, var(--color-neon-a20) 45%, var(--color-neon-a40) 85%, var(--color-neon));
+}
+/* The point the beam powers on from and collapses back into. */
+.scanDot {
+  position: absolute;
+  top: 50%;
+  left: -.3125rem;
+  width: .625rem;
+  height: .625rem;
+  margin-top: -.3125rem;
+  border-radius: 50%;
+  background: var(--color-frost);
+  box-shadow: 0 0 .5rem var(--color-neon), 0 0 1.25rem var(--color-neon);
+  animation: scanDot 7s linear 1.2s infinite both;
+}
+@keyframes scanMove {
+  0%, 19% { transform: translateX(1%); animation-timing-function: cubic-bezier(.45, 0, .55, 1); }
+  47%, 100% { transform: translateX(96.5%); }
+}
+/* Power on: flicker as a point, then unfold vertically over ~0.7 s with a
+ * soft overshoot. Power off: swell slightly, then fold back to the point over
+ * ~0.6 s, which flares and fades. Fractions of the 7 s cycle. */
+@keyframes scanGrow {
+  0%, 6% { transform: scaleY(0); opacity: 0; }
+  7.5% { transform: scaleY(.02); opacity: 1; animation-timing-function: cubic-bezier(.45, 0, .25, 1); }
+  17% { transform: scaleY(1.03); }
+  19%, 45% { transform: scaleY(1); opacity: 1; }
+  47% { transform: scaleY(1.03); animation-timing-function: cubic-bezier(.55, 0, .7, .2); }
+  56% { transform: scaleY(.02); opacity: 1; }
+  57%, 100% { transform: scaleY(0); opacity: 0; }
+}
+@keyframes scanDot {
+  0% { transform: scale(0); opacity: 0; }
+  2% { transform: scale(1); opacity: 1; }
+  3% { opacity: .25; }
+  4% { opacity: 1; }
+  4.8% { opacity: .35; }
+  5.6%, 7.5% { transform: scale(1); opacity: 1; }
+  13% { transform: scale(.5); opacity: 0; }
+  54.5% { transform: scale(.5); opacity: 0; }
+  56% { transform: scale(1.1); opacity: 1; }
+  58% { transform: scale(1.9); opacity: .9; }
+  62%, 100% { transform: scale(.2); opacity: 0; }
+}
+.heroRabbit video {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+/* A low mint wash under the plate, as if lit from the circuit below. */
+.heroRabbit::before {
+  content: "";
+  position: absolute;
+  inset: 45% 10% 2%;
+  z-index: -1;
+  border-radius: 50%;
+  background: radial-gradient(closest-side, var(--color-neon-a40), transparent);
+  opacity: .55;
+}
+
+@keyframes settle {
+  from { opacity: 0; transform: translateY(1.5rem) scale(.98); }
+  to { opacity: 1; transform: none; }
+}
+
+.heroStats {
+  grid-area: stats;
+  z-index: 1;
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(3, auto);
+  grid-template-rows: auto auto auto;
+  justify-content: start;
+  padding-block: 1.5rem 1.75rem;
+}
+.heroStats > div {
+  display: grid;
+  grid-row: span 3;
+  grid-template-rows: subgrid;
+  align-content: start;
+  row-gap: .375rem;
+  padding-right: clamp(1.25rem, 2.5vw, 2.25rem);
+  min-width: 0;
+}
+.heroStats > div + div {
+  padding-left: clamp(1.25rem, 2.5vw, 2.25rem);
+  border-left: 1px solid var(--color-night-line);
+}
+.heroStats dt { align-self: end; font-size: .8125rem; color: var(--color-night-muted); }
+.heroStats dd {
+  font-size: clamp(1.375rem, 2.2vw, 1.875rem);
+  letter-spacing: -.03em;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.heroStats small { font-size: .8125rem; letter-spacing: 0; color: var(--color-night-muted); }
+.heroStats .heroHash { font-family: var(--font-mono), monospace; font-size: clamp(1.125rem, 1.7vw, 1.5rem); letter-spacing: 0; color: var(--color-neon); }
+
+/* ── Traits ─────────────────────────────────────────────────── */
+
+.traits { display: grid; gap: clamp(1.75rem, 3vw, 2.5rem); }
+.traitsTitle {
+  text-wrap: balance;
+  font-size: clamp(2rem, 4vw, 3.25rem);
+  font-weight: 500;
+  line-height: 1.02;
+  letter-spacing: -.045em;
+}
+
+.bento {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+/* Nested tray and plate: the plate sits inside a hairline tray like glass in
+ * a frame, with concentric radii. */
+.tray {
+  --tray-pad: .375rem;
+  padding: var(--tray-pad);
+  border-radius: var(--radius-panel);
+  background: color-mix(in oklch, var(--color-text) 4%, transparent);
+  box-shadow: inset 0 0 0 1px color-mix(in oklch, var(--color-text) 7%, transparent);
+  min-width: 0;
+}
+.plate {
+  height: 100%;
+  display: grid;
+  align-content: start;
+  gap: .875rem;
+  padding: clamp(1.5rem, 2.5vw, 2.25rem);
+  border-radius: calc(var(--radius-panel) - var(--tray-pad));
+  background: var(--color-surface);
+  box-shadow: inset 0 1px 0 color-mix(in oklch, var(--color-surface) 70%, transparent), 0 1.5rem 3rem -2rem var(--color-shadow-a15);
+  overflow: hidden;
+}
+.plate h3 {
+  max-width: 22ch;
+  font-size: clamp(1.25rem, 1.8vw, 1.625rem);
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: -.03em;
+}
+.plate p {
+  max-width: 46ch;
+  font-size: .9375rem;
+  line-height: 1.6;
+  color: var(--color-text-secondary);
+}
+.night {
+  background: var(--color-night);
+  color: var(--color-night-text);
+  box-shadow: inset 0 1px 0 color-mix(in oklch, var(--color-night-text) 10%, transparent), 0 1.5rem 3rem -2rem var(--color-shadow-a15);
+}
+.night p { color: var(--color-night-muted); }
+
+.chainTile { grid-column: span 8; }
+.honestTile { grid-column: span 4; }
+.localTile { grid-column: span 5; }
+.keepTile, .howTile { grid-column: span 7; }
+
+.chainTile .plate { min-height: 22rem; align-content: space-between; }
+.chainTile h3 { font-size: clamp(1.5rem, 2.6vw, 2.25rem); max-width: 20ch; }
+
+/* Blocks share the width; when the tile is too narrow for all of them, the
+ * oldest drop out first so the newest and the open slot always fit. */
+.chain {
+  list-style: none;
+  display: flex;
+  align-items: stretch;
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+  container-type: inline-size;
+}
+.chain li {
+  position: relative;
+  flex: 1 1 0;
+  min-width: 0;
+  display: grid;
+  gap: .25rem;
+  min-height: 5.5rem;
+  padding: 1rem;
+  border-radius: 1rem;
+  border: 1px solid var(--color-night-line);
+  background: var(--color-night-raised);
+}
+/* The link between consecutive contributions. */
+.chain li + li::before {
+  content: "";
+  position: absolute;
+  left: -1.5rem;
+  top: 50%;
+  width: 1.5rem;
+  border-top: 1px solid var(--color-night-line);
+}
+.chainIndex { font-size: .75rem; color: var(--color-night-muted); font-variant-numeric: tabular-nums; }
+.chainName {
+  font-size: .9375rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.chainGhost { opacity: .6; align-content: center; }
+/* 5 blocks need 5 × 7.5rem + 4 gaps; then 4, then 3. */
+@container (max-width: 43.5rem) { .chain > li:nth-last-child(n+5) { display: none; } }
+@container (max-width: 34.5rem) { .chain > li:nth-last-child(n+4) { display: none; } }
+@container (max-width: 25.5rem) { .chain > li:nth-last-child(n+3) { display: none; } }
+.chain .chainNote {
+  flex: 1 1 auto;
+  min-height: 0;
+  align-content: center;
+  border-style: dashed;
+  background: transparent;
+  font-size: .875rem;
+  color: var(--color-night-muted);
+}
+.chainGhost .ghostBar { display: block; height: .5rem; width: 40%; border-radius: var(--radius-control); background: var(--color-night-line); }
+.chainGhost .ghostBar + .ghostBar { width: 75%; }
+.chain .chainNext {
+  flex-grow: 1.5;
+  border-style: dashed;
+  background: transparent;
+}
+.chain .chainNext[data-open="true"] {
+  border-color: var(--color-neon);
+  box-shadow: 0 0 1.5rem -.5rem var(--color-neon-a40);
+}
+.chainNext[data-open="true"] .chainIndex,
+.chainNext[data-open="true"] + li::before { color: var(--color-neon); }
+
+.honestGlyph { width: min(100%, 15.5rem); height: auto; margin-bottom: .75rem; overflow: visible; }
+.lockLine { stroke: var(--color-border); stroke-width: 1.5; stroke-dasharray: 2 5; }
+.shackle { fill: none; stroke: var(--color-accent); stroke-width: 3.5; stroke-linecap: round; transform-box: fill-box; transform-origin: 0 100%; }
+.lockBody { fill: var(--color-surface); stroke: var(--color-accent); stroke-width: 2; }
+.keyhole { fill: var(--color-accent); }
+.lockHonest .lockBody { fill: var(--color-accent); }
+.lockHonest .keyhole { fill: var(--color-on-accent); }
+.lockHonest { transform-box: fill-box; transform-origin: 50% 70%; }
+
+/* Randomness field: the entropy screen's circuit floor in miniature. The
+ * field takes any spare height so the copy sits on the tile's bottom edge. */
+.localTile .plate { grid-template-rows: 1fr auto auto; }
+.field {
+  position: relative;
+  isolation: isolate;
+  min-height: clamp(12rem, 18vw, 15rem);
+  margin-bottom: .5rem;
+  border-radius: 1.25rem;
+  overflow: hidden;
+  cursor: crosshair;
+  touch-action: pan-y;
+  background:
+    radial-gradient(ellipse 80% 60% at 50% 70%, var(--color-night-raised), transparent 100%),
+    var(--color-night);
+  box-shadow: inset 0 0 0 1px var(--color-night-line);
+}
+.field::before,
+.field::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+.field::before {
+  background-image: radial-gradient(var(--color-night-line) 1px, transparent 1.6px);
+  background-size: 18px 18px;
+  background-position: 9px 9px;
+  mask-image: radial-gradient(ellipse 80% 75% at 50% 60%, black, transparent);
+}
+.field::after {
+  background: var(--color-night-line);
+  opacity: .6;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='216' height='216' fill='none' stroke='black' stroke-width='1'%3E%3Cpath d='M0 54h63l18 18h54M135 72v54l18 18h63M36 216v-45l18-18h45M180 0v36l-18 18'/%3E%3Cg fill='black' stroke='none'%3E%3Ccircle cx='135' cy='72' r='2.4'/%3E%3Ccircle cx='99' cy='153' r='2.4'/%3E%3Ccircle cx='162' cy='54' r='2.4'/%3E%3C/g%3E%3C/svg%3E") 0 0 / 216px 216px repeat;
+}
+/* Decorative fill-and-loop meter: one step per landing. */
+.fieldMeter {
+  position: absolute;
+  z-index: 2;
+  top: .875rem;
+  right: .875rem;
+  width: 3.5rem;
+  height: .25rem;
+  border-radius: var(--radius-control);
+  background: var(--color-night-line);
+  overflow: hidden;
+}
+.fieldMeter span {
+  display: block;
+  height: 100%;
+  background: var(--color-neon);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform var(--duration-settle) var(--ease-out-soft);
+}
+
+.keepTile .plate { position: relative; }
+.keepFan {
+  position: relative;
+  height: clamp(12rem, 18vw, 15rem);
+  margin-bottom: 1rem;
+}
+.keepFan img {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: auto;
+  height: 100%;
+  aspect-ratio: 1;
+  border-radius: 1.25rem;
+  box-shadow: 0 0 0 1px var(--color-night-line), 0 1.25rem 2.5rem -1rem oklch(0 0 0 / .6);
+  transform: translateX(-50%);
+}
+.keepFan img:nth-child(1) { transform: translateX(-108%) translateY(.75rem) rotate(-8deg) scale(.86); }
+.keepFan img:nth-child(3) { transform: translateX(8%) translateY(.75rem) rotate(8deg) scale(.86); }
+.keepFan img:nth-child(2) { z-index: 1; }
+
+/* Call to action into the step-by-step walkthrough. */
+.howBand {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(10rem, 20rem) auto;
+  align-items: center;
+  gap: 1.5rem clamp(1.5rem, 4vw, 3.5rem);
+  padding: clamp(1.5rem, 3vw, 2.25rem) clamp(1.5rem, 3vw, 2.5rem);
+  border-radius: var(--radius-panel);
+  background: var(--color-night);
+  color: var(--color-night-text);
+  text-decoration: none;
+  box-shadow: inset 0 0 0 1px var(--color-night-line);
+}
+.howText { display: grid; gap: .375rem; }
+.howText strong { font-size: clamp(1.25rem, 2vw, 1.625rem); font-weight: 500; letter-spacing: -.03em; line-height: 1.2; }
+.howText span { font-size: .9375rem; line-height: 1.55; color: var(--color-night-muted); max-width: 52ch; }
+.howRail { width: 100%; height: auto; }
+.howRail path { stroke: var(--color-night-line); stroke-width: 1.5; }
+.howRail rect { fill: var(--color-night-raised); stroke: var(--color-night-line); }
+.howRail rect[data-end="true"] { fill: var(--color-neon-a20); stroke: var(--color-neon); }
+.howRail .howPacket { fill: var(--color-neon); stroke: none; animation: travel 4.2s var(--ease-out-soft) infinite; }
+.howBand[data-live="false"] .howPacket { animation-play-state: paused; }
+@keyframes travel {
+  0% { transform: translateX(0); opacity: 0; }
+  6% { opacity: 1; }
+  80% { transform: translateX(279px); opacity: 1; }
+  88%, 100% { transform: translateX(279px); opacity: 0; }
+}
+.howArrow {
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  background: var(--color-frost);
+  mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'><mask id='m'><rect width='40' height='40' fill='white'/><path d='M14 20h11m-4.5-4.5L25 20l-4.5 4.5' fill='none' stroke='black' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'/></mask><circle cx='20' cy='20' r='20' fill='white' mask='url(%23m)'/></svg>") center / contain no-repeat;
+  transition: transform var(--duration-quick) var(--ease-out-soft);
+}
+.howBand:hover .howArrow { transform: translateX(.25rem); }
+.howBand:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 4px; }
+
+/* Without the collectible, the walkthrough tile: the animated step rail in
+ * the visual area, then the heading and copy, with the arrow beside the copy.
+ * Laid out like the randomness tile next to it. */
+.howTile { color: inherit; text-decoration: none; }
+.howTile > .plate {
+  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-rows: 1fr auto auto;
+  column-gap: 1.5rem;
+}
+.howTile .howFlow { grid-column: 1 / -1; align-self: center; padding-block: 1rem; }
+.howTile h3 { grid-column: 1 / -1; }
+.howTile .howBody { grid-column: 1; }
+.howTile .howArrow { grid-column: 2; grid-row: 3; align-self: start; }
+.howTile:hover .howArrow { transform: translateX(.25rem); }
+.howTile:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 4px; }
+/* Side by side, the two tiles share row tracks so their headings and copy
+ * start on the same lines. Stacked layouts don't need it. */
+@media (min-width: 1025px) {
+  .keepTile { grid-row: span 3; }
+  .localTile, .howTile { grid-row: span 3; display: grid; grid-template-rows: subgrid; row-gap: 0; }
+  .localTile > .plate, .howTile > .plate { grid-row: 1 / -1; grid-template-rows: subgrid; row-gap: .875rem; }
+}
+.howFlow { display: grid; justify-items: center; align-content: center; gap: 1.25rem; }
+.howTile .howRail { width: min(100%, 36rem); }
+/* Ten 1.2 s slots: the packet holds at a step, then moves on as the next step
+ * lights. Every element shares the 12 s cycle, offset by its slot. */
+.howRail .howLit { fill: var(--color-neon); stroke: none; opacity: 0; animation: howLit 12s linear infinite; animation-delay: calc(var(--i) * 1.2s); }
+.howRail .howStepper { fill: var(--color-neon); stroke: none; animation: howStep 12s var(--ease-out-soft) infinite; }
+@keyframes howLit {
+  0% { opacity: 0; }
+  2% { opacity: .9; }
+  12% { opacity: .2; }
+  20%, 100% { opacity: 0; }
+}
+@keyframes howStep {
+  0% { transform: translateX(0); opacity: 0; }
+  2%, 6% { transform: translateX(0); opacity: 1; }
+  10%, 16% { transform: translateX(31px); }
+  20%, 26% { transform: translateX(62px); }
+  30%, 36% { transform: translateX(93px); }
+  40%, 46% { transform: translateX(124px); }
+  50%, 56% { transform: translateX(155px); }
+  60%, 66% { transform: translateX(186px); }
+  70%, 76% { transform: translateX(217px); }
+  80%, 86% { transform: translateX(248px); }
+  90%, 97% { transform: translateX(279px); opacity: 1; }
+  100% { transform: translateX(279px); opacity: 0; }
+}
+
+.history { scroll-margin-top: 6rem; min-width: 0; }
+
+/* ── Evidence + details ─────────────────────────────────────── */
+
+.evidence {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1.5rem 2rem;
+  padding: clamp(1.75rem, 3vw, 2.5rem);
+  border-radius: var(--radius-panel);
+  background: var(--color-surface-hover);
+}
+.evidence h2 { font-size: clamp(1.5rem, 2.4vw, 2rem); font-weight: 500; letter-spacing: -.035em; }
+.evidence p { margin-top: .5rem; font-size: .9375rem; color: var(--color-text-secondary); }
+.evidence > button { width: auto; }
+
+.details { display: grid; margin-top: calc(-1 * clamp(2rem, 6vw, 5rem)); }
+
+/* ── Responsive ─────────────────────────────────────────────── */
+
+@media (max-width: 1024px) {
+  .chainTile, .honestTile, .localTile, .keepTile { grid-column: span 6; }
+  .chainTile, .keepTile, .howTile { grid-column: 1 / -1; }
+  /* Full width here, so the fan and the text sit side by side. */
+  .keepTile .plate { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); align-items: center; align-content: center; column-gap: 2rem; }
+  .keepTile .plate > :not(.keepFan) { grid-column: 2; }
+  .keepFan { grid-column: 1; grid-row: 1 / span 2; margin-bottom: 0; }
+}
+
+@media (max-width: 760px) {
+  .hero { min-height: 0; }
+  .heroInner {
+    grid-template-columns: 1fr;
+    grid-template-rows: none;
+    grid-template-areas: "title" "copy" "cta" "art" "stats";
+  }
+  .heroCopy > .heroLede { grid-area: copy; padding-top: 1.25rem; }
+  .heroCopy > .heroCta { grid-area: cta; padding: 1.5rem 0 0; }
+  .heroRabbit { position: relative; right: auto; bottom: auto; grid-area: art; margin: 0 -12% -3rem; justify-self: center; width: min(32rem, 120%); }
+  .hero::after {
+    background: linear-gradient(180deg, color-mix(in oklch, var(--color-night) 70%, transparent) 0%, color-mix(in oklch, var(--color-night) 30%, transparent) 60%, color-mix(in oklch, var(--color-night) 90%, transparent) 100%);
+  }
+  .heroStats { grid-template-columns: 1fr; }
+  .heroStats > div { padding: .875rem 0; }
+  .heroStats > div + div { padding-left: 0; border-left: 0; border-top: 1px solid var(--color-night-line); }
+  .heroCta > button, .heroCta > .ctaRing, .ctaRing > [data-variant="accent"] { flex: 1 1 100%; }
+  .heroLink { padding-inline: 0; }
+  .keepTile .plate { grid-template-columns: 1fr; }
+  .keepTile .plate > :not(.keepFan) { grid-column: 1; }
+  .keepFan { grid-row: auto; margin-bottom: 1rem; }
+  .bento { grid-template-columns: 1fr; }
+  .howBand { grid-template-columns: minmax(0, 1fr) auto; }
+  .howBand .howRail { grid-column: 1 / -1; grid-row: 2; }
+  .chainTile, .honestTile, .localTile, .keepTile, .howTile { grid-column: 1; }
+  .chainTile .plate { min-height: 0; }
+  .evidence > button { width: 100%; }
+}
+
+/* ── Ambient flourishes ─────────────────────────────────────────
+ * Slow, looping and transform/opacity only. They pause when the grid
+ * leaves the viewport and stop under reduced motion (globals.css). */
+
+.bento[data-live="false"] :is(*, *::before, *::after) { animation-play-state: paused; }
+
+/* Chain: a packet travels each link, and the block it reaches flashes. */
+.chain li { --cycle: 4.8s; --step: .6s; }
+.chain li + li::after {
+  content: "";
+  position: absolute;
+  left: -1.5rem;
+  top: calc(50% - 2px);
+  width: 5px;
+  height: 5px;
+  border-radius: 1px;
+  background: var(--color-neon);
+  box-shadow: 0 0 .5rem var(--color-neon);
+  opacity: 0;
+  animation: packet var(--cycle) var(--ease-out-soft) infinite;
+  animation-delay: calc(var(--i, 0) * var(--step) - var(--step));
+}
+@keyframes packet {
+  0% { opacity: 0; transform: translateX(0); }
+  3% { opacity: 1; }
+  11% { opacity: 1; transform: translateX(calc(1.5rem - 5px)); }
+  14%, 100% { opacity: 0; transform: translateX(calc(1.5rem - 5px)); }
+}
+.chainPulse {
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  border: 1px solid var(--color-neon);
+  box-shadow: inset 0 0 1.25rem -.5rem var(--color-neon-a40);
+  opacity: 0;
+  pointer-events: none;
+  animation: blockFlash var(--cycle) ease-out infinite;
+  animation-delay: calc(var(--i, 0) * var(--step) - var(--step) + .5s);
+}
+@keyframes blockFlash {
+  0%, 100% { opacity: 0; }
+  4% { opacity: .9; }
+  18% { opacity: 0; }
+}
+/* The open slot keeps breathing: it is waiting for you. */
+.chain .chainNext[data-open="true"] .chainPulse {
+  animation: slotBreathe 2.4s ease-in-out infinite;
+  border-style: dashed;
+}
+@keyframes slotBreathe {
+  0%, 100% { opacity: .15; }
+  50% { opacity: .85; }
+}
+
+/* Honest locks: the other secrets leak one at a time (shackle springs open,
+ * lock fades), the honest one holds and pulses once, then everything resets. */
+.lockLeak .shackle { animation: unlatch 7s var(--ease-out-soft) infinite; animation-delay: calc(var(--i, 0) * .45s); }
+.lockLeak .lockBody, .lockLeak .keyhole { animation: leak 7s var(--ease-out-soft) infinite; animation-delay: calc(var(--i, 0) * .45s); }
+@keyframes unlatch {
+  0%, 10% { transform: none; }
+  16%, 78% { transform: translateY(-7px) rotate(-14deg); }
+  86%, 100% { transform: none; }
+}
+@keyframes leak {
+  0%, 10% { opacity: 1; }
+  16%, 78% { opacity: .28; }
+  86%, 100% { opacity: 1; }
+}
+.lockHonest { animation: hold 7s var(--ease-out-soft) infinite; }
+@keyframes hold {
+  0%, 40% { transform: none; }
+  48% { transform: scale(1.1); }
+  58%, 100% { transform: none; }
+}
+.lockHalo { fill: var(--color-neon-a40); opacity: 0; animation: halo 7s var(--ease-out-soft) infinite; }
+@keyframes halo {
+  0%, 38% { opacity: 0; }
+  48% { opacity: .9; }
+  66%, 100% { opacity: 0; }
+}
+
+
+/* Collectible fan: the cards spread when you hover the tile. */
+.keepFan img { transition: transform var(--duration-settle) var(--ease-out-soft); }
+.keepTile:hover .keepFan img:nth-child(1) { transform: translateX(-118%) translateY(1rem) rotate(-12deg) scale(.86); }
+.keepTile:hover .keepFan img:nth-child(3) { transform: translateX(18%) translateY(1rem) rotate(12deg) scale(.86); }
+.keepTile:hover .keepFan img:nth-child(2) { transform: translateX(-50%) translateY(-.375rem); }
+
+@media (prefers-reduced-motion: reduce) {
+  .ctaRing::before { animation: none; transform: rotate(.6turn); }
+}
+
+/* Focus rings: mint on night surfaces, accent on the light plates inside them. */
+.hero, .night, .howBand { --focus-ring: var(--color-neon); }
+.heroCta > section { --focus-ring: var(--color-accent); }
+.nowrap { white-space: nowrap; }

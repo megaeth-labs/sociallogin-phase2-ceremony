@@ -1,0 +1,20 @@
+{
+  "type": "moss.phase2.web-reproduction.v1",
+  "id": "dpl_2WDGA1eaqVSZv7v4Z7oxXYd7wkVJ",
+  "url": "https://zklogin-phase2-ceremony-d5ec0koae-mega-eth.vercel.app",
+  "sourceCommit": "54198dec8925d822f392c35e8f5181d865b55793",
+  "platform": "linux/amd64",
+  "nodeImage": "node@sha256:0e0ff40c39bc087845bfb27465a0df4ea419520094bc35842ff83dd8cbe6f9b6",
+  "buildRoot": "/vercel/path0",
+  "packageManager": "pnpm@10.29.2",
+  "buildArguments": {
+    "MOSS_WEB_BUILD_ID": "54198dec8925d822f392c35e8f5181d865b55793",
+    "NEXT_DEPLOYMENT_ID": "dpl_2WDGA1eaqVSZv7v4Z7oxXYd7wkVJ",
+    "NEXT_PUBLIC_BROWSER_CONTRIBUTIONS_ENABLED": "true",
+    "COORDINATOR_BASE_URL": "https://28ia0ofkx1.execute-api.us-east-2.amazonaws.com",
+    "ARTIFACT_ORIGINS": "https://d1lqbpxesw1yqu.cloudfront.net,https://moss-rehearsal-archive-qrgf2jkdbkhs.s3.us-east-2.amazonaws.com,https://moss-rehearsal-quarantine-8vamf6fhrlpf.s3.us-east-2.amazonaws.com"
+  },
+  "webReleaseSha256": "8d5c369096b8293d0fbd92cdf5a262d520b2454670180c84f0cde9ca6dad6be7",
+  "verifiedAssets": 60,
+  "dependencyInstall": "Frozen lockfile, offline using the previous independent build dependency cache; source extracted from a clean git archive."
+}

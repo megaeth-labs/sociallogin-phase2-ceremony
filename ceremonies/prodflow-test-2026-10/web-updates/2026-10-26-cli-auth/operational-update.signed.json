@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "keyId": "prodflow-test-root-2026-10",
+  "payload": {
+    "reason": "Fix CLI GitHub sign-in: the device-flow start request was rejected as a malformed poll. Also trims two verification caveats and points CLI setup at the sociallogin repository.",
+    "webRelease": {
+      "sha256": "5cd921e064f0960a04c1e37958ca7669447df1fcf78d2b83975d8f92b3a5c5e9",
+      "byteLength": 8701,
+      "urls": [
+        "https://d1xydbco3b83a0.cloudfront.net/inputs/sha256/5cd921e064f0960a04c1e37958ca7669447df1fcf78d2b83975d8f92b3a5c5e9/web-release.json?versionId=LfRrGhrCiq_aFFoDQbPOvxbJSFhLdhGb"
+      ],
+      "sourceCommit": "be2519c8f1b5075c842d0114fbdd32d40c5ef0d9"
+    },
+    "schemaVersion": 1,
+    "type": "moss.phase2.operational-update.v1",
+    "ceremonyId": "bd40e300-5034-4139-9576-ce162da9aca3",
+    "manifestSha256": "1d0372caa754d78da75d439bab0a84db53d6b3c349512d976e20c21d345d2a92",
+    "sequence": 1,
+    "previousUpdateSha256": null,
+    "authorizedAt": "2026-10-26T15:40:58.846Z"
+  },
+  "signature": "N2iCJYrGSXLNJt-DVzWs-8_YakqmsjULl7H_fqV400EvOS1hLz1HN7NEJf4S8nilfiEfDkuWxQILunupbkoiBA"
+}

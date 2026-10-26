@@ -1,0 +1,10 @@
+{
+  "checkedAt": "2026-10-08T21:49:00.795Z",
+  "result": "passed",
+  "origin": "https://zklogin-phase2-ceremony-mega-eth.vercel.app",
+  "checks": [
+    "three clearly separated readiness instructions",
+    "requested storage notes removed",
+    "mobile overflow and no runtime errors"
+  ]
+}

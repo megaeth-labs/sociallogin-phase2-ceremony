@@ -1,0 +1,155 @@
+/* Frosted-glass bunny. Colours derive from the night-moss tokens. */
+.layer {
+  --bunny-frost: var(--color-frost);
+  --bunny-mist: color-mix(in oklch, var(--color-frost) 82%, var(--color-night-muted));
+  --bunny-shade: color-mix(in oklch, var(--color-frost) 55%, var(--color-night-muted));
+  --bunny-deep: color-mix(in oklch, var(--color-night-muted) 70%, var(--color-night));
+  --bunny-ink: var(--color-night);
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.body,
+.shadow {
+  position: absolute;
+  left: 0;
+  top: 0;
+  transform-origin: 0 0;
+  will-change: transform;
+}
+
+.svg {
+  position: absolute;
+  left: -100px;
+  top: -190px;
+  overflow: visible;
+}
+
+/* A dark contact shadow over a faint neon pool: the glass catching the floor. */
+.shadow {
+  will-change: transform, opacity;
+}
+.shadow::before,
+.shadow::after {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+}
+.shadow::before {
+  width: 190px;
+  height: 46px;
+  left: 4px;
+  background: radial-gradient(closest-side, var(--color-neon-a20), transparent);
+}
+.shadow::after {
+  width: 118px;
+  height: 18px;
+  left: 2px;
+  background: radial-gradient(closest-side, color-mix(in oklch, var(--color-night) 85%, black), transparent);
+  opacity: 0.85;
+}
+
+.stopFrost { stop-color: var(--bunny-frost); }
+.stopMist { stop-color: var(--bunny-mist); }
+.stopShade { stop-color: var(--bunny-shade); }
+.stopDeep { stop-color: var(--bunny-deep); }
+.stopNeon { stop-color: var(--color-neon); }
+
+/* Backlit glass: a neon copy of each shape peeks above its top edge. */
+.rimLight {
+  fill: var(--color-neon);
+  opacity: 0.75;
+  transform: translate(0, -1.8px);
+}
+
+.sheenLine {
+  fill: none;
+  stroke: var(--bunny-frost);
+  stroke-width: 2.4;
+  stroke-linecap: round;
+  opacity: 0.95;
+}
+.crease {
+  fill: none;
+  stroke: var(--bunny-shade);
+  stroke-width: 1.4;
+  stroke-linecap: round;
+  opacity: 0.6;
+}
+.toe { fill: none; stroke: var(--bunny-shade); stroke-width: 1; stroke-linecap: round; }
+.muzzle { fill: var(--bunny-frost); opacity: 0.85; }
+.eyeRing { fill: none; stroke: var(--color-neon); stroke-opacity: 0.35; stroke-width: 1; }
+.eye { fill: var(--bunny-ink); }
+.glint { fill: var(--bunny-frost); }
+.nose { fill: var(--bunny-deep); }
+.mouth,
+.whisker {
+  fill: none;
+  stroke-linecap: round;
+}
+.mouth { stroke: var(--bunny-deep); stroke-width: 1.2; }
+.whisker { stroke: var(--bunny-frost); stroke-opacity: 0.45; stroke-width: 0.6; }
+
+/* Click burst: small mint squares, like bits leaving the cursor. */
+.bit,
+.mark {
+  position: absolute;
+  width: 7px;
+  height: 7px;
+  margin: -3.5px 0 0 -3.5px;
+  background: var(--color-neon);
+  box-shadow: 0 0 10px var(--color-neon-a40);
+  pointer-events: none;
+}
+.bit {
+  animation: bit 300ms var(--ease-out-soft) forwards;
+}
+@keyframes bit {
+  from { transform: translate(0, 0) rotate(0) scale(var(--s)); opacity: 1; }
+  to { transform: translate(var(--tx), var(--ty)) rotate(var(--r)) scale(0.4); opacity: 0; }
+}
+/* Reduced motion: one outlined square that fades in place. */
+.mark {
+  width: 14px;
+  height: 14px;
+  margin: -7px 0 0 -7px;
+  background: transparent;
+  outline: 2px solid var(--color-neon);
+  animation: mark 300ms ease-out forwards;
+}
+@keyframes mark {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+/* The global reduced-motion rule shortens every animation to 0.01ms, which
+ * would end this fade before it is seen. Show the mark statically instead;
+ * the script removes it after 420ms. */
+@media (prefers-reduced-motion: reduce) {
+  .mark { animation: none; }
+}
+
+/* Landing prints: two hind-foot ovals that fade after the bunny moves on. */
+.print {
+  position: absolute;
+  left: 0;
+  top: 0;
+  transform-origin: 0 0;
+  opacity: 0.4;
+  transition: opacity var(--duration-settle) ease-out;
+}
+.print::before,
+.print::after {
+  content: "";
+  position: absolute;
+  width: 22px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--color-neon-a40);
+}
+.print::before { left: -30px; top: -6px; }
+.print::after { left: -24px; top: 2px; }
+.printFade { opacity: 0; }

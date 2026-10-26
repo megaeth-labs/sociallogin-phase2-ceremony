@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "keyId": "moss-rehearsal-root-2026-09",
+  "payload": {
+    "reason": "Clarify contribution timing and tab instructions and simplify storage guidance. No contribution, beacon or acceptance policy changes.",
+    "webRelease": {
+      "sha256": "abb047e3a2d01b4b33cc4308cb5a6f5e15dd94ae5e95d54915260c387b2d2faa",
+      "byteLength": 7962,
+      "urls": [
+        "https://d1lqbpxesw1yqu.cloudfront.net/inputs/sha256/abb047e3a2d01b4b33cc4308cb5a6f5e15dd94ae5e95d54915260c387b2d2faa/web-release.json?versionId=eVSemGTJTEsRGa4h9WlNtBAcpMI7h4eB"
+      ],
+      "sourceCommit": "8f0ccbbd57b8946744d0a92e35d0c90afe036ed4"
+    },
+    "schemaVersion": 1,
+    "type": "moss.phase2.operational-update.v1",
+    "ceremonyId": "bf4e9f78-441b-4a24-96c1-b7990e77e150",
+    "manifestSha256": "b6fd9543e3ebacfb8fab7b43ccdbb3670d1e16552bf6a8b494c44efdc65a6289",
+    "sequence": 7,
+    "previousUpdateSha256": "b5f6b9df877c3703ddf7905ede380329e59e2d7256f1b1c9c8dadddd4bf434b1",
+    "authorizedAt": "2026-10-08T21:48:09.415Z"
+  },
+  "signature": "X4IZLZ966FyWQ60A_XOFtLs_U_2Ql6qUvcPwbLH-Tje5a9pIThHCgySFFq4rgUPohX1kCT1bR6Td560k06UaCg"
+}

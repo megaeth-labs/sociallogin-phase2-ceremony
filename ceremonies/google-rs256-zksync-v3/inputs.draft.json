@@ -1,0 +1,113 @@
+{
+  "_README": [
+    "Operating decisions the relation definition cannot make. Feed to",
+    "`pnpm build:manifest --definition <draft> --inputs <this> --out ceremony-manifest.json`.",
+    "Fields marked TODO are blocked on a decision, a second operator, a build, or storage.",
+    "The ceremonyId here is a UUID and is deliberately NOT the definition's ceremonyId,",
+    "which is a human-readable label; the protocol requires a UUID."
+  ],
+  "slug": "moss-google-rs256-zksync-v3",
+  "operationalPolicy": {
+    "_note": "Owner decisions (2026-10-23, 2026-10-25): the root key may authorize website releases, CLI releases and heartbeat grace changes (30-600 s) after opening, each as a signed, publicly listed operational update. A CLI release update adds a build; earlier builds stay authorized.",
+    "minHeartbeatGraceSeconds": 30,
+    "maxHeartbeatGraceSeconds": 600,
+    "allowWebReleaseUpdates": true,
+    "allowCliReleaseUpdates": true
+  },
+  "primaryPublication": {
+    "_note": "Owner decision (2026-10-23): no independent witness. Each accepted head's evidence bundle and coordinator-signed checkpoint go to this Object-Locked archive before the next lease.",
+    "archiveBaseUrl": "https://d1xydbco3b83a0.cloudfront.net"
+  },
+  "ceremonyId": "789a742d-af60-44d7-86b6-19182f666a80",
+  "schedule": {
+    "_TODO": "Decide. Everything downstream \u2014 the beacon block, the challenge window \u2014 hangs off these.",
+    "opensAt": "TODO",
+    "sealsAt": "TODO"
+  },
+  "beacon": {
+    "_note": "Production decision: exponent 10 uses 1,024 sequential hashes, without a meaningful proposer-grinding delay. Seal before the precommitted beacon block; soundness still requires an honest ordinary contributor. Existing signed rehearsal manifests retain exponent 32.",
+    "_TODO": "blockNumber: a mainnet block comfortably after sealsAt (~12s/block, so 7 days is ~50,400 blocks). expectedAt: its projected time.",
+    "source": "ethereum-block",
+    "chainId": 1,
+    "blockNumber": "TODO",
+    "expectedAt": "TODO",
+    "numIterationsExp": 10,
+    "contributionName": "final"
+  },
+  "genesisBellman": {
+    "_note": "Owner decision (2026-10-23): contributions use the Bellman format (bellman-transition-v1). This is the deterministic snarkjs 0.7.6 Bellman export of the pinned genesis zkey f23c5dad\u2026; the rehearsal used the same genesis and every verifier reproduces the export at startup.",
+    "sha256": "600950f4831a93c7907cca96c8e722c4d319401925c353f4ad2ed6aae82d173e",
+    "byteLength": 368440348,
+    "urls": [
+      "https://d1xydbco3b83a0.cloudfront.net/inputs/sha256/600950f4831a93c7907cca96c8e722c4d319401925c353f4ad2ed6aae82d173e/genesis.params?versionId=6XHF2OBn0LXLKfJWQM6A2q3jLbbW1C9I"
+    ]
+  },
+  "artifactUrls": {
+    "_note": "Mainnet archive (stack moss-phase2-mainnet), copied 2026-10-25 server side from the rehearsal archive and checked against the pinned hashes. The ptau entry is load-bearing: no public source exists, so this archive is the only way anyone verifies the ceremony from the root.",
+    "r1cs": [
+      "https://d1xydbco3b83a0.cloudfront.net/inputs/sha256/173eba6b9b7883bb8e761f69f902c334b14cea61a094eba7466f0f548d601692/circuit.r1cs?versionId=NSqeKG.vaZcg9QnQSp_OaJEcpcPDPRZw"
+    ],
+    "ptau": [
+      "https://d1xydbco3b83a0.cloudfront.net/inputs/sha256/032647abe127f4562f8118dd5f866ab595c1f2bbd03d0a85ff3739a4a967d9be/powersoftau.ptau?versionId=7loKBCkcC4D3OWLmrKdWClX1yU4bc8MH"
+    ],
+    "genesisZkey": [
+      "https://d1xydbco3b83a0.cloudfront.net/inputs/sha256/f23c5dadb27613ec3d819c3cb59060804a0dc506fb6d873ab6d3ca5f8357090d/genesis.zkey?versionId=n8WbeAChgauldwbbBZ3.C8c3PkpGl5Tm"
+    ]
+  },
+  "coordinatorKeys": [
+    {
+      "_TODO": "Generate: openssl genpkey -algorithm ed25519 -out secrets/coordinator-1.key && openssl pkey -in secrets/coordinator-1.key -pubout -out secrets/coordinator-1.pub. Exactly one per epoch, frozen before opening.",
+      "keyId": "coordinator-1",
+      "publicKeyFile": "../../secrets/coordinator-1.pub"
+    }
+  ],
+  "verifierKeys": [
+    {
+      "_note": "Owner decision (2026-10-22): one internal verifier operator, as in the rehearsal.",
+      "_TODO": "Generate the verifier key and record the digest of the image it will run.",
+      "keyId": "verifier-a",
+      "publicKeyFile": "TODO",
+      "verifierImageDigest": "TODO"
+    }
+  ],
+  "verifierPolicy": {
+    "verificationMethod": "bellman-transition-v1",
+    "requiredOperators": 1,
+    "passesPerOperator": 1
+  },
+  "contributionPolicy": {
+    "_note": "maximumContributions is derived from targetContributions; the validator requires them equal. Owner decision (2026-10-23): 100,000 is a ceiling that is not expected to bind, so the signed seal time ends contributions. maxArtifactByteLength leaves room for 100,000 contributions in either artifact format (zkey: 567,402,188 + 435 bytes each).",
+    "targetContributions": 100000,
+    "maxArtifactByteLength": 620000000,
+    "requirePinnedClientRelease": true,
+    "lease": {
+      "offerSeconds": 120,
+      "heartbeatSeconds": 300,
+      "absoluteSeconds": 5400
+    },
+    "verifierJobSeconds": 1800,
+    "verifierMaxAttempts": 3
+  },
+  "webRelease": {
+    "_note": "sha256/byteLength of web-release.json: a deterministic manifest of every asset the build serves, from `pnpm web:release --describe apps/ceremony/.next --out web-release.json` on the release commit. The browser cannot attest to its own code, so this is verified out of band: anyone runs `pnpm web:release --check <site> --manifest web-release.json`. The build is reproducible (build ID pinned to the commit) and pages carry SRI.",
+    "_TODO": "Blocked on building the release commit, publishing web-release.json at an immutable URL, and a pushed sourceCommit.",
+    "sha256": "TODO",
+    "byteLength": 0,
+    "urls": [
+      "TODO"
+    ],
+    "sourceCommit": "TODO"
+  },
+  "cliReleases": [
+    {
+      "_note": "Owner decision (2026-10-24): the CLI contributes in this Bellman ceremony. sha256/byteLength are of packages/cli/dist/index.js, the file the CLI hashes at run time (packages/cli/src/release.ts), built with `pnpm --filter @moss/phase2-ceremony-cli build`; this value is from the commit that pins the contribution worker and is a placeholder until the release commit. Signed operational updates can authorize later CLI builds (operationalPolicy.allowCliReleaseUpdates), so a CLI fix after signing goes out as an update.",
+      "_TODO": "Rebuild on the release commit, recompute sha256 and byteLength, set sourceCommit to that commit, and publish the same bytes at an immutable URL.",
+      "sha256": "62bcd42a3e9a28e8e0d1adcfba3000710c758d7b2eb961f2a8520abaf53722da",
+      "byteLength": 261681,
+      "urls": [
+        "TODO"
+      ],
+      "sourceCommit": "TODO"
+    }
+  ]
+}

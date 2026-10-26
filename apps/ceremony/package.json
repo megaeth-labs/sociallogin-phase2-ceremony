@@ -1,0 +1,38 @@
+{
+  "name": "@moss/phase2-ceremony-web",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "start": "next start",
+    "test": "vitest run --passWithNoTests",
+    "test:wallet-ui": "node scripts/check-wallet-ui.cjs",
+    "generate:badge-art": "tsx scripts/generate-badge-art.ts"
+  },
+  "dependencies": {
+    "@megaeth-labs/wallet-sdk": "1.0.7",
+    "@moss/phase2-protocol": "workspace:*",
+    "@tanstack/react-query": "5.91.0",
+    "@upstash/redis": "1.36.2",
+    "@wonderland/cabure-crypto": "workspace:*",
+    "next": "15.5.24",
+    "next-auth": "4.24.15",
+    "react": "19.2.4",
+    "react-dom": "19.2.4",
+    "viem": "2.57.1"
+  },
+  "devDependencies": {
+    "@testing-library/react": "16.3.0",
+    "@types/node": "22.19.11",
+    "@types/react": "19.2.14",
+    "@types/react-dom": "19.2.3",
+    "jsdom": "28.1.0",
+    "playwright-core": "1.59.1",
+    "postcss": "8.5.25",
+    "tsx": "4.21.0",
+    "typescript": "5.9.3",
+    "vitest": "4.1.2"
+  }
+}

@@ -1,0 +1,191 @@
+{
+  "recursiveIncludeClosureSha256": "53268998b4edd328bc5b8e205760a95f9a601c012f4ace741418a3bc0bdf2ac0",
+  "fileCount": 46,
+  "scheme": "sha256 over sorted `<label> LF <sha256(file bytes)> LF`",
+  "files": [
+    {
+      "label": "@zk-email/circuits/helpers/reveal-substring.circom",
+      "sha256": "dcb82a73cd15af0564d88ffb4375ac4b2e8079270c82382ced6bd9e4cae4ad42"
+    },
+    {
+      "label": "@zk-email/circuits/lib/base64.circom",
+      "sha256": "d20fad92ca89cda592d7842e51676e0198b80e1f18233f1c90878601c33fb67b"
+    },
+    {
+      "label": "@zk-email/circuits/lib/bigint-func.circom",
+      "sha256": "9e5fc81fc3ac71decb351be2d7ad916ba1d18a26bbc99376a5c3520da4cbe650"
+    },
+    {
+      "label": "@zk-email/circuits/lib/bigint.circom",
+      "sha256": "f3480aa71acf5b357a12e20c3552afdf60e0f565541df61b53833de385ea5a3f"
+    },
+    {
+      "label": "@zk-email/circuits/lib/fp.circom",
+      "sha256": "bddda78279fa60dd1ef6e9cc53b3e62724655c2cdab1f6c4f6ab725b8320d44f"
+    },
+    {
+      "label": "@zk-email/circuits/lib/rsa.circom",
+      "sha256": "ed5d2d9cc71749caa404951f75ff46eed098c459479e15f9061f7bad186c2ce0"
+    },
+    {
+      "label": "@zk-email/circuits/lib/sha.circom",
+      "sha256": "000da852836bbe5f31399b224140a73ab41dce7fdb3fb2cb89fb313e548a0c41"
+    },
+    {
+      "label": "@zk-email/circuits/utils/array.circom",
+      "sha256": "cd39adc48cc5bdd13f78bc9c57703b1093b27c9588a47cf1de6caa42eb379be8"
+    },
+    {
+      "label": "@zk-email/circuits/utils/bytes.circom",
+      "sha256": "69937e673c5a66dd01c1fff4c75d64f38a41a04716ff6012dd9252653d47dfee"
+    },
+    {
+      "label": "@zk-email/circuits/utils/constants.circom",
+      "sha256": "f7fbda4a2c1432bb78a36741e255fc3a91cb8947e3fd3c022e8602787167ee5b"
+    },
+    {
+      "label": "@zk-email/circuits/utils/functions.circom",
+      "sha256": "49c60b0a66bced4d5e40e3d20e762a7117a0d41fcacf5ff318c6d70b62ef946e"
+    },
+    {
+      "label": "@zk-email/circuits/utils/hash.circom",
+      "sha256": "a58b10a9c90fe9f624063c4a306d95d207f8389ae40f4663d299a926ba5249a0"
+    },
+    {
+      "label": "circomlib/circuits/aliascheck.circom",
+      "sha256": "7df7542461a68c1564a55be8f01d75571c0e2555a08a078abeba43e1ea032eb4"
+    },
+    {
+      "label": "circomlib/circuits/binsum.circom",
+      "sha256": "8aa153baf5791d96d06dce837c1e19b9ecc3a7dc65054132d5dd189b60bfcfc2"
+    },
+    {
+      "label": "circomlib/circuits/bitify.circom",
+      "sha256": "688f121303a2dd0154ceeda8d2f53a9d2d26789d10a69a46acd534642725683e"
+    },
+    {
+      "label": "circomlib/circuits/comparators.circom",
+      "sha256": "fd0c7723ee56e1467df1861131157cbb108e156fe2d9ec64895c8e68de14db20"
+    },
+    {
+      "label": "circomlib/circuits/compconstant.circom",
+      "sha256": "94c5cc93b589a940acbfecdb98babc2efc253ad4298814399fb41109faa3b50d"
+    },
+    {
+      "label": "circomlib/circuits/gates.circom",
+      "sha256": "890e2514ddcbce77e0a5f6867749401fc182664a4b901d6d7bf6856197e0d87c"
+    },
+    {
+      "label": "circomlib/circuits/poseidon.circom",
+      "sha256": "2582464669b69827164bd08ee0337997e1957f2ab4f00cdd86d533ca5e9d9234"
+    },
+    {
+      "label": "circomlib/circuits/poseidon_constants.circom",
+      "sha256": "94c9e4b5ea891ab4d1ba626f1d719f8c661014d9b628f6096c803f75f39e3eee"
+    },
+    {
+      "label": "circomlib/circuits/sha256/ch.circom",
+      "sha256": "facb33f8ed5dfcd3590eaaf8921c37c27839564d61d565597de1412b78e42cf8"
+    },
+    {
+      "label": "circomlib/circuits/sha256/constants.circom",
+      "sha256": "90f910027d360162896b81a4a1654fae16b74d90d43521d172f72c6deb52104e"
+    },
+    {
+      "label": "circomlib/circuits/sha256/maj.circom",
+      "sha256": "64f2483ac7db29099bc5d241f5870dec0b5172599d40c56084565ebd589247ff"
+    },
+    {
+      "label": "circomlib/circuits/sha256/rotate.circom",
+      "sha256": "a20bc425cd4b516696c374da461b2f1c046b5782c18741ecea4a0a45e29ba7ab"
+    },
+    {
+      "label": "circomlib/circuits/sha256/sha256compression.circom",
+      "sha256": "aec6674cee5d0b775d7b27279a98b7fbabf5258885d56e01dec9a4a356dbc69c"
+    },
+    {
+      "label": "circomlib/circuits/sha256/sha256compression_function.circom",
+      "sha256": "1418439e9609ff086f6cce56341eb3add999c875bd48e2dc9f84a252781bc9e5"
+    },
+    {
+      "label": "circomlib/circuits/sha256/shift.circom",
+      "sha256": "874990de968719b50e7f0d6e713926f016c53f3f1ce33ee354b5b1984f2aa4de"
+    },
+    {
+      "label": "circomlib/circuits/sha256/sigma.circom",
+      "sha256": "0af88a750958ecabbb6e4c17b3d5d4f8efdd8841b98a1e5186ba1092a74d2024"
+    },
+    {
+      "label": "circomlib/circuits/sha256/sigmaplus.circom",
+      "sha256": "43d34fce0160ac9fa8d03425f2349bf8a29dd0448226774a8030f853642c9760"
+    },
+    {
+      "label": "circomlib/circuits/sha256/t1.circom",
+      "sha256": "0488b16db02b2dd43429d964096aedf261c31ab6a2484a67b91bf3ccfc6bf38b"
+    },
+    {
+      "label": "circomlib/circuits/sha256/t2.circom",
+      "sha256": "58c7e16ae5144ad72a900e1d470eb7d9d317f2a033f1ea85090e56548fa5d431"
+    },
+    {
+      "label": "circomlib/circuits/sha256/xor3.circom",
+      "sha256": "d2d65d9ef40a37c1b46e4fae0dd1e7f9084ab917c870153dbb6303c6e4e378f1"
+    },
+    {
+      "label": "circomlib/circuits/sign.circom",
+      "sha256": "172255ff7d11d48958d9836f88bb40792009b94be19ba94ed01982a12c276dfb"
+    },
+    {
+      "label": "circuit/jwt-tx-validation.circom",
+      "sha256": "3b277ce02a15b88ae5fca1994b5290dcaa7a09cd120d86706e287c45816e587f"
+    },
+    {
+      "label": "circuit/utils/array.circom",
+      "sha256": "c23935cd842c4915148f5717171752b3ffb664a5b36cbbc1a51e510c8442b828"
+    },
+    {
+      "label": "circuit/utils/assert-fits-binary.circom",
+      "sha256": "43d7a905809aada198e1c7ab932197e80f214472a064ef048a7d269641896ab8"
+    },
+    {
+      "label": "circuit/utils/base64url-to-base64.circom",
+      "sha256": "ccc8b4c152674cc294af5793c97b84778ef6e98051116ef82c369f356b565cc7"
+    },
+    {
+      "label": "circuit/utils/bytes-to-field.circom",
+      "sha256": "8042549ebfd9e86f30c925eef0495ab7765f0ea06cf927736cbcbfc9aa9901aa"
+    },
+    {
+      "label": "circuit/utils/bytes.circom",
+      "sha256": "3344e658b2d36260cd305979a64dad9c3d28ed417febabe3890aa2440045fbfa"
+    },
+    {
+      "label": "circuit/utils/constants.circom",
+      "sha256": "841d7b011981f424f82224bfcc943540f1d9c195ca4d10d4f5fe9af7a143f307"
+    },
+    {
+      "label": "circuit/utils/fields.circom",
+      "sha256": "0900fc1ddf28f247effe14397aacdae6a8f9a8140ef6cf8e9065800fa0c071d9"
+    },
+    {
+      "label": "circuit/utils/jwt-data.circom",
+      "sha256": "d99f6132ffda618df1d064023f6b0cc9d0c7e816f9367466c4be15e125aed71c"
+    },
+    {
+      "label": "circuit/utils/jwt-verify.circom",
+      "sha256": "fa6c24656806d725c48bca272a969581cd881ae1347b8b2332afd4a630a2f52d"
+    },
+    {
+      "label": "circuit/utils/replace-all.circom",
+      "sha256": "b73bf5518ff238ea17babcb96f3d473fdeb20d24fa62cc74bf3f7ec599507bbb"
+    },
+    {
+      "label": "circuit/utils/verify-nonce.circom",
+      "sha256": "2056decc579f8e71f21dc0564665ed2e81fcafe95c3e8780b680ce508dc5b423"
+    },
+    {
+      "label": "circuit/utils/verify-oidc-digest.circom",
+      "sha256": "4095600f3e768c80c68e547103a91360a18f0005da29aea65ed14881c369442a"
+    }
+  ]
+}

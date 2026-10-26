@@ -1,0 +1,153 @@
+/* Collectible gallery: the bunny card system on one night panel. A featured
+ * card with its traits, thumbnail sets beneath, then the trait odds. */
+
+.gallery {
+  max-width: 76rem;
+  margin: 1.5rem auto 0;
+  padding: clamp(1.5rem, 4vw, 3.5rem);
+  border-radius: var(--radius-panel);
+  background: var(--color-night);
+  color: var(--color-night-text);
+  font-family: var(--font-body), sans-serif;
+}
+@media (max-width: 1260px) {
+  .gallery { margin-inline: 1rem; }
+}
+.gallery :is(button):focus-visible {
+  outline: 2px solid var(--color-neon);
+  outline-offset: 3px;
+}
+.gallery h1,
+.gallery h2,
+.gallery h3 {
+  margin: 0;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+}
+
+.intro { max-width: 40rem; }
+.intro h1 { font-size: clamp(2rem, 4.5vw, 3.25rem); line-height: 1.05; }
+.intro p { margin: 1rem 0 0; color: var(--color-night-muted); line-height: 1.55; }
+
+/* ── Featured card ─────────────────────────────────────────────── */
+
+.feature {
+  display: grid;
+  grid-template-columns: minmax(0, 22rem) minmax(0, 1fr);
+  gap: clamp(1.5rem, 4vw, 3rem);
+  align-items: center;
+  margin-top: clamp(2rem, 5vw, 3rem);
+  scroll-margin-top: 6rem; /* clears the sticky header */
+}
+.featureCopy { min-width: 0; }
+.featureCopy h2 { font-size: clamp(1.5rem, 3vw, 2rem); }
+.eyebrow {
+  margin: 0 0 .5rem;
+  font-size: .8125rem;
+  color: var(--color-neon);
+}
+.hash {
+  margin: .5rem 0 0;
+  font-size: .8125rem;
+  color: var(--color-night-muted);
+}
+.hash code {
+  margin-left: .375rem;
+  font-family: var(--font-mono);
+  color: var(--color-night-text);
+}
+
+/* ── Thumbnail sets ────────────────────────────────────────────── */
+
+.set {
+  margin-top: clamp(2.5rem, 6vw, 4rem);
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--color-night-line);
+}
+.setHead {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: .25rem 1rem;
+  margin-bottom: 1.25rem;
+}
+.setHead h2 { font-size: 1.25rem; }
+.setHead p { flex: 1 1 18rem; margin: 0; font-size: .875rem; color: var(--color-night-muted); }
+.set > p { margin: 0; color: var(--color-night-muted); }
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(7.5rem, 1fr));
+  gap: .75rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.thumb {
+  display: block;
+  width: 100%;
+  padding: .25rem;
+  border: 0;
+  border-radius: 1.125rem;
+  background: color-mix(in oklch, var(--color-night-text) 6%, transparent);
+  box-shadow: inset 0 0 0 1px var(--color-night-line);
+  cursor: pointer;
+  transition: transform var(--duration-quick) ease-out, opacity var(--duration-quick) ease-out;
+}
+.thumb img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: .875rem;
+}
+.thumb:hover { transform: translateY(-2px); }
+.thumb[aria-pressed="true"] { box-shadow: inset 0 0 0 2px var(--color-neon); }
+
+.shuffle {
+  min-height: 44px;
+  padding: .625rem 1.125rem;
+  border: 1px solid var(--color-night-line);
+  border-radius: var(--radius-control);
+  background: transparent;
+  color: var(--color-night-text);
+  font: inherit;
+  font-size: .875rem;
+  cursor: pointer;
+}
+.shuffle:hover { border-color: var(--color-neon); color: var(--color-neon); }
+
+/* ── Trait odds ────────────────────────────────────────────────── */
+
+.odds {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(13rem, 1fr));
+  gap: 1.75rem 2rem;
+}
+.odds h3 { font-size: .875rem; color: var(--color-night-muted); }
+.odds ul { margin: .5rem 0 0; padding: 0; list-style: none; }
+.odds li {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: .3125rem 0;
+  border-bottom: 1px solid var(--color-night-line);
+  font-size: .875rem;
+}
+.odds li span:last-child {
+  font-family: var(--font-mono);
+  font-size: .8125rem;
+  color: var(--color-night-muted);
+}
+
+@media (max-width: 720px) {
+  .feature { grid-template-columns: minmax(0, 1fr); }
+  .feature > :first-child { max-width: 22rem; }
+  .grid { grid-template-columns: repeat(auto-fill, minmax(5.5rem, 1fr)); gap: .5rem; }
+}
+@media (max-width: 480px) {
+  .gallery :global(dl) { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .thumb { transition: none; }
+  .thumb:hover { transform: none; }
+}

@@ -1,0 +1,102 @@
+{
+  "$schema": "./definition.schema.json",
+  "schemaVersion": 1,
+  "status": "draft",
+  "ceremonyId": "moss-google-rs256-zksync-v3-phase2-1",
+  "relation": {
+    "profile": "google-rs256-zksync-v3",
+    "relationId": "google-rs256-zksync-v3-groth16-bn254-2",
+    "verifierVersion": 4,
+    "proofSystem": "groth16",
+    "curve": "bn254",
+    "publicInputCount": 20,
+    "mossSource": {
+      "repository": "https://github.com/mega-dmitriy/moss-zk",
+      "integrationCommit": "b6dbfd1eb07281adac61ab25d1c09c4934d1bc80",
+      "artifactManifestCircuitCommit": "49714064a0ba"
+    },
+    "circuitSource": {
+      "upstreamRepository": "https://github.com/Moonsong-Labs/zksync-social-login-circuit",
+      "upstreamCommit": "5461ae81208d7e9d6331865b4a8c841546134018",
+      "vendoredFilesSha256": "e019eb42112d2b9295ce06f2bf1c4b7993cc1b9664299a50f29a5aed6ab13ddf",
+      "recursiveIncludeClosureSha256": "53268998b4edd328bc5b8e205760a95f9a601c012f4ace741418a3bc0bdf2ac0",
+      "circomVersion": "2.2.3",
+      "circomOptimization": "O2",
+      "circomBinarySha256": "85342c7ff332d948df7c0c50ecf201e6129349aef550ce873f3c811b79fe53a3",
+      "circomBinaryRelease": {
+        "platform": "linux-amd64",
+        "fileName": "circom-linux-amd64",
+        "tag": "v2.2.3",
+        "sourceCommit": "ad44e915a12bb047b05745c2884aad9cc8326bc6",
+        "githubAssetId": 309324748,
+        "byteLength": 13145432,
+        "url": "https://github.com/iden3/circom/releases/download/v2.2.3/circom-linux-amd64"
+      },
+      "circomBinaryRole": "optional-reproduction-compiler",
+      "circomBinaryReproductionVerified": false,
+      "dependencies": {
+        "@zk-email/circuits": "6.3.2",
+        "circomlib": "2.0.5"
+      },
+      "includeClosureFileCount": 46
+    },
+    "snarkjsVersion": "0.7.6",
+    "r1cs": {
+      "sha256": "173eba6b9b7883bb8e761f69f902c334b14cea61a094eba7466f0f548d601692",
+      "byteLength": 232099260,
+      "constraints": 960780,
+      "wires": 941659,
+      "domainSize": 1048576,
+      "supersededO1Sha256": "740d3ade2a617f238aec82f18874f0b26d0e9f91c66f568f1c1f2766b25ff48d",
+      "urls": []
+    },
+    "ptau": {
+      "fileName": "powersOfTau28_hez_final_24.ptau",
+      "byteLength": 19327435928,
+      "sha256": "032647abe127f4562f8118dd5f866ab595c1f2bbd03d0a85ff3739a4a967d9be",
+      "blake2b512": "fa404d140d5819d39984833ca5ec3632cd4995f81e82db402371a4de7c2eae8687c62bc632a95b0c6aadba3fb02680a94e09174b7233ccd26d78baca2647c733",
+      "urls": [],
+      "note": "The canonical hosts storage.googleapis.com/zkevm/ptau and hermez.s3-eu-west-1.amazonaws.com both returned 403 AccessDenied on 2026-09-18 for the whole prepared-Phase-2 series; tracked upstream at iden3/snarkjs#636. The BLAKE2b-512 above is the reference value published in the snarkjs README, so any recovered copy can be validated independently. A self-hosted immutable mirror is required before opening."
+    },
+    "genesisZkey": {
+      "sha256": "f23c5dadb27613ec3d819c3cb59060804a0dc506fb6d873ab6d3ca5f8357090d",
+      "byteLength": 567402188,
+      "urls": []
+    }
+  },
+  "policy": {
+    "targetContributions": 100000,
+    "schedule": {
+      "opensAt": null,
+      "sealsAt": null,
+      "challengeEndsAt": null
+    },
+    "lease": {
+      "offerSeconds": 120,
+      "heartbeatSeconds": 300,
+      "suspectAfterSeconds": 90,
+      "absoluteSeconds": 5400
+    },
+    "verification": {
+      "requiredIndependentOperators": 1,
+      "passesPerOperator": 1,
+      "requireUnanimity": true
+    },
+    "beacon": null,
+    "coordinatorPublicKeys": [],
+    "verifierPublicKeys": [],
+    "webRelease": null,
+    "cliReleases": []
+  },
+  "launchBlockers": [
+    "Bind the recorded O2 compilation profile into the signed manifest; no Linux rebuild is required",
+    "immutable self-hosted URLs for the R1CS, PTAU, genesis zkey, and Bellman genesis",
+    "coordinator and verifier public keys",
+    "reproducible web and signed CLI release hashes",
+    "opening, sealing, and challenge-window schedule",
+    "precommitted future beacon source and derivation",
+    "versioned Object-Locked storage adapter with conditional crash-idempotent promotion",
+    "Object-Locked archive origin for primaryPublication (coordinator-signed checkpoints; no independent witness by owner decision)",
+    "production-zkey browser and CLI hardware benchmark matrix"
+  ]
+}

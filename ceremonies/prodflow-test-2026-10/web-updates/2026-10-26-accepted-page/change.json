@@ -1,0 +1,9 @@
+{
+  "reason": "Accepted-page fixes found during this test: open the accepted page on acceptance, hide the collectible everywhere, clearer receipt row. Also makes the web build reproducible.",
+  "webRelease": {
+    "sha256": "4e132434d8d16fd14ff60fd3493eac3e4080499faf465f43a5bb0acf90f32971",
+    "byteLength": 8701,
+    "urls": ["https://d1xydbco3b83a0.cloudfront.net/inputs/sha256/4e132434d8d16fd14ff60fd3493eac3e4080499faf465f43a5bb0acf90f32971/web-release.json?versionId=zJ2CK0VqAIe3BFh4kFOz.YJp9Y5Gp3e7"],
+    "sourceCommit": "c6a24f5888d540767335d9b65090809077e5691f"
+  }
+}

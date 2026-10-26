@@ -1,0 +1,11 @@
+{
+  "reason": "Remove the homepage schedule and beacon details section, which only repeated the closing time.",
+  "webRelease": {
+    "sha256": "a11ea4a053f891858e2096ffc67a6d85c854b38c055b6b5b0b195ba9c9c700ee",
+    "byteLength": 8701,
+    "urls": [
+      "https://d1xydbco3b83a0.cloudfront.net/inputs/sha256/a11ea4a053f891858e2096ffc67a6d85c854b38c055b6b5b0b195ba9c9c700ee/web-release.json?versionId=mvEUSke1dkMh0MiDesctNiIhlwYrsZoZ"
+    ],
+    "sourceCommit": "9bd039d5a3ab8452c237b2ece0ee6e8d1bd008ea"
+  }
+}

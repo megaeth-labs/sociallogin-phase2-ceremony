@@ -1,0 +1,15 @@
+# Harness for the exported snarkjs Groth16 verifier. The proof-test tool copies
+# this project, adds src/Verifier.sol and fixture/fixture.json, and runs
+# `forge test --offline` in the copy. Nothing here deploys to a network.
+[profile.default]
+src = "src"
+test = "test"
+out = "out"
+libs = []
+solc_version = "0.8.28"
+auto_detect_solc = false
+offline = true
+evm_version = "cancun"
+optimizer = true
+optimizer_runs = 200
+fs_permissions = [{ access = "read", path = "./fixture" }]

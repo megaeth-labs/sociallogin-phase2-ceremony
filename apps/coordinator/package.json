@@ -1,0 +1,26 @@
+{
+  "name": "@moss/phase2-coordinator",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "main": "./dist/index.js",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "test": "vitest run",
+    "start": "node dist/server.js",
+    "clean": "rm -rf dist"
+  },
+  "dependencies": {
+    "@moss/phase2-db": "workspace:*",
+    "@moss/phase2-protocol": "workspace:*",
+    "@moss/phase2-storage": "workspace:*",
+    "fastify": "5.12.1",
+    "pg": "8.16.3"
+  },
+  "devDependencies": {
+    "@types/node": "22.19.11",
+    "@types/pg": "8.15.6",
+    "typescript": "5.9.3",
+    "vitest": "4.1.2"
+  }
+}

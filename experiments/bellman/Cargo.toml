@@ -1,0 +1,8 @@
+[package]
+name = "moss-bellman-prototype"
+version = "0.0.0"
+edition = "2021"
+publish = false
+
+[dependencies]
+phase2 = { git = "https://github.com/MystenLabs/phase2-bn254", rev = "f10c8a41ae019fb68c66fae0276159900b3a128c" }

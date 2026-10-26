@@ -1,0 +1,38 @@
+node_modules/
+dist/
+*.tsbuildinfo
+.env
+.env.*
+!.env.example
+!**/.env.example
+coverage/
+.next/
+.next-dev/
+.turbo/
+
+# Ceremony artifacts are public after deliberate release, never by accident.
+circuits/
+artifacts/
+quarantine/
+transcripts/private/
+*.r1cs
+*.ptau
+*.zkey
+*.params
+*.wtns
+
+# Local service state and credentials.
+data/
+secrets/
+*.pem
+*.key
+
+# pnpm is the single package manager; never track stray npm/yarn locks
+package-lock.json
+yarn.lock
+
+# Keep template fixtures visible for create-cabure-ceremony
+!packages/create-cabure-ceremony/templates/
+!packages/create-cabure-ceremony/templates/**
+# ...but never the local TypeScript build cache the wildcard above re-included
+packages/create-cabure-ceremony/templates/**/*.tsbuildinfo

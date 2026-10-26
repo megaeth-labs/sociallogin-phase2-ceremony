@@ -1,0 +1,15 @@
+{
+  "checkedAt": "2026-10-08T20:42:48.398Z",
+  "result": "passed",
+  "origin": "https://zklogin-phase2-ceremony-mega-eth.vercel.app",
+  "sourceCommit": "d8c01b7059d6ecb10d426b2b6de0b5eff844ad87",
+  "checks": [
+    "finalized homepage loads",
+    "verification guide reached from homepage",
+    "checkout uses authorized source commit",
+    "receipt and artifact downloads explained",
+    "genesis link available for contribution one",
+    "no full-audit option or commit placeholder",
+    "mobile overflow and no runtime errors"
+  ]
+}

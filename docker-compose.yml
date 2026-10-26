@@ -1,0 +1,308 @@
+name: moss-phase2-local
+
+x-node-security: &node-security
+  init: true
+  read_only: true
+  cap_drop:
+    - ALL
+  security_opt:
+    - no-new-privileges:true
+  restart: unless-stopped
+
+x-local-postgres: &local-postgres
+  POSTGRES_DB: ${MOSS_LOCAL_POSTGRES_DB:-moss_phase2}
+  POSTGRES_USER: ${MOSS_LOCAL_POSTGRES_ADMIN_USER:-moss_phase2_admin}
+  POSTGRES_PASSWORD: ${MOSS_LOCAL_POSTGRES_ADMIN_PASSWORD:-local-dev-only-postgres-admin}
+
+x-local-minio: &local-minio
+  MINIO_ROOT_USER: ${MOSS_LOCAL_MINIO_ROOT_USER:-moss-local-minio-admin}
+  MINIO_ROOT_PASSWORD: ${MOSS_LOCAL_MINIO_ROOT_PASSWORD:-local-dev-only-minio-admin}
+
+services:
+  postgres:
+    image: postgres:17-bookworm
+    environment:
+      <<: *local-postgres
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - database
+      - local-admin
+    ports:
+      - 127.0.0.1:${MOSS_LOCAL_POSTGRES_PORT:-55432}:5432
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U \"$${POSTGRES_USER}\" -d \"$${POSTGRES_DB}\""]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+      start_period: 10s
+    security_opt:
+      - no-new-privileges:true
+    restart: unless-stopped
+
+  postgres-role-init:
+    image: postgres:17-bookworm
+    environment:
+      PGHOST: postgres
+      PGPORT: 5432
+      POSTGRES_DB: ${MOSS_LOCAL_POSTGRES_DB:-moss_phase2}
+      POSTGRES_USER: ${MOSS_LOCAL_POSTGRES_ADMIN_USER:-moss_phase2_admin}
+      PGPASSWORD: ${MOSS_LOCAL_POSTGRES_ADMIN_PASSWORD:-local-dev-only-postgres-admin}
+      MOSS_COORDINATOR_DB_USER: ${MOSS_LOCAL_COORDINATOR_DB_USER:-moss_phase2_coordinator}
+      MOSS_COORDINATOR_DB_PASSWORD: ${MOSS_LOCAL_COORDINATOR_DB_PASSWORD:-local-dev-only-postgres-coordinator}
+    command: ["sh", "/infra/init-roles.sh"]
+    volumes:
+      - ./infra/postgres/init-roles.sh:/infra/init-roles.sh:ro
+    networks:
+      - database
+    depends_on:
+      postgres:
+        condition: service_healthy
+    read_only: true
+    tmpfs:
+      - /tmp:rw,noexec,nosuid,nodev,size=16m
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    restart: "no"
+
+  postgres-migrate:
+    image: postgres:17-bookworm
+    environment:
+      PGHOST: postgres
+      PGPORT: 5432
+      PGDATABASE: ${MOSS_LOCAL_POSTGRES_DB:-moss_phase2}
+      PGUSER: ${MOSS_LOCAL_POSTGRES_ADMIN_USER:-moss_phase2_admin}
+      PGPASSWORD: ${MOSS_LOCAL_POSTGRES_ADMIN_PASSWORD:-local-dev-only-postgres-admin}
+    command: ["sh", "/infra/run-migrations.sh"]
+    volumes:
+      - ./infra/postgres/run-migrations.sh:/infra/run-migrations.sh:ro
+      - ./packages/db/migrations:/migrations:ro
+    networks:
+      - database
+    depends_on:
+      postgres-role-init:
+        condition: service_completed_successfully
+    read_only: true
+    tmpfs:
+      - /tmp:rw,noexec,nosuid,nodev,size=16m
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    restart: "no"
+
+  minio:
+    # Optional emulator only. The concrete coordinator deliberately has no S3
+    # runtime adapter yet and never reads from this service.
+    profiles: ["s3-emulator"]
+    image: minio/minio:RELEASE.2025-04-22T22-12-26Z
+    command: ["server", "/data", "--console-address", ":9001"]
+    environment:
+      <<: *local-minio
+      MINIO_BROWSER_REDIRECT_URL: http://127.0.0.1:${MOSS_LOCAL_MINIO_CONSOLE_PORT:-59001}
+    volumes:
+      - minio_data:/data
+    networks:
+      - object-storage
+      - local-admin
+    ports:
+      - 127.0.0.1:${MOSS_LOCAL_MINIO_API_PORT:-59000}:9000
+      - 127.0.0.1:${MOSS_LOCAL_MINIO_CONSOLE_PORT:-59001}:9001
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://127.0.0.1:9000/minio/health/ready"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+      start_period: 10s
+    security_opt:
+      - no-new-privileges:true
+    restart: unless-stopped
+
+  minio-bootstrap:
+    profiles: ["s3-emulator"]
+    image: minio/mc:RELEASE.2025-04-16T18-13-26Z
+    environment:
+      <<: *local-minio
+      MINIO_COORDINATOR_ACCESS_KEY: ${MOSS_LOCAL_MINIO_COORDINATOR_ACCESS_KEY:-moss-local-coordinator}
+      MINIO_COORDINATOR_SECRET_KEY: ${MOSS_LOCAL_MINIO_COORDINATOR_SECRET_KEY:-local-dev-only-minio-coordinator}
+      MINIO_VERIFIER_ACCESS_KEY: ${MOSS_LOCAL_MINIO_VERIFIER_ACCESS_KEY:-moss-local-verifier}
+      MINIO_VERIFIER_SECRET_KEY: ${MOSS_LOCAL_MINIO_VERIFIER_SECRET_KEY:-local-dev-only-minio-verifier}
+    entrypoint: ["sh", "/infra/bootstrap.sh"]
+    volumes:
+      - ./infra/minio/bootstrap.sh:/infra/bootstrap.sh:ro
+      - ./infra/minio:/policies:ro
+    networks:
+      - object-storage
+    depends_on:
+      minio:
+        condition: service_healthy
+    read_only: true
+    tmpfs:
+      - /tmp:rw,noexec,nosuid,nodev,size=16m
+      - /root/.mc:rw,noexec,nosuid,nodev,size=4m
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    restart: "no"
+
+  local-runtime-init:
+    image: node:24-bookworm-slim
+    command: ["node", "/infra/prepare-local-runtime.mjs"]
+    environment:
+      LOCAL_RUNTIME_UID: "1000"
+      LOCAL_RUNTIME_GID: "1000"
+      MOSS_PHASE2_GENESIS_FILE: ${MOSS_PHASE2_GENESIS_FILE:-genesis.zkey}
+      MOSS_PHASE2_R1CS_FILE: ${MOSS_PHASE2_R1CS_FILE:-circuit.r1cs}
+      MOSS_PHASE2_PTAU_FILE: ${MOSS_PHASE2_PTAU_FILE:-powersoftau.ptau}
+      MOSS_LOCAL_VERIFIER_IMAGE_DIGEST: ${MOSS_LOCAL_VERIFIER_IMAGE_DIGEST:-sha256:0000000000000000000000000000000000000000000000000000000000000000}
+      MOSS_LOCAL_MAX_ARTIFACT_BYTE_LENGTH: ${MOSS_LOCAL_MAX_ARTIFACT_BYTE_LENGTH:-2147483648}
+    volumes:
+      - ./infra/docker/prepare-local-runtime.mjs:/infra/prepare-local-runtime.mjs:ro
+      - ${MOSS_PHASE2_ARTIFACT_DIR:-./infra/dev-artifacts}:/artifacts:ro
+      - artifact_data:/artifact-data
+      - runtime_config:/runtime-config
+      - coordinator_secrets:/coordinator-secrets
+      - verifier_secrets:/verifier-secrets
+      - participant_auth_public:/participant-auth-public
+      - web_auth_secrets:/web-auth-secrets
+      - verifier_work:/verifier-work
+    network_mode: none
+    read_only: true
+    tmpfs:
+      - /tmp:rw,noexec,nosuid,nodev,size=16m
+    cap_drop:
+      - ALL
+    cap_add:
+      - CHOWN
+      - DAC_OVERRIDE
+      - FOWNER
+    security_opt:
+      - no-new-privileges:true
+    restart: "no"
+
+  coordinator:
+    <<: *node-security
+    build:
+      context: .
+      dockerfile: infra/docker/Dockerfile
+      target: coordinator
+    environment:
+      NODE_ENV: development
+      HOST: 0.0.0.0
+      PORT: 8787
+      DATABASE_URL: postgresql://${MOSS_LOCAL_COORDINATOR_DB_USER:-moss_phase2_coordinator}:${MOSS_LOCAL_COORDINATOR_DB_PASSWORD:-local-dev-only-postgres-coordinator}@postgres:5432/${MOSS_LOCAL_POSTGRES_DB:-moss_phase2}
+      CEREMONY_MANIFEST_ENVELOPE_PATH: /run/config/manifest-envelope.json
+      MANIFEST_ROOT_PUBLIC_KEY_FILE: /run/config/manifest-root-public.pem
+      COORDINATOR_KEY_ID: coordinator-local-dev
+      COORDINATOR_PRIVATE_KEY_FILE: /run/secrets/coordinator-private.pem
+      INTERNAL_VERIFIER_BEARER_TOKENS_FILE: /run/secrets/internal-verifier-bearers.json
+      PUBLIC_BASE_URL: http://127.0.0.1:${MOSS_LOCAL_COORDINATOR_PORT:-58787}
+      ARTIFACT_BACKEND: local
+      ARTIFACT_LOCAL_ROOT: /var/lib/moss-phase2/artifacts
+      GENESIS_ZKEY_PATH: /artifacts/${MOSS_PHASE2_GENESIS_FILE:-genesis.zkey}
+      PARTICIPANT_JWT_PUBLIC_KEY_FILE: /run/participant-auth/participant-jwt-public.pem
+      PARTICIPANT_JWT_ISSUER: ${MOSS_LOCAL_PARTICIPANT_JWT_ISSUER:-moss-phase2-local-web}
+      PARTICIPANT_JWT_AUDIENCE: ${MOSS_LOCAL_PARTICIPANT_JWT_AUDIENCE:-moss-phase2-local-coordinator}
+      CORS_ALLOWED_ORIGINS: ${MOSS_LOCAL_CORS_ALLOWED_ORIGINS:-http://localhost:3000,http://127.0.0.1:3000}
+    volumes:
+      - runtime_config:/run/config:ro
+      - coordinator_secrets:/run/secrets:ro
+      - participant_auth_public:/run/participant-auth:ro
+      - ${MOSS_PHASE2_ARTIFACT_DIR:-./infra/dev-artifacts}:/artifacts:ro
+      - artifact_data:/var/lib/moss-phase2/artifacts
+    tmpfs:
+      - /tmp:rw,noexec,nosuid,nodev,size=64m,uid=1000,gid=1000,mode=0700
+    networks:
+      - edge
+      - database
+      - verifier-control
+    ports:
+      - 127.0.0.1:${MOSS_LOCAL_COORDINATOR_PORT:-58787}:8787
+    depends_on:
+      postgres-migrate:
+        condition: service_completed_successfully
+      local-runtime-init:
+        condition: service_completed_successfully
+    healthcheck:
+      test:
+        - CMD
+        - node
+        - -e
+        - fetch('http://127.0.0.1:8787/healthz').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))
+      interval: 10s
+      timeout: 5s
+      retries: 12
+      start_period: 15s
+    pids_limit: 128
+
+  verifier-worker:
+    <<: *node-security
+    build:
+      context: .
+      dockerfile: infra/docker/Dockerfile
+      target: verifier-worker
+    environment:
+      NODE_ENV: development
+      COORDINATOR_URL: http://coordinator:8787
+      CEREMONY_MANIFEST_ENVELOPE_PATH: /run/config/manifest-envelope.json
+      MANIFEST_ROOT_PUBLIC_KEY_FILE: /run/config/manifest-root-public.pem
+      INTERNAL_VERIFIER_BEARER_TOKEN_FILE: /run/secrets/internal-verifier-bearer
+      VERIFIER_OPERATOR_KEY_ID: verifier-local-dev
+      VERIFIER_PRIVATE_KEY_FILE: /run/secrets/verifier-private.pem
+      VERIFIER_IMAGE_DIGEST: ${MOSS_LOCAL_VERIFIER_IMAGE_DIGEST:-sha256:0000000000000000000000000000000000000000000000000000000000000000}
+      VERIFIER_PASSES_PER_OPERATOR: "1"
+      VERIFIER_ALLOWED_ARTIFACT_ORIGINS: http://coordinator:8787
+      VERIFIER_ALLOWED_ARTIFACT_FILE_ROOT: /var/lib/moss-phase2/artifacts
+      VERIFIER_WORK_ROOT: /var/lib/moss-phase2/verifier
+      GENESIS_ZKEY_PATH: /artifacts/${MOSS_PHASE2_GENESIS_FILE:-genesis.zkey}
+      PTAU_PATH: /artifacts/${MOSS_PHASE2_PTAU_FILE:-powersoftau.ptau}
+      MAX_ARTIFACT_BYTE_LENGTH: ${MOSS_LOCAL_MAX_ARTIFACT_BYTE_LENGTH:-2147483648}
+    volumes:
+      - runtime_config:/run/config:ro
+      - verifier_secrets:/run/secrets:ro
+      - ${MOSS_PHASE2_ARTIFACT_DIR:-./infra/dev-artifacts}:/artifacts:ro
+      - artifact_data:/var/lib/moss-phase2/artifacts:ro
+      - verifier_work:/var/lib/moss-phase2/verifier
+    tmpfs:
+      - /tmp:rw,noexec,nosuid,nodev,size=256m,uid=1000,gid=1000,mode=0700
+    networks:
+      - verifier-control
+    depends_on:
+      coordinator:
+        condition: service_healthy
+    healthcheck:
+      test:
+        - CMD
+        - node
+        - -e
+        - Promise.all([import('node:fs/promises').then(f=>Promise.all([f.access(process.env.GENESIS_ZKEY_PATH),f.access(process.env.PTAU_PATH)])),fetch(process.env.COORDINATOR_URL+'/healthz').then(r=>{if(!r.ok)throw Error()})]).then(()=>process.exit(0)).catch(()=>process.exit(1))
+      interval: 15s
+      timeout: 10s
+      retries: 8
+      start_period: 30s
+    pids_limit: 512
+    shm_size: 256m
+
+volumes:
+  postgres_data:
+  minio_data:
+  artifact_data:
+  runtime_config:
+  coordinator_secrets:
+  verifier_secrets:
+  participant_auth_public:
+  web_auth_secrets:
+  verifier_work:
+
+networks:
+  edge:
+  local-admin:
+  database:
+    internal: true
+  object-storage:
+    internal: true
+  verifier-control:
+    internal: true

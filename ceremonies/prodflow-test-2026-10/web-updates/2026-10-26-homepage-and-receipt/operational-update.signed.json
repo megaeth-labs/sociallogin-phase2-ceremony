@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "keyId": "prodflow-test-root-2026-10",
+  "payload": {
+    "reason": "Homepage and accepted-page fixes from this test: no collectible column, walkthrough tile, share-first receipt panel with #n username, new share text.",
+    "webRelease": {
+      "sha256": "f6097b9ef7a1a134c2735891c62c71773f2493834963d862356eb4494bc79371",
+      "byteLength": 8701,
+      "urls": [
+        "https://d1xydbco3b83a0.cloudfront.net/inputs/sha256/f6097b9ef7a1a134c2735891c62c71773f2493834963d862356eb4494bc79371/web-release.json?versionId=eq8xx7mmUwtNLIoySCvqDPhqNOfcAFta"
+      ],
+      "sourceCommit": "70de69b84e00db2d75748203c3b6d7ec816b017e"
+    },
+    "schemaVersion": 1,
+    "type": "moss.phase2.operational-update.v1",
+    "ceremonyId": "bd40e300-5034-4139-9576-ce162da9aca3",
+    "manifestSha256": "1d0372caa754d78da75d439bab0a84db53d6b3c349512d976e20c21d345d2a92",
+    "sequence": 4,
+    "previousUpdateSha256": "e967c344cc71ed41b88b83db72ca7077f88c84fba08f75eb8c06ddc188ed5c65",
+    "authorizedAt": "2026-10-26T16:55:14.983Z"
+  },
+  "signature": "C7YMydsenBQPlh12W9phTMLGWntSI-8FmaMZkn4OJalkaTnpIbG9vGlxdD1IhNZIx74ZLaiO3NGWqWIhfF8DAQ"
+}

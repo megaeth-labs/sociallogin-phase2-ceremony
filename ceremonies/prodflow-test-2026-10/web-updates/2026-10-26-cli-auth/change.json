@@ -1,0 +1,9 @@
+{
+  "reason": "Fix CLI GitHub sign-in: the device-flow start request was rejected as a malformed poll. Also trims two verification caveats and points CLI setup at the sociallogin repository.",
+  "webRelease": {
+    "sha256": "5cd921e064f0960a04c1e37958ca7669447df1fcf78d2b83975d8f92b3a5c5e9",
+    "byteLength": 8701,
+    "urls": ["https://d1xydbco3b83a0.cloudfront.net/inputs/sha256/5cd921e064f0960a04c1e37958ca7669447df1fcf78d2b83975d8f92b3a5c5e9/web-release.json?versionId=LfRrGhrCiq_aFFoDQbPOvxbJSFhLdhGb"],
+    "sourceCommit": "be2519c8f1b5075c842d0114fbdd32d40c5ef0d9"
+  }
+}

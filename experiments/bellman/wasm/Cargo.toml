@@ -1,0 +1,12 @@
+[package]
+name = "moss-bellman-wasm-prototype"
+version = "0.0.0"
+edition = "2021"
+publish = false
+
+[lib]
+crate-type = ["cdylib"]
+
+[dependencies]
+phase2 = { path = "source/phase2", default-features = false, features = ["wasm"] }
+wasm-bindgen = "=0.2.100"

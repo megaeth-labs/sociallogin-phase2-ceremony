@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://moss.example/schemas/phase2-ceremony-definition-v1.json",
+  "title": "MOSS Phase 2 Ceremony Definition",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "status", "ceremonyId", "relation", "policy", "launchBlockers"],
+  "properties": {
+    "schemaVersion": { "const": 1 },
+    "status": { "enum": ["draft", "prepared", "open", "sealed", "finalized", "aborted"] },
+    "ceremonyId": { "type": "string", "minLength": 1 },
+    "relation": { "type": "object" },
+    "policy": { "type": "object" },
+    "launchBlockers": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 }
+    }
+  }
+}

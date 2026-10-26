@@ -1,0 +1,257 @@
+/* MOSS Wallet tokens, adapted from wallet-design-system/src/index.css.
+ * Keep this small token layer separate from the wallet's global CSS reset. */
+:root {
+  --font-body: var(--font-wallet), "Helvetica Neue", Helvetica, sans-serif;
+  --font-display: var(--font-body);
+  --font-mono: "SFMono-Regular", Consolas, monospace;
+  --color-bg: oklch(0.95 0.005 78.3);
+  --color-bg-alt: oklch(0.97 0 0);
+  --color-bg-muted: oklch(0.913 0.006 84.6);
+  --color-surface: oklch(1 0 0);
+  --color-surface-hover: oklch(0.959 0.007 151.9);
+  --color-border: oklch(0.889 0.011 136.6);
+  --color-text: oklch(0.199 0.031 156.4);
+  --color-text-secondary: oklch(0.48 0.015 149);
+  --color-text-muted: oklch(0.528 0.021 155.4);
+  --color-text-light: oklch(0.561 0.018 148.2);
+  --color-accent: oklch(0.428 0.062 160.9);
+  --color-accent-dark: oklch(0.363 0.056 158.8);
+  --color-accent-light: oklch(0.75 0.131 117.9);
+  --color-warning: oklch(0.794 0.128 46.9);
+  --color-blue: oklch(0.479 0.141 259.7);
+  --color-scrollbar-thumb: oklch(0.832 0.026 149);
+  --color-track-inactive: oklch(0.889 0.011 136.6);
+  --color-accent-a05: color-mix(in oklch, var(--color-accent) 5%, transparent);
+  --color-accent-a08: color-mix(in oklch, var(--color-accent) 8%, transparent);
+  --color-accent-a10: color-mix(in oklch, var(--color-accent) 10%, transparent);
+  --color-accent-a12: color-mix(in oklch, var(--color-accent) 12%, transparent);
+  --color-accent-a20: color-mix(in oklch, var(--color-accent) 20%, transparent);
+  --color-accent-a25: color-mix(in oklch, var(--color-accent) 25%, transparent);
+  --color-on-accent: oklch(1 0 0);
+  --color-surface-tint: oklch(0.918 0.015 151.8);
+  --color-surface-tint-line: oklch(0.825 0.026 152.8);
+  --color-notice: oklch(0.946 0.03 49.5);
+  --color-notice-line: oklch(0.841 0.045 56.1);
+  --color-error: oklch(0.501 0.178 28.7);
+  --color-error-strong: oklch(0.501 0.178 28.7);
+  --color-error-a08: oklch(0.961 0.013 23.2);
+  --color-error-a25: oklch(0.835 0.057 22.4);
+  --color-shadow-a05: rgb(9 26 16 / 5%);
+  --color-shadow-a08: rgb(9 26 16 / 8%);
+  --color-shadow-a15: rgb(9 26 16 / 15%);
+  --color-overlay-70: rgb(245 245 245 / 70%);
+  --color-overlay-80: rgb(245 245 245 / 80%);
+  --color-overlay-90: rgb(245 245 245 / 90%);
+  --radius-panel: 2rem;
+  --radius-control: 999px;
+
+  /* Night moss: the hero, footer, entropy field and collectible art. The
+   * daytime wallet palette above stays the base for reading surfaces. */
+  --color-night: oklch(0.19 0.018 165);
+  --color-night-raised: oklch(0.235 0.022 165);
+  --color-night-line: oklch(0.42 0.03 165 / 0.45);
+  --color-night-text: oklch(0.965 0.008 150);
+  --color-night-muted: oklch(0.8 0.02 155);
+  --color-neon: oklch(0.87 0.16 158);
+  --color-neon-a20: color-mix(in oklch, var(--color-neon) 20%, transparent);
+  --color-neon-a40: color-mix(in oklch, var(--color-neon) 40%, transparent);
+  --color-haze: oklch(0.72 0.11 340);
+  --color-frost: oklch(0.975 0.006 160);
+  --ease-out-soft: cubic-bezier(0.22, 1, 0.36, 1);
+  --duration-quick: 180ms;
+  --duration-settle: 280ms;
+}
+
+/* ── Reset ────────────────────────────────────────────────────── */
+
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font-body), sans-serif;
+  background: var(--color-bg);
+  color: var(--color-text);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  line-height: 1.5;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+  background: none;
+  padding: 0;
+}
+
+input,
+textarea {
+  font-family: inherit;
+}
+
+/* ── Shared classes ───────────────────────────────────────────── */
+
+.card {
+  background: var(--color-bg-alt);
+  border: 1px solid var(--color-border);
+  border-radius: 0.5rem;
+  padding: 0.75rem 1rem;
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+}
+
+.card-padded {
+  background: var(--color-bg-alt);
+  border: 1px solid var(--color-border);
+  border-radius: 0.5rem;
+  padding: 1.25rem;
+}
+
+.card-white {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 0.5rem;
+  padding: 0.75rem 1rem;
+}
+
+.label {
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.input {
+  width: 100%;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 0.5rem;
+  padding: 0.75rem 1rem;
+  font-size: 0.875rem;
+  color: var(--color-text);
+  font-family: var(--font-mono), monospace;
+}
+
+.input::placeholder {
+  color: var(--color-text-light);
+}
+
+/*
+ * The previous ring was a 1px box-shadow at 0.2 alpha, which is close to
+ * invisible and below the 2px minimum. Focus feedback is also immediate now:
+ * the old 150ms border-colour transition delayed the one cue a keyboard user
+ * depends on, and colour is not a property worth animating.
+ */
+.input:focus {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 1px;
+  border-color: var(--color-accent);
+}
+
+.sectionTitle {
+  font-size: 1.25rem;
+  font-weight: 300;
+  color: var(--color-text);
+}
+
+.sectionSubtitle {
+  font-size: 0.875rem;
+  color: var(--color-text-secondary);
+}
+
+.screenLayout {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.textMuted {
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+}
+
+.textAccent {
+  color: var(--color-accent);
+}
+
+.accentDot {
+  width: 0.375rem;
+  height: 0.375rem;
+  border-radius: 50%;
+  background: var(--color-accent);
+}
+
+/* ── Keyframes ────────────────────────────────────────────────── */
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 1; }
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ── Scrollbar ────────────────────────────────────────────────── */
+
+::-webkit-scrollbar {
+  width: 4px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-bg-muted);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-scrollbar-thumb);
+  border-radius: 2px;
+}
+
+/* ── Reduced motion ───────────────────────────────────────────── */
+
+/*
+ * Applies to CSS-module styles too, since it selects elements rather than
+ * class names. The spinner and pulse indicators run infinitely, which is the
+ * case reduced-motion exists for; stopping them costs no information because
+ * progress is also reported as a numeric percentage and a status label.
+ */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* One focus ring everywhere; dark surfaces set --focus-ring to neon. */
+:where(button, a, input, summary, textarea, select):focus-visible {
+  outline: 2px solid var(--focus-ring, var(--color-accent));
+  outline-offset: 3px;
+}
+button { color: inherit; }
+a { color: var(--color-accent); }
+::selection { background: var(--color-scrollbar-thumb); color: var(--color-text); }

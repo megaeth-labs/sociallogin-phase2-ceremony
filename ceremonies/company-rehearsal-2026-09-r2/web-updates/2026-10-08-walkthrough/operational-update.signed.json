@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "keyId": "moss-rehearsal-root-2026-09",
+  "payload": {
+    "reason": "Show review screens in their native page layouts with compact walkthrough navigation. No contribution, beacon or acceptance policy changes.",
+    "webRelease": {
+      "sha256": "052020ab726628399964fd57bf3309efb78275f0b803f5171e120e8d48c71715",
+      "byteLength": 7962,
+      "urls": [
+        "https://d1lqbpxesw1yqu.cloudfront.net/inputs/sha256/052020ab726628399964fd57bf3309efb78275f0b803f5171e120e8d48c71715/web-release.json?versionId=Zf9lpBp3UEtJoxYx.qH4NdEoBDkTVltp"
+      ],
+      "sourceCommit": "7c1e747c2618f4f3b24d7e5a61cc61c39c910d17"
+    },
+    "schemaVersion": 1,
+    "type": "moss.phase2.operational-update.v1",
+    "ceremonyId": "bf4e9f78-441b-4a24-96c1-b7990e77e150",
+    "manifestSha256": "b6fd9543e3ebacfb8fab7b43ccdbb3670d1e16552bf6a8b494c44efdc65a6289",
+    "sequence": 4,
+    "previousUpdateSha256": "5973c9d983fa675670eadb3ee9c69c499729193c102c34e7529d3f6073008521",
+    "authorizedAt": "2026-10-08T18:45:30.371Z"
+  },
+  "signature": "aCuWFobCcenDcMaut5IOZR82jWBTLFZ9U3hxC3nLVzu_b3DFHQUzU-ioHtQEvSE30GMD2P1XK0Oz0SFKx4_QBQ"
+}

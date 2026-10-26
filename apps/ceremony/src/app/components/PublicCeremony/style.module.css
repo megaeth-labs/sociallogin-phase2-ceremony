@@ -1,0 +1,115 @@
+.shell {
+  --ink: var(--color-text);
+  --muted: var(--color-text-secondary);
+  --paper: var(--color-surface);
+  --line: var(--color-border);
+  color: var(--ink);
+  font-family: var(--font-body);
+  display: grid;
+  gap: 3rem;
+  min-width: 0;
+}
+.eyebrow { font-size: .6875rem; text-transform: uppercase; letter-spacing: .12em; font-weight: 500; color: var(--muted); }
+.hero { display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(20rem, 1fr); gap: 5rem; align-items: start; }
+.intro { display: grid; gap: 2rem; padding-block: 1rem; }
+.title { font-size: clamp(3rem, 5vw, 5.25rem); line-height: .98; font-weight: 400; letter-spacing: -.065em; max-width: 15ch; text-wrap: balance; }
+.titleAccent { color: var(--color-accent); }
+.description { max-width: 43ch; font-size: 1.0625rem; line-height: 1.65; color: var(--muted); }
+.panel { background: var(--paper); border: 1px solid var(--line); border-radius: 1.5rem; padding: 1.75rem; display: grid; gap: 1.25rem; min-width: 0; }
+.panel h2, .sectionHeading { font-size: 1.75rem; font-weight: 400; line-height: 1.2; letter-spacing: -.035em; }
+.panel p, .note { font-size: .875rem; line-height: 1.65; color: var(--muted); }
+.participation { position: relative; gap: 1rem; border: 0; border-radius: var(--radius-panel); padding: 0 2rem 2rem; background: var(--color-bg-alt); }
+.rabbit { display: block; width: calc(100% + 4rem); max-width: none; height: 320px; object-fit: contain; margin: -1.5rem -2rem 0; mix-blend-mode: multiply; }
+.participation h2 { font-size: 1.625rem; }
+.participation > p:last-child { font-size: .75rem; }
+.badge { display: inline-flex; align-items: center; gap: .5rem; font-size: .75rem; width: fit-content; padding: .5rem .75rem; border-radius: var(--radius-control); background: var(--color-surface-tint); color: var(--color-accent-dark); }
+.badge::before { content: ""; width: .375rem; height: .375rem; border-radius: 50%; background: currentColor; }
+.stats { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 1.5rem 3rem; padding-block: 1.75rem; border-block: 1px solid var(--line); }
+.stat { display: grid; gap: .5rem; }
+.stat dt { font-size: .8125rem; color: var(--muted); }
+.stat dd { font-size: 1.75rem; letter-spacing: -.035em; font-variant-numeric: tabular-nums; }
+.community { display: flex; align-items: center; justify-content: space-between; gap: 2rem; padding: 1.75rem 2rem; border-radius: 1.5rem; background: var(--color-surface-tint); }
+.communityLabel { display: flex; align-items: center; gap: 1.25rem; font-size: .8125rem; line-height: 1.5; }
+.community > div:last-child { display: flex; align-items: center; gap: 3rem; }
+.community h2 { font-size: 1.25rem; font-weight: 400; letter-spacing: -.025em; line-height: 1.3; }
+.community p { font-size: .8125rem; line-height: 1.65; color: var(--muted); }
+.sectionHeading + .note { margin-top: .75rem; }
+.timeline { list-style: none; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 2.5rem; margin-block: 1.75rem; }
+.timeline li { display: grid; align-content: start; gap: 1rem; padding-top: 1.5rem; border-top: 1px solid var(--line); }
+.timeline strong { font-weight: 500; font-size: 1rem; line-height: 1.4; }
+.timeline p { font-size: .875rem; color: var(--muted); line-height: 1.65; }
+.number { color: var(--color-accent); font-size: .6875rem; letter-spacing: .1em; }
+.actions { display: flex; flex-wrap: wrap; gap: .75rem; align-items: center; }
+.actions > button { width: auto; padding-inline: 1.25rem; }
+.link { color: var(--color-accent); font-size: .875rem; text-decoration: underline; text-underline-offset: .25rem; }
+.disclosure { border-top: 1px solid var(--line); padding-block: 1rem; font-size: .875rem; }
+.disclosure summary { cursor: pointer; padding-block: .5rem; }
+.disclosure > div { padding-top: 1rem; }
+.evidence { display: flex; justify-content: space-between; align-items: center; gap: 2rem; background: var(--color-surface-tint); padding: 2rem; border-radius: 1.5rem; }
+.evidence h2 { font-size: 1.5rem; font-weight: 400; letter-spacing: -.03em; margin-top: .5rem; }
+.evidence .actions { display: grid; justify-items: start; }
+.footer { display: flex; flex-wrap: wrap; gap: 1.5rem; border-top: 1px solid var(--line); padding-top: 1.5rem; font-size: .8125rem; color: var(--muted); }
+.footer span { margin-right: auto; }
+.footer a { color: inherit; text-underline-offset: .25rem; }
+.previewBanner { background: var(--color-notice); border: 1px solid var(--color-notice-line); border-radius: 1rem; padding: .875rem 1rem; font-size: .8125rem; line-height: 1.7; }
+.toolbar { display: flex; flex-wrap: wrap; gap: .5rem; align-items: center; }
+.toolbar button { border: 1px solid var(--line); border-radius: var(--radius-control); padding: .65rem .875rem; min-height: 44px; color: var(--ink); font-size: .75rem; }
+.toolbar button[aria-pressed="true"] { background: var(--color-accent); color: var(--color-on-accent); border-color: var(--color-accent); }
+.journey { max-width: 48rem; width: 100%; margin-inline: auto; gap: 1.5rem; padding: clamp(1.5rem, 4vw, 3rem); background: var(--color-bg-alt); border-radius: var(--radius-panel); }
+.journey h1 { font-size: 2.5rem; font-weight: 400; letter-spacing: -.045em; line-height: 1.1; }
+.journeyHeading { display: grid; gap: 1rem; }
+.journey .description { max-width: 65ch; font-size: 1rem; }
+.journey .panel { padding: 1.5rem; border-radius: 1rem; }
+.journey .panel h2 { font-size: 1.375rem; }
+.readinessGuide { display: grid; gap: 1.25rem; max-width: 65ch; margin: 0; }
+.readinessGuide > div { display: grid; gap: .375rem; }
+.readinessGuide dt { font-size: 1rem; font-weight: 500; line-height: 1.4; }
+.readinessGuide dd { margin: 0; font-size: .875rem; line-height: 1.65; color: var(--muted); }
+.steps { list-style: none; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: .75rem; }
+.steps li { padding-top: .75rem; border-top: 2px solid var(--line); font-size: .75rem; color: var(--muted); }
+.steps li[data-current="true"] { border-color: var(--color-accent); color: var(--color-accent); font-weight: 500; }
+.steps li[data-done="true"] { border-color: var(--color-accent-light); }
+.progress { accent-color: var(--color-accent); width: 100%; height: .5rem; }
+.timer { font-size: 2rem; font-variant-numeric: tabular-nums; letter-spacing: -.04em; }
+.checks { list-style: none; display: grid; gap: .875rem; }
+.checks li, .check { font-size: .875rem; line-height: 1.6; }
+.check { display: flex; align-items: start; gap: .75rem; cursor: pointer; }
+.check input { margin-top: .25rem; width: 1.125rem; height: 1.125rem; accent-color: var(--color-accent); flex-shrink: 0; }
+.error { padding: 1rem; border: 1px solid var(--color-error-a25); border-radius: 1rem; background: var(--color-error-a08); color: var(--color-error); font-size: .875rem; line-height: 1.65; overflow-wrap: anywhere; }
+.shell :is(button, a, summary, input):focus-visible { outline: 2px solid var(--color-accent); outline-offset: 4px; }
+@media (max-width: 900px) {
+  .hero { gap: 2rem; }
+  .community > div:last-child { gap: 1.5rem; }
+  .community p { max-width: 22ch; }
+  .community p br { display: none; }
+}
+@media (max-width: 700px) {
+  .shell { gap: 2rem; }
+  .hero { grid-template-columns: 1fr; gap: 1.5rem; }
+  .intro { padding-top: 0; gap: 1.5rem; }
+  .title { font-size: clamp(2.75rem, 10vw, 4rem); }
+  .participation { padding: 0 1.5rem 1.5rem; }
+  .rabbit { width: calc(100% + 2.5rem); height: 260px; margin: 0 -1.25rem; }
+  .community, .community > div:last-child { flex-direction: column; align-items: start; gap: 1.25rem; }
+  .community p { max-width: none; }
+  .community h2 br { display: none; }
+  .stats { gap: 1.5rem 2rem; justify-content: start; }
+  .stat dd { font-size: 1.5rem; }
+  .timeline { grid-template-columns: 1fr; gap: 1.5rem; }
+  .panel { padding: 1.25rem; }
+  .steps { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .journey { gap: 1.25rem; }
+  .journey h1 { font-size: 2rem; }
+  .journey .panel { padding: 1.125rem; }
+  .evidence { flex-direction: column; align-items: start; padding: 1.5rem; }
+}
+
+/* Shared alignment for instructions and contribution states. */
+.journey > .eyebrow { margin-bottom: -.5rem; }
+.journey h1 { text-wrap: balance; }
+.journey .panel > button { width: fit-content; max-width: 100%; }
+.stat { flex: 1 1 12rem; }
+.timeline strong { min-height: 2.8em; }
+@media (max-width: 700px) {
+  .timeline strong { min-height: 0; }
+}

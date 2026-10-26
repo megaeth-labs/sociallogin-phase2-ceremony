@@ -1,0 +1,15 @@
+{
+  "checkedAt": "2026-10-07T15:47:35.891700+00:00",
+  "origin": "https://zklogin-phase2-ceremony-mega-eth.vercel.app",
+  "result": "passed",
+  "checks": [
+    "root-verified finalized homepage loads",
+    "seven accepted contributions and history pagination preserved",
+    "final artifacts and signed completion record reachable",
+    "review navigation and deep-link reloads",
+    "preview wallet controls make no mint or wallet requests",
+    "mobile layout and no browser runtime errors",
+    "41 deployed assets match independent build",
+    "operational authorization chain verified; ceremony checkpoint unchanged"
+  ]
+}

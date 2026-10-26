@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "keyId": "moss-rehearsal-root-2026-09",
+  "payload": {
+    "reason": "Show real verified rehearsal contribution cards and downloads in the walkthrough. No contribution, beacon or acceptance policy changes.",
+    "webRelease": {
+      "sha256": "21b254ee9e4a0b07ebf08cdbcd3eeaa918c6ee287bb03b883bdeef5183fd3b4b",
+      "byteLength": 7962,
+      "urls": [
+        "https://d1lqbpxesw1yqu.cloudfront.net/inputs/sha256/21b254ee9e4a0b07ebf08cdbcd3eeaa918c6ee287bb03b883bdeef5183fd3b4b/web-release.json?versionId=mN3S6Suz.Fc5af13gohOifGREuQdDao."
+      ],
+      "sourceCommit": "0ac8eb16ee266e9cc988371b0c24d6e747304556"
+    },
+    "schemaVersion": 1,
+    "type": "moss.phase2.operational-update.v1",
+    "ceremonyId": "bf4e9f78-441b-4a24-96c1-b7990e77e150",
+    "manifestSha256": "b6fd9543e3ebacfb8fab7b43ccdbb3670d1e16552bf6a8b494c44efdc65a6289",
+    "sequence": 6,
+    "previousUpdateSha256": "cb3c9eedd8676252a4f5d54d7a9176e665ae02040256d34e865308cde03ac60a",
+    "authorizedAt": "2026-10-08T21:41:15.101Z"
+  },
+  "signature": "1FIzG6ahPYjpybdeGsA-6sPGxCE_LTNYX1i4xOEuCdNVxtPTy38LvaMzhbr3D28bQZU-UJJBr5pgrrezXQCxAQ"
+}

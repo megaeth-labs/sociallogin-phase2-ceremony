@@ -1,0 +1,11 @@
+node_modules/
+.next/
+out/
+.DS_Store
+*.tsbuildinfo
+next-env.d.ts
+.env
+.vercel
+.npmrc
+public/genesis/*.zkey
+public/finalize/*.zkey

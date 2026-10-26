@@ -1,0 +1,34 @@
+{
+  "name": "@wonderland/create-cabure-ceremony",
+  "version": "2.0.0-beta.0",
+  "description": "CLI wizard that scaffolds a fully deployable ceremony project",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/defi-wonderland/cabure-wizard.git",
+    "directory": "packages/create-cabure-ceremony"
+  },
+  "author": "Wonderland",
+  "type": "module",
+  "bin": {
+    "create-cabure-ceremony": "./dist/index.js"
+  },
+  "files": [
+    "dist",
+    "templates"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "test": "vitest run",
+    "test:e2e": "vitest run src/__tests__/wizard.e2e.test.ts",
+    "format": "prettier --write --ignore-unknown \"src/**/*.ts\"",
+    "clean": "rm -rf dist tsconfig.tsbuildinfo"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@types/node": "22.19.11",
+    "prettier": "3.6.2",
+    "typescript": "5.9.3",
+    "vitest": "4.1.2"
+  },
+  "license": "MIT"
+}

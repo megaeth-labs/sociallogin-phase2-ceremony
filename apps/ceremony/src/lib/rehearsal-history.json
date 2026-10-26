@@ -1,0 +1,373 @@
+{
+  "source": "https://28ia0ofkx1.execute-api.us-east-2.amazonaws.com/v1/ceremonies/moss-phase2-company-rehearsal-2026-09-r2/contributions?after=0",
+  "capturedAt": "2026-10-19",
+  "manifest": {
+    "schemaVersion": 1,
+    "keyId": "moss-rehearsal-root-2026-09",
+    "payload": {
+      "schemaVersion": 1,
+      "purpose": "rehearsal",
+      "primaryPublication": {
+        "archiveBaseUrl": "https://d1lqbpxesw1yqu.cloudfront.net"
+      },
+      "ceremonyId": "bf4e9f78-441b-4a24-96c1-b7990e77e150",
+      "slug": "moss-phase2-company-rehearsal-2026-09-r2",
+      "relation": {
+        "profile": "google-rs256-zksync-v3",
+        "relationId": "google-rs256-zksync-v3-groth16-bn254-2",
+        "verifierVersion": 4,
+        "proofSystem": "groth16",
+        "curve": "bn254",
+        "sourceRepository": "https://github.com/Moonsong-Labs/zksync-social-login-circuit",
+        "sourceCommit": "5461ae81208d7e9d6331865b4a8c841546134018",
+        "sourceClosureSha256": "53268998b4edd328bc5b8e205760a95f9a601c012f4ace741418a3bc0bdf2ac0",
+        "circomVersion": "2.2.3",
+        "snarkjsVersion": "0.7.6",
+        "r1cs": {
+          "sha256": "173eba6b9b7883bb8e761f69f902c334b14cea61a094eba7466f0f548d601692",
+          "byteLength": 232099260,
+          "urls": [
+            "https://d1lqbpxesw1yqu.cloudfront.net/inputs/sha256/173eba6b9b7883bb8e761f69f902c334b14cea61a094eba7466f0f548d601692/circuit.r1cs?versionId=_3DnGFLDg2hJY5JjDHP8t7YvfdXMia01"
+          ]
+        },
+        "ptau": {
+          "sha256": "032647abe127f4562f8118dd5f866ab595c1f2bbd03d0a85ff3739a4a967d9be",
+          "byteLength": 19327435928,
+          "urls": [
+            "https://d1lqbpxesw1yqu.cloudfront.net/inputs/sha256/032647abe127f4562f8118dd5f866ab595c1f2bbd03d0a85ff3739a4a967d9be/powersoftau.ptau?versionId=wkdMa2unhWGOv6pUDzS9mPWbuLG5aEBe"
+          ],
+          "blake2b512": "fa404d140d5819d39984833ca5ec3632cd4995f81e82db402371a4de7c2eae8687c62bc632a95b0c6aadba3fb02680a94e09174b7233ccd26d78baca2647c733"
+        },
+        "genesisBellman": {
+          "sha256": "600950f4831a93c7907cca96c8e722c4d319401925c353f4ad2ed6aae82d173e",
+          "byteLength": 368440348,
+          "urls": [
+            "https://d1lqbpxesw1yqu.cloudfront.net/inputs/sha256/600950f4831a93c7907cca96c8e722c4d319401925c353f4ad2ed6aae82d173e/genesis.params?versionId=u7H4QXGeX2s3RFU0P9FpUvAP4no1cQzr"
+          ]
+        },
+        "genesisZkey": {
+          "sha256": "f23c5dadb27613ec3d819c3cb59060804a0dc506fb6d873ab6d3ca5f8357090d",
+          "byteLength": 567402188,
+          "urls": [
+            "https://d1lqbpxesw1yqu.cloudfront.net/inputs/sha256/f23c5dadb27613ec3d819c3cb59060804a0dc506fb6d873ab6d3ca5f8357090d/genesis.zkey?versionId=7ocYg73Rx5b6AMyyNMAvR94.seLqQJc2"
+          ]
+        }
+      },
+      "schedule": {
+        "opensAt": "2026-09-28T21:20:28.850Z",
+        "sealsAt": "2026-10-02T18:00:00.000Z"
+      },
+      "beacon": {
+        "source": "ethereum-block",
+        "chainId": 1,
+        "blockNumber": 26108000,
+        "expectedAt": "2026-10-02T22:58:23.000Z",
+        "numIterationsExp": 32,
+        "contributionName": "MOSS rehearsal final beacon",
+        "derivation": "MOSS_PHASE2_BEACON_V1"
+      },
+      "coordinatorKeys": [
+        {
+          "keyId": "moss-rehearsal-coordinator-2026-09",
+          "algorithm": "Ed25519",
+          "publicKeyPem": "-----BEGIN PUBLIC KEY-----\nMCowBQYDK2VwAyEAfx42uNMmxi45DuraND00PpvvBQHgWKE7fo+npQE/M1I=\n-----END PUBLIC KEY-----\n"
+        }
+      ],
+      "verifierKeys": [
+        {
+          "keyId": "moss-rehearsal-verifier-2026-09",
+          "algorithm": "Ed25519",
+          "publicKeyPem": "-----BEGIN PUBLIC KEY-----\nMCowBQYDK2VwAyEANP1RxfN5g/2bH5YJG6BLLdKfTnc9UMigGj5wrIbgtd8=\n-----END PUBLIC KEY-----\n",
+          "verifierImageDigest": "sha256:60d6933b2f66f3060e4abefee02237f2c37567a0042e887c0c6856fee316a834"
+        }
+      ],
+      "verifierPolicy": {
+        "verificationMethod": "bellman-transition-v1",
+        "operatorKeyIds": [
+          "moss-rehearsal-verifier-2026-09"
+        ],
+        "requiredOperators": 1,
+        "passesPerOperator": 1
+      },
+      "contributionPolicy": {
+        "targetContributions": 10,
+        "maxArtifactByteLength": 600000000,
+        "requirePinnedClientRelease": true,
+        "lease": {
+          "offerSeconds": 120,
+          "heartbeatSeconds": 15,
+          "absoluteSeconds": 5400
+        },
+        "verifierJobSeconds": 1800,
+        "verifierMaxAttempts": 3,
+        "maximumContributions": 10
+      },
+      "webRelease": {
+        "sha256": "32e22d25e63e20afca5c9aea8f490af5c645f3cc7463ed6e89ee6d3dc52d8fb5",
+        "byteLength": 11440,
+        "urls": [
+          "https://d1lqbpxesw1yqu.cloudfront.net/inputs/sha256/32e22d25e63e20afca5c9aea8f490af5c645f3cc7463ed6e89ee6d3dc52d8fb5/web-release.json?versionId=bZ3fLQyBf9PFUOe7QOpLKr2tm4yYHdZP"
+        ],
+        "sourceCommit": "5f51acac9b3197172bddd30393b17de149b91287"
+      },
+      "cliReleases": [
+        {
+          "sha256": "1bd9d12e87ff1981ce62a4155476c5ce467ae3acb910f2f17ab58f40413a7adc",
+          "byteLength": 238775,
+          "urls": [
+            "https://d1lqbpxesw1yqu.cloudfront.net/inputs/sha256/1bd9d12e87ff1981ce62a4155476c5ce467ae3acb910f2f17ab58f40413a7adc/moss-phase2-cli.js?versionId=lQBfqs2gVg5VWwcWpUZzpZPoiKuVKyL_"
+          ],
+          "sourceCommit": "2dbebd340d20565465c721dd01c784b8aaee5490"
+        }
+      ]
+    },
+    "signature": "54DzoVbE6FGn5OZ8gxc_thdVj8g84idRKah1UsBDzYynwQzhmiMBi-rNNr_OgDcs_miO5BgMXOSKscTeABdKCw"
+  },
+  "receipts": [
+    {
+      "schemaVersion": 1,
+      "keyId": "moss-rehearsal-coordinator-2026-09",
+      "payload": {
+        "type": "moss.phase2.receipt.v1",
+        "sequence": 1,
+        "successor": {
+          "urls": [
+            "https://d1lqbpxesw1yqu.cloudfront.net/canonical/bf4e9f78-441b-4a24-96c1-b7990e77e150/sha256/b3173437344b85f44d8cc5ab7e9afd01d92a3d395b5b7bc2feab0d5e3141ae9d.zkey?versionId=YIBwPTVtxN30SwCxG8FM7etESYKNjRHh"
+          ],
+          "sha256": "b3173437344b85f44d8cc5ab7e9afd01d92a3d395b5b7bc2feab0d5e3141ae9d",
+          "byteLength": 368440732
+        },
+        "acceptedAt": "2026-09-28T22:54:43.080Z",
+        "ceremonyId": "bf4e9f78-441b-4a24-96c1-b7990e77e150",
+        "clientKind": "browser",
+        "generation": 1,
+        "predecessor": {
+          "urls": [
+            "https://d1lqbpxesw1yqu.cloudfront.net/canonical/bf4e9f78-441b-4a24-96c1-b7990e77e150/sha256/600950f4831a93c7907cca96c8e722c4d319401925c353f4ad2ed6aae82d173e.zkey?versionId=hdED4ZCmjyoMDDy5BQlT04LdlZ.zjxwP"
+          ],
+          "sha256": "600950f4831a93c7907cca96c8e722c4d319401925c353f4ad2ed6aae82d173e",
+          "byteLength": 368440348
+        },
+        "schemaVersion": 1,
+        "contributionName": "moss-df1efda1-a7d3-82aa-9721-db1b45d3764a",
+        "contributionIndex": 1,
+        "clientReleaseSha256": "32e22d25e63e20afca5c9aea8f490af5c645f3cc7463ed6e89ee6d3dc52d8fb5",
+        "transcriptEventHash": "7b4e82e817d1342397594bfb3087efe49b75fb7a8b662948a154fbd61829c296",
+        "participantPseudonym": "deva-arun",
+        "relationManifestSha256": "b6fd9543e3ebacfb8fab7b43ccdbb3670d1e16552bf6a8b494c44efdc65a6289",
+        "contributionHashBlake2b512": "e1ebaa130605c956d7e821168eec5bfcd53c855ab2c2e3ec51cc9ca672649a42ac8280bd9bf912b614566e901430bd1d15ded88e54b614d181730e520556cee0"
+      },
+      "signature": "rns15QuccCQ-NUsxi_JvqSTIogDpMAFX1UdSN0zkINTHowe1-dlPpAe0me2C6efJOixUOkxvpLcv2iTthnHSDw"
+    },
+    {
+      "schemaVersion": 1,
+      "keyId": "moss-rehearsal-coordinator-2026-09",
+      "payload": {
+        "type": "moss.phase2.receipt.v1",
+        "sequence": 2,
+        "successor": {
+          "urls": [
+            "https://d1lqbpxesw1yqu.cloudfront.net/canonical/bf4e9f78-441b-4a24-96c1-b7990e77e150/sha256/c3f0429536fe2900c9f3a677321668993fd810b300e6e45d3fb2e3f130cc51ac.zkey?versionId=qLTmDAw7ur_sBrDnKx1F9ipDbKoZN.oh"
+          ],
+          "sha256": "c3f0429536fe2900c9f3a677321668993fd810b300e6e45d3fb2e3f130cc51ac",
+          "byteLength": 368441116
+        },
+        "acceptedAt": "2026-09-29T13:32:13.375Z",
+        "ceremonyId": "bf4e9f78-441b-4a24-96c1-b7990e77e150",
+        "clientKind": "browser",
+        "generation": 2,
+        "predecessor": {
+          "urls": [
+            "https://d1lqbpxesw1yqu.cloudfront.net/canonical/bf4e9f78-441b-4a24-96c1-b7990e77e150/sha256/b3173437344b85f44d8cc5ab7e9afd01d92a3d395b5b7bc2feab0d5e3141ae9d.zkey?versionId=YIBwPTVtxN30SwCxG8FM7etESYKNjRHh"
+          ],
+          "sha256": "b3173437344b85f44d8cc5ab7e9afd01d92a3d395b5b7bc2feab0d5e3141ae9d",
+          "byteLength": 368440732
+        },
+        "schemaVersion": 1,
+        "contributionName": "moss-026b7592-1c08-827f-979d-cda7a165aa1f",
+        "contributionIndex": 2,
+        "clientReleaseSha256": "8d5c369096b8293d0fbd92cdf5a262d520b2454670180c84f0cde9ca6dad6be7",
+        "transcriptEventHash": "188883292b6bf05b3fa29a95f36f1d6bd51264c92743580ba3204e1c261c8af9",
+        "participantPseudonym": "mega-dmitriy",
+        "relationManifestSha256": "b6fd9543e3ebacfb8fab7b43ccdbb3670d1e16552bf6a8b494c44efdc65a6289",
+        "contributionHashBlake2b512": "30a5690e976d7edfbbac3b9f0ebecd237a712627c0ce3de535b5cc8a1980e8455044b56374aa8ab88f60bde8e1a57bf216cbc0e78bcecc59e316574172248e0e"
+      },
+      "signature": "8caSeJiTJ2hCyLKkukTgb0-oXZ9FD3Sq4dL1873XyxSLQC99tG-UkZPCPgBYoT-mpU2OLr89vfawzi-HBvrWCA"
+    },
+    {
+      "schemaVersion": 1,
+      "keyId": "moss-rehearsal-coordinator-2026-09",
+      "payload": {
+        "type": "moss.phase2.receipt.v1",
+        "sequence": 3,
+        "successor": {
+          "urls": [
+            "https://d1lqbpxesw1yqu.cloudfront.net/canonical/bf4e9f78-441b-4a24-96c1-b7990e77e150/sha256/4e7b54ea62f62b6d4fa5615aed01c50ca9b5cb78f266aebc706976c81b75fd12.zkey?versionId=y7Y6eHpexUshw8EbEiKY4q8vuYyt5WET"
+          ],
+          "sha256": "4e7b54ea62f62b6d4fa5615aed01c50ca9b5cb78f266aebc706976c81b75fd12",
+          "byteLength": 368441500
+        },
+        "acceptedAt": "2026-09-29T22:55:08.110Z",
+        "ceremonyId": "bf4e9f78-441b-4a24-96c1-b7990e77e150",
+        "clientKind": "browser",
+        "generation": 3,
+        "predecessor": {
+          "urls": [
+            "https://d1lqbpxesw1yqu.cloudfront.net/canonical/bf4e9f78-441b-4a24-96c1-b7990e77e150/sha256/c3f0429536fe2900c9f3a677321668993fd810b300e6e45d3fb2e3f130cc51ac.zkey?versionId=qLTmDAw7ur_sBrDnKx1F9ipDbKoZN.oh"
+          ],
+          "sha256": "c3f0429536fe2900c9f3a677321668993fd810b300e6e45d3fb2e3f130cc51ac",
+          "byteLength": 368441116
+        },
+        "schemaVersion": 1,
+        "contributionName": "moss-6814a829-f5d2-8738-982d-a872a41a1d76",
+        "contributionIndex": 3,
+        "clientReleaseSha256": "91d884e4c6ee44d9355c5825f3ca64ce48c613f4b2f22553f0c27c6878f7b649",
+        "transcriptEventHash": "c072672e1ec71a67c86c6dec51bb208d5c4b7e50898ab6d0e2a5ba8df49dee6e",
+        "participantPseudonym": "0xBreadguy",
+        "relationManifestSha256": "b6fd9543e3ebacfb8fab7b43ccdbb3670d1e16552bf6a8b494c44efdc65a6289",
+        "contributionHashBlake2b512": "50543ccbce09bd1779897a606635620c9f60cd1c345bde3ff2395ef1804ab688bcab4c3bf7f5f7f4fb1771be60977899e67057f383e5bd4f6227d39e00c619d9"
+      },
+      "signature": "15nWo-5F67c5OI_Hubd40HE4xq4TMBYny0tQRTnVYODAZsPCVyEOHCjaODeIIeywjo14_IxQyoNJSpCg-4rBDw"
+    },
+    {
+      "schemaVersion": 1,
+      "keyId": "moss-rehearsal-coordinator-2026-09",
+      "payload": {
+        "type": "moss.phase2.receipt.v1",
+        "sequence": 4,
+        "successor": {
+          "urls": [
+            "https://d1lqbpxesw1yqu.cloudfront.net/canonical/bf4e9f78-441b-4a24-96c1-b7990e77e150/sha256/baeb4b6ca9f4673c4a9c6265b7186762d857a3bd6ef45a6609256ffab8078f5e.zkey?versionId=oOOuf5feh2kv1qPsxog_2oS8BOgx66V9"
+          ],
+          "sha256": "baeb4b6ca9f4673c4a9c6265b7186762d857a3bd6ef45a6609256ffab8078f5e",
+          "byteLength": 368441884
+        },
+        "acceptedAt": "2026-10-01T19:15:57.496Z",
+        "ceremonyId": "bf4e9f78-441b-4a24-96c1-b7990e77e150",
+        "clientKind": "browser",
+        "generation": 4,
+        "predecessor": {
+          "urls": [
+            "https://d1lqbpxesw1yqu.cloudfront.net/canonical/bf4e9f78-441b-4a24-96c1-b7990e77e150/sha256/4e7b54ea62f62b6d4fa5615aed01c50ca9b5cb78f266aebc706976c81b75fd12.zkey?versionId=y7Y6eHpexUshw8EbEiKY4q8vuYyt5WET"
+          ],
+          "sha256": "4e7b54ea62f62b6d4fa5615aed01c50ca9b5cb78f266aebc706976c81b75fd12",
+          "byteLength": 368441500
+        },
+        "schemaVersion": 1,
+        "contributionName": "moss-df1efda1-a7d3-82aa-9721-db1b45d3764a",
+        "contributionIndex": 4,
+        "clientReleaseSha256": "48c687eb65c296bd657ee2f37283bf41f665488ae7ea24a2fb0e238077f1cfc9",
+        "transcriptEventHash": "f60373f0d01115c908b182cae72091ff1831dd4528ceb4e2c3c6ec6479bb2940",
+        "participantPseudonym": "deva-arun",
+        "relationManifestSha256": "b6fd9543e3ebacfb8fab7b43ccdbb3670d1e16552bf6a8b494c44efdc65a6289",
+        "contributionHashBlake2b512": "4ed3e8730e0382bceb724fec5c1be7e988d84949b430a1fa9ce6ff0e86a483034f055e427d091cf6552a23961d19342372ba40fb69895345ee553295e13a0f2c"
+      },
+      "signature": "iUCoSlSFxRgi8HHWIDbk9IdAsvaOoTI45VoqtRudlKwVFhKfXQ5VWWWqRabwSte9AzEthh7NfK1r2glO40DoAA"
+    },
+    {
+      "schemaVersion": 1,
+      "keyId": "moss-rehearsal-coordinator-2026-09",
+      "payload": {
+        "type": "moss.phase2.receipt.v1",
+        "sequence": 5,
+        "successor": {
+          "urls": [
+            "https://d1lqbpxesw1yqu.cloudfront.net/canonical/bf4e9f78-441b-4a24-96c1-b7990e77e150/sha256/fa1017505c7843f8d02a5dafc16ff1806374c95ece62f45010929571d6f44222.zkey?versionId=VU2V_WGjGCqlWmG7AlV76eqtkTLdx59l"
+          ],
+          "sha256": "fa1017505c7843f8d02a5dafc16ff1806374c95ece62f45010929571d6f44222",
+          "byteLength": 368442268
+        },
+        "acceptedAt": "2026-10-02T08:19:07.223Z",
+        "ceremonyId": "bf4e9f78-441b-4a24-96c1-b7990e77e150",
+        "clientKind": "browser",
+        "generation": 5,
+        "predecessor": {
+          "urls": [
+            "https://d1lqbpxesw1yqu.cloudfront.net/canonical/bf4e9f78-441b-4a24-96c1-b7990e77e150/sha256/baeb4b6ca9f4673c4a9c6265b7186762d857a3bd6ef45a6609256ffab8078f5e.zkey?versionId=oOOuf5feh2kv1qPsxog_2oS8BOgx66V9"
+          ],
+          "sha256": "baeb4b6ca9f4673c4a9c6265b7186762d857a3bd6ef45a6609256ffab8078f5e",
+          "byteLength": 368441884
+        },
+        "schemaVersion": 1,
+        "contributionName": "moss-6c815045-a485-8af4-8f02-1a4f80d63e81",
+        "contributionIndex": 5,
+        "clientReleaseSha256": "fd11a8dec7b29a3676f750f814ef8eb9d9bb0e3a5fad631d9de05346bdf6085d",
+        "transcriptEventHash": "96a2c0e9d51d22620f12ca5beecd573c69df6a24651ae0a32c4ec24317541459",
+        "participantPseudonym": "ben-megaeth",
+        "relationManifestSha256": "b6fd9543e3ebacfb8fab7b43ccdbb3670d1e16552bf6a8b494c44efdc65a6289",
+        "contributionHashBlake2b512": "38a4dd04a788a2e26b759e605da3306f01ab27362bf4f57c854b4b31256f8801acfc71d0cb2641474c21b0d90a4fd5429639963af519c066e8de8f5384415186"
+      },
+      "signature": "UYagLd5nBjCPoxbCLzhyZ2qjdphnHqn_ZoeHT313X0kxz-eSllMautz9VgnYiuuv4Yc_abFaRaSlaSp8UJQADg"
+    },
+    {
+      "schemaVersion": 1,
+      "keyId": "moss-rehearsal-coordinator-2026-09",
+      "payload": {
+        "type": "moss.phase2.receipt.v1",
+        "sequence": 6,
+        "successor": {
+          "urls": [
+            "https://d1lqbpxesw1yqu.cloudfront.net/canonical/bf4e9f78-441b-4a24-96c1-b7990e77e150/sha256/a7fcb2e373461d9d3c15f9059239ead26dd26608f59fb882ee765f83657e0b4b.zkey?versionId=PZqyWMJkZwjUl2gXWux3b_nIvW7AjdxX"
+          ],
+          "sha256": "a7fcb2e373461d9d3c15f9059239ead26dd26608f59fb882ee765f83657e0b4b",
+          "byteLength": 368442652
+        },
+        "acceptedAt": "2026-10-02T14:17:36.536Z",
+        "ceremonyId": "bf4e9f78-441b-4a24-96c1-b7990e77e150",
+        "clientKind": "browser",
+        "generation": 6,
+        "predecessor": {
+          "urls": [
+            "https://d1lqbpxesw1yqu.cloudfront.net/canonical/bf4e9f78-441b-4a24-96c1-b7990e77e150/sha256/fa1017505c7843f8d02a5dafc16ff1806374c95ece62f45010929571d6f44222.zkey?versionId=VU2V_WGjGCqlWmG7AlV76eqtkTLdx59l"
+          ],
+          "sha256": "fa1017505c7843f8d02a5dafc16ff1806374c95ece62f45010929571d6f44222",
+          "byteLength": 368442268
+        },
+        "schemaVersion": 1,
+        "contributionName": "moss-df1efda1-a7d3-82aa-9721-db1b45d3764a",
+        "contributionIndex": 6,
+        "clientReleaseSha256": "fd11a8dec7b29a3676f750f814ef8eb9d9bb0e3a5fad631d9de05346bdf6085d",
+        "transcriptEventHash": "b0f107182159ff4a4c6071a97d7db4c17108ce02e4381c69226bf5a85d5823bd",
+        "participantPseudonym": "deva-arun",
+        "relationManifestSha256": "b6fd9543e3ebacfb8fab7b43ccdbb3670d1e16552bf6a8b494c44efdc65a6289",
+        "contributionHashBlake2b512": "c7080acfe239b7cfed7dc42ac19cd177f43b7b5fbb004bdda8a82ebdc9289622b21db51eee04b4e4d02ea6b9ea9b626e4b13b70e856f58d5b5106f4e7e046c2a"
+      },
+      "signature": "EUYtobuV9FhDE9vXk06knnJkLTpiBIzvG0M6GpnIpOCgBDVHsTfqao6bGQ0kJtedFjf29aDCtaSOWtX9EQQ8Ag"
+    },
+    {
+      "schemaVersion": 1,
+      "keyId": "moss-rehearsal-coordinator-2026-09",
+      "payload": {
+        "type": "moss.phase2.receipt.v1",
+        "sequence": 7,
+        "successor": {
+          "urls": [
+            "https://d1lqbpxesw1yqu.cloudfront.net/canonical/bf4e9f78-441b-4a24-96c1-b7990e77e150/sha256/68b6997ed5aec31231f0e162d132ec9bf84dc8a316a342e5466e9870eb3beb3d.zkey?versionId=yAP1Y4BOh5OlM53P6J1NIutrOoMQZhnn"
+          ],
+          "sha256": "68b6997ed5aec31231f0e162d132ec9bf84dc8a316a342e5466e9870eb3beb3d",
+          "byteLength": 368443036
+        },
+        "acceptedAt": "2026-10-02T15:23:19.328Z",
+        "ceremonyId": "bf4e9f78-441b-4a24-96c1-b7990e77e150",
+        "clientKind": "browser",
+        "generation": 7,
+        "predecessor": {
+          "urls": [
+            "https://d1lqbpxesw1yqu.cloudfront.net/canonical/bf4e9f78-441b-4a24-96c1-b7990e77e150/sha256/a7fcb2e373461d9d3c15f9059239ead26dd26608f59fb882ee765f83657e0b4b.zkey?versionId=PZqyWMJkZwjUl2gXWux3b_nIvW7AjdxX"
+          ],
+          "sha256": "a7fcb2e373461d9d3c15f9059239ead26dd26608f59fb882ee765f83657e0b4b",
+          "byteLength": 368442652
+        },
+        "schemaVersion": 1,
+        "contributionName": "moss-df1efda1-a7d3-82aa-9721-db1b45d3764a",
+        "contributionIndex": 7,
+        "clientReleaseSha256": "8ce3c111f26c060b7530ab97f4cade4460c191f070b913c9506e013442d600de",
+        "transcriptEventHash": "c01736255ecaabd85476e55dc7efaa411011ec26936ab860b9ded07298f04251",
+        "participantPseudonym": "deva-arun",
+        "relationManifestSha256": "b6fd9543e3ebacfb8fab7b43ccdbb3670d1e16552bf6a8b494c44efdc65a6289",
+        "contributionHashBlake2b512": "a2cb56274b644d7aa84ff54233f1fc6e9ba1a13fe490aaac16f13d0567559c964072121a2de4405f74fdd7b39a2f3d8f5df34666c19de0024f009bcb22a5c731"
+      },
+      "signature": "dHDvxQ6hWaDRZnuWaT4X85ntyxfNESRLA12NpS2xSouZS67UmDZOVv8F9zKFh1zSZdlWURlCm6iIVLBYDTlCCw"
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "keyId": "prodflow-test-root-2026-10",
+  "payload": {
+    "reason": "Remove the homepage schedule and beacon details section, which only repeated the closing time.",
+    "webRelease": {
+      "sha256": "a11ea4a053f891858e2096ffc67a6d85c854b38c055b6b5b0b195ba9c9c700ee",
+      "byteLength": 8701,
+      "urls": [
+        "https://d1xydbco3b83a0.cloudfront.net/inputs/sha256/a11ea4a053f891858e2096ffc67a6d85c854b38c055b6b5b0b195ba9c9c700ee/web-release.json?versionId=mvEUSke1dkMh0MiDesctNiIhlwYrsZoZ"
+      ],
+      "sourceCommit": "9bd039d5a3ab8452c237b2ece0ee6e8d1bd008ea"
+    },
+    "schemaVersion": 1,
+    "type": "moss.phase2.operational-update.v1",
+    "ceremonyId": "bd40e300-5034-4139-9576-ce162da9aca3",
+    "manifestSha256": "1d0372caa754d78da75d439bab0a84db53d6b3c349512d976e20c21d345d2a92",
+    "sequence": 5,
+    "previousUpdateSha256": "dc95c07a0353d35a4248bc8c62cb7db8fef1fd037c8468429186f287f5404a47",
+    "authorizedAt": "2026-10-26T16:59:45.770Z"
+  },
+  "signature": "M2Vw0stJdkxRQF-Q-ab1Lrl1oHtreNVD5VNVxq7WCm-9n-49L3TTnSKwNFJaGIlYldLTFhxQgPziMR3kjH9XCw"
+}

@@ -1,0 +1,14 @@
+{
+  "checkedAt": "2026-10-08T18:46:38.620617+00:00",
+  "result": "passed",
+  "origin": "https://zklogin-phase2-ceremony-mega-eth.vercel.app",
+  "checks": [
+    "native review page layouts and full-screen randomness",
+    "previous/next navigation and hidden controls",
+    "deep-link reload and simulated mint isolation",
+    "mobile overflow and runtime errors",
+    "root-verified finalized homepage",
+    "seven accepted contributions and pagination",
+    "final artifact downloads and signed completion record"
+  ]
+}

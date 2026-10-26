@@ -1,0 +1,35 @@
+{
+  "name": "@moss/phase2-ceremony-cli",
+  "version": "2.0.0-beta.0",
+  "description": "CLI contributor tool for headless/VM environments",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/defi-wonderland/cabure-wizard.git",
+    "directory": "packages/cli"
+  },
+  "author": "Wonderland",
+  "type": "module",
+  "bin": {
+    "moss-ceremony": "./dist/index.js"
+  },
+  "scripts": {
+    "build": "node build.mjs",
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "test": "vitest run --passWithNoTests",
+    "clean": "rm -rf dist"
+  },
+  "dependencies": {
+    "@moss/phase2-protocol": "workspace:*",
+    "@moss/phase2-zkey-inspect": "workspace:*",
+    "commander": "13.1.0",
+    "snarkjs": "0.7.6"
+  },
+  "devDependencies": {
+    "@types/node": "22.19.11",
+    "@types/snarkjs": "0.7.9",
+    "esbuild": "0.25.12",
+    "typescript": "5.9.3",
+    "vitest": "4.1.2"
+  },
+  "license": "MIT"
+}

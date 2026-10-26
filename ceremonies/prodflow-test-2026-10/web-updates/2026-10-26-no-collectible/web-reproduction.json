@@ -1,0 +1,19 @@
+{
+  "type": "moss.phase2.web-reproduction.v1",
+  "id": "dpl_8TvKtF7Af3GrG7MNi9mWb2VfkU6s",
+  "url": "https://megaeth-ceremony-m7uibjsjx-mega-eth.vercel.app",
+  "sourceCommit": "b61f9c0576ebf0376f78c37a65112f046e4c4cb5",
+  "platform": "linux/amd64",
+  "nodeImage": "node@sha256:0e0ff40c39bc087845bfb27465a0df4ea419520094bc35842ff83dd8cbe6f9b6",
+  "buildRoot": "/vercel/path0",
+  "packageManager": "pnpm@10.29.2",
+  "buildArguments": {
+    "MOSS_WEB_BUILD_ID": "b61f9c0576ebf0376f78c37a65112f046e4c4cb5",
+    "NEXT_DEPLOYMENT_ID": "dpl_8TvKtF7Af3GrG7MNi9mWb2VfkU6s",
+    "NEXT_PUBLIC_BROWSER_CONTRIBUTIONS_ENABLED": "true",
+    "COORDINATOR_BASE_URL": "https://dy87eh5gw5.execute-api.us-east-2.amazonaws.com",
+    "ARTIFACT_ORIGINS": "https://d1xydbco3b83a0.cloudfront.net,https://moss-phase2-mainnet-quarantine-xfingj1ka9ez.s3.us-east-2.amazonaws.com"
+  },
+  "webReleaseSha256": "677c1ff94f1d095a28257d4a82ee7fcf87d7d45f5a7247411d6c4efa31b41559",
+  "verifiedAssets": 45
+}

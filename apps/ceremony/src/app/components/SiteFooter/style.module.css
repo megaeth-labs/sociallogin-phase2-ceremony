@@ -1,0 +1,60 @@
+/* Site footer: a night window matching the lobby hero, shared by every page. */
+
+.footer {
+  --gutter: clamp(1rem, 4vw, 3rem);
+  --window-inset: clamp(.5rem, 1vw, .875rem);
+  margin: 0 var(--window-inset) var(--window-inset);
+  border-radius: var(--radius-panel);
+  background: var(--color-night);
+  color: var(--color-night-text);
+}
+.footerInner {
+  width: min(78rem, 100% - 2 * var(--gutter));
+  margin-inline: auto;
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  gap: 3rem 2rem;
+  padding-block: clamp(3rem, 6vw, 5rem) 1.75rem;
+}
+.footerBrand { display: grid; align-content: start; gap: 1.25rem; }
+/* The wordmark ships dark; a static filter knocks it out to the night text. */
+.footerBrand img { width: clamp(8rem, 14vw, 11rem); height: auto; filter: brightness(0) invert(1); opacity: .95; }
+.footerBrand p { max-width: 28ch; font-size: .9375rem; line-height: 1.6; color: var(--color-night-muted); }
+.footerLinks {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 2rem;
+}
+.footerLinks h2 { font-size: .8125rem; font-weight: 400; color: var(--color-night-muted); margin-bottom: 1rem; }
+.footerLinks ul { list-style: none; display: grid; gap: .25rem; }
+.footerLinks :is(a, button) {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.25rem;
+  color: var(--color-night-text);
+  font-size: .9375rem;
+  text-decoration: none;
+}
+.footerLinks :is(a, button):hover { text-decoration: underline; text-decoration-color: var(--color-neon); text-underline-offset: .3125rem; }
+.footerLinks a[target="_blank"]::after { content: "↗"; margin-left: .375rem; font-size: .75em; color: var(--color-night-muted); }
+.footer :is(a, button):focus-visible { outline: 2px solid var(--color-neon); outline-offset: 3px; border-radius: .25rem; }
+.footerBase {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--color-night-line);
+  font-size: .8125rem;
+  color: var(--color-night-muted);
+}
+.footerMega { display: inline-flex; align-items: center; gap: .5rem; }
+.footerMega img { filter: brightness(0) invert(1); opacity: .8; }
+
+@media (max-width: 760px) {
+  .footerInner { grid-template-columns: 1fr; }
+  .footerLinks { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+.footer { --focus-ring: var(--color-neon); }

@@ -1,0 +1,82 @@
+{
+  "name": "@wonderland/cabure-crypto",
+  "version": "2.0.0-beta.0",
+  "description": "Typed exports for all Groth16 Phase 2 ceremony operations",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/defi-wonderland/cabure-wizard.git",
+    "directory": "packages/crypto"
+  },
+  "author": "Wonderland",
+  "type": "module",
+  "main": "./dist/cjs/index.cjs",
+  "module": "./dist/esm/index.js",
+  "types": "./dist/esm/index.d.ts",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/esm/index.d.ts",
+        "default": "./dist/esm/index.js"
+      },
+      "require": {
+        "types": "./dist/cjs/index.d.cts",
+        "default": "./dist/cjs/index.cjs"
+      }
+    },
+    "./worker": {
+      "default": "./dist/worker/contribute.worker.js"
+    },
+    "./browser": {
+      "import": {
+        "types": "./dist/esm/browserContribution.d.ts",
+        "default": "./dist/browser/index.js"
+      },
+      "require": {
+        "types": "./dist/browser/index.d.cts",
+        "default": "./dist/browser/index.cjs"
+      }
+    },
+    "./protocol": {
+      "import": {
+        "types": "./dist/esm/worker/protocol.d.ts",
+        "default": "./dist/worker/protocol.js"
+      },
+      "require": {
+        "types": "./dist/worker/protocol.d.cts",
+        "default": "./dist/worker/protocol.cjs"
+      }
+    },
+    "./entropy": {
+      "import": {
+        "types": "./dist/esm/entropy.d.ts",
+        "default": "./dist/entropy/index.js"
+      },
+      "require": {
+        "types": "./dist/entropy/index.d.cts",
+        "default": "./dist/entropy/index.cjs"
+      }
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "node build.mjs",
+    "test": "vitest run",
+    "audit": "pnpm audit --prod --audit-level high",
+    "clean": "rm -rf dist"
+  },
+  "dependencies": {
+    "@noble/hashes": "1.7.1",
+    "ffjavascript": "0.3.1",
+    "snarkjs": "0.7.6"
+  },
+  "devDependencies": {
+    "esbuild": "0.25.12",
+    "typescript": "5.9.3",
+    "vitest": "4.1.2",
+    "@types/node": "22.19.11",
+    "@types/snarkjs": "0.7.9"
+  },
+  "license": "MIT"
+}

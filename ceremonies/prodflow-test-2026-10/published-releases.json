@@ -1,0 +1,23 @@
+{
+  "web-release.json": {
+    "sha256": "2862e3059fd8ff4d6aed849b7eae2730bfce611384d02a0dd8670a3fedf10477",
+    "byteLength": 8701,
+    "urls": [
+      "https://d1xydbco3b83a0.cloudfront.net/inputs/sha256/2862e3059fd8ff4d6aed849b7eae2730bfce611384d02a0dd8670a3fedf10477/web-release.json?versionId=bHMk9m858YvBqZ5ciIuF_IgZJhXpkSs3"
+    ]
+  },
+  "web-reproduction.json": {
+    "sha256": "05cf03b5c4edb82479c9047db371f30f390cc8a6f14a490bfad5f039defffee6",
+    "byteLength": 971,
+    "urls": [
+      "https://d1xydbco3b83a0.cloudfront.net/inputs/sha256/05cf03b5c4edb82479c9047db371f30f390cc8a6f14a490bfad5f039defffee6/web-reproduction.json?versionId=81JJC39siQSPqg6o_d7YXuqDbyb69mza"
+    ]
+  },
+  "moss-phase2-cli.js": {
+    "sha256": "62bcd42a3e9a28e8e0d1adcfba3000710c758d7b2eb961f2a8520abaf53722da",
+    "byteLength": 261681,
+    "urls": [
+      "https://d1xydbco3b83a0.cloudfront.net/inputs/sha256/62bcd42a3e9a28e8e0d1adcfba3000710c758d7b2eb961f2a8520abaf53722da/moss-phase2-cli.js?versionId=5B8J1E8wvLhY04IOnrR7KVUV5gjICLfk"
+    ]
+  }
+}

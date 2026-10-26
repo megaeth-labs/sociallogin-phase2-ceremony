@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "keyId": "prodflow-test-root-2026-10",
+  "payload": {
+    "reason": "Homepage: end the contribution chain at the last contribution once closed; walkthrough tile leads with its heading over a compact step rail.",
+    "webRelease": {
+      "sha256": "554dcafb4bbb62a84709f3b4abb604b3a42f0dab29bee934b0d2e4133cbf310a",
+      "byteLength": 8701,
+      "urls": [
+        "https://d1xydbco3b83a0.cloudfront.net/inputs/sha256/554dcafb4bbb62a84709f3b4abb604b3a42f0dab29bee934b0d2e4133cbf310a/web-release.json?versionId=11lcHpXLqLenfXyjya2uUJbsHVH8Zb.W"
+      ],
+      "sourceCommit": "d5aa20eed83b346e5e45d334f907aebde485f466"
+    },
+    "schemaVersion": 1,
+    "type": "moss.phase2.operational-update.v1",
+    "ceremonyId": "bd40e300-5034-4139-9576-ce162da9aca3",
+    "manifestSha256": "1d0372caa754d78da75d439bab0a84db53d6b3c349512d976e20c21d345d2a92",
+    "sequence": 7,
+    "previousUpdateSha256": "dae8133d774f86777e44e8b8dcd83f83081737a6ebaa0e254e35943ab51ba6cf",
+    "authorizedAt": "2026-10-26T17:08:34.728Z"
+  },
+  "signature": "h-qWhBPv6KNtur4Xigqg9WZXxQYieQ4rPLUs2uKLoJ2qnSjDHQuIWdstkNtAofz3sYPvNb9irmhaISoLGAYeAA"
+}

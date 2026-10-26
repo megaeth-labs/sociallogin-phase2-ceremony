@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "keyId": "moss-rehearsal-root-2026-09",
+  "payload": {
+    "reason": "Show root-verified rehearsal completion, final artifacts and proof-test evidence. No contribution, beacon or acceptance policy changes.",
+    "webRelease": {
+      "sha256": "26f05de0869ac70f6835002331db30dc302d580100f7f049b15a67dec3751446",
+      "byteLength": 7230,
+      "urls": [
+        "https://d1lqbpxesw1yqu.cloudfront.net/inputs/sha256/26f05de0869ac70f6835002331db30dc302d580100f7f049b15a67dec3751446/web-release.json?versionId=XefBh1DnVGGzaxV.2YyEFJ3fYHfN6FgP"
+      ],
+      "sourceCommit": "23adb86c10ab97569d87a3e14dfe4c48f7eb912d"
+    },
+    "schemaVersion": 1,
+    "type": "moss.phase2.operational-update.v1",
+    "ceremonyId": "bf4e9f78-441b-4a24-96c1-b7990e77e150",
+    "manifestSha256": "b6fd9543e3ebacfb8fab7b43ccdbb3670d1e16552bf6a8b494c44efdc65a6289",
+    "sequence": 2,
+    "previousUpdateSha256": "7426d394ddff0e50efe3c703052f307203eb9a04cecfaa00b6f1613a8b908589",
+    "authorizedAt": "2026-10-04T23:05:01.154Z"
+  },
+  "signature": "lEgvWmVRAYJZsEFlTVJ-rdgHybFYp02-zO4nhZ5UFoJMegF6NZwk1fI2lBHzKsOPr3pB35yb5BAe_-KJR7ASDg"
+}

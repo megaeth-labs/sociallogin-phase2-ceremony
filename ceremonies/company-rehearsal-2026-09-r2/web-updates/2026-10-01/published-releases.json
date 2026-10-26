@@ -1,0 +1,23 @@
+{
+  "web-release.json": {
+    "sha256": "48c687eb65c296bd657ee2f37283bf41f665488ae7ea24a2fb0e238077f1cfc9",
+    "byteLength": 7230,
+    "urls": [
+      "https://d1lqbpxesw1yqu.cloudfront.net/inputs/sha256/48c687eb65c296bd657ee2f37283bf41f665488ae7ea24a2fb0e238077f1cfc9/web-release.json?versionId=3kYTftMMfdyD6ZJ0PqGRO1O1jZ0iQxdp"
+    ]
+  },
+  "web-reproduction.json": {
+    "sha256": "51197fcfb1673a5709a90a56bd63602930779842017ac265661c991f6bb03c63",
+    "byteLength": 1044,
+    "urls": [
+      "https://d1lqbpxesw1yqu.cloudfront.net/inputs/sha256/51197fcfb1673a5709a90a56bd63602930779842017ac265661c991f6bb03c63/web-reproduction.json?versionId=B33k8uqHiSBI0m61jl2pwn7VXL3yMPcT"
+    ]
+  },
+  "web-release-authorization.signed.json": {
+    "sha256": "0dc518a3de378b712e74757121a1a77879b229199bdecccfcc2b66b558a53a9d",
+    "byteLength": 974,
+    "urls": [
+      "https://d1lqbpxesw1yqu.cloudfront.net/inputs/sha256/0dc518a3de378b712e74757121a1a77879b229199bdecccfcc2b66b558a53a9d/web-release-authorization.signed.json?versionId=.B5fovT_oTJkMQGsFSKo55LeWvSYqSa7"
+    ]
+  }
+}

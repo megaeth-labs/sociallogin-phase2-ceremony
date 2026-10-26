@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "keyId": "moss-rehearsal-root-2026-09",
+  "payload": {
+    "reason": "Authorize the reproduced website with compact history navigation, corrected Bellman verification guidance and audited operational release support. Ceremony is sealed; no heartbeat, schedule, beacon or acceptance changes.",
+    "webRelease": {
+      "sha256": "e261e0fc9d8b6ed60b9003e80f3281ed3ded03f277e5e57cd080c3f909383a52",
+      "byteLength": 7230,
+      "urls": [
+        "https://d1lqbpxesw1yqu.cloudfront.net/inputs/sha256/e261e0fc9d8b6ed60b9003e80f3281ed3ded03f277e5e57cd080c3f909383a52/web-release.json?versionId=f0mKvaHh_fzOaqjKx6Hz7ViSXGYW0vvO"
+      ],
+      "sourceCommit": "d3bd60f5ad36c3f7ab67d68ef43741dc5198d816"
+    },
+    "schemaVersion": 1,
+    "type": "moss.phase2.operational-update.v1",
+    "ceremonyId": "bf4e9f78-441b-4a24-96c1-b7990e77e150",
+    "manifestSha256": "b6fd9543e3ebacfb8fab7b43ccdbb3670d1e16552bf6a8b494c44efdc65a6289",
+    "sequence": 1,
+    "previousUpdateSha256": null,
+    "authorizedAt": "2026-10-02T19:46:22.868Z"
+  },
+  "signature": "WIos5nRL6NtGEWqDzstJSc_VEHk1-zlMuIy6eTrsv5d0MQp0bhIrtpCwKb3QBYtTF7EgNLEEY9guuzp__sVuCQ"
+}

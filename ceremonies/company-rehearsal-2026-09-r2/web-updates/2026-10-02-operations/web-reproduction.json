@@ -1,0 +1,19 @@
+{
+  "type": "moss.phase2.web-reproduction.v1",
+  "id": "dpl_A6rXZxKWyrqCxajXBu2dTKq3XnxK",
+  "url": "https://zklogin-phase2-ceremony-q9yqaepgn-mega-eth.vercel.app",
+  "sourceCommit": "d3bd60f5ad36c3f7ab67d68ef43741dc5198d816",
+  "platform": "linux/amd64",
+  "nodeImage": "node@sha256:0e0ff40c39bc087845bfb27465a0df4ea419520094bc35842ff83dd8cbe6f9b6",
+  "buildRoot": "/vercel/path0",
+  "packageManager": "pnpm@10.29.2",
+  "buildArguments": {
+    "MOSS_WEB_BUILD_ID": "d3bd60f5ad36c3f7ab67d68ef43741dc5198d816",
+    "NEXT_DEPLOYMENT_ID": "dpl_A6rXZxKWyrqCxajXBu2dTKq3XnxK",
+    "NEXT_PUBLIC_BROWSER_CONTRIBUTIONS_ENABLED": "true",
+    "COORDINATOR_BASE_URL": "https://28ia0ofkx1.execute-api.us-east-2.amazonaws.com",
+    "ARTIFACT_ORIGINS": "https://d1lqbpxesw1yqu.cloudfront.net,https://moss-rehearsal-archive-qrgf2jkdbkhs.s3.us-east-2.amazonaws.com,https://moss-rehearsal-quarantine-8vamf6fhrlpf.s3.us-east-2.amazonaws.com"
+  },
+  "webReleaseSha256": "e261e0fc9d8b6ed60b9003e80f3281ed3ded03f277e5e57cd080c3f909383a52",
+  "verifiedAssets": 37
+}

@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "keyId": "prodflow-test-root-2026-10",
+  "payload": {
+    "reason": "Verify guide: link Contribution history back to the homepage table and remove the scope caveat.",
+    "webRelease": {
+      "sha256": "25e723c42b2eedb7e1c845fd2cca3583cd5e126376868783622c7549f4df12b6",
+      "byteLength": 8701,
+      "urls": [
+        "https://d1xydbco3b83a0.cloudfront.net/inputs/sha256/25e723c42b2eedb7e1c845fd2cca3583cd5e126376868783622c7549f4df12b6/web-release.json?versionId=qzUiyHoTAtSG6DBHSs9ZZipItTtddUnK"
+      ],
+      "sourceCommit": "70908046122dd222bd5a722d1fb8cfa71ad09101"
+    },
+    "schemaVersion": 1,
+    "type": "moss.phase2.operational-update.v1",
+    "ceremonyId": "bd40e300-5034-4139-9576-ce162da9aca3",
+    "manifestSha256": "1d0372caa754d78da75d439bab0a84db53d6b3c349512d976e20c21d345d2a92",
+    "sequence": 6,
+    "previousUpdateSha256": "c909b918d406c0009ddc6c0acbe5af95255fbc37da738a9d4df07047e9948abc",
+    "authorizedAt": "2026-10-26T17:04:45.166Z"
+  },
+  "signature": "JOwYOffCh-8oSS9kKrXIDIt9TsLDqgZW7mpIm7kVgIv4KQv_R2E2G7MzVeWVon-ZUlkIpQJTJ0Yy3i156x73DQ"
+}

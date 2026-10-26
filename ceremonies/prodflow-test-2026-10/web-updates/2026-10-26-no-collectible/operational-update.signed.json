@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "keyId": "prodflow-test-root-2026-10",
+  "payload": {
+    "reason": "Remove the contribution collectible from the site, and ship the resume, queue and copy fixes found during this test.",
+    "webRelease": {
+      "sha256": "677c1ff94f1d095a28257d4a82ee7fcf87d7d45f5a7247411d6c4efa31b41559",
+      "byteLength": 8701,
+      "urls": [
+        "https://d1xydbco3b83a0.cloudfront.net/inputs/sha256/677c1ff94f1d095a28257d4a82ee7fcf87d7d45f5a7247411d6c4efa31b41559/web-release.json?versionId=u3I34tXyjfnMjNXhNKCpYO73g61x40ED"
+      ],
+      "sourceCommit": "b61f9c0576ebf0376f78c37a65112f046e4c4cb5"
+    },
+    "schemaVersion": 1,
+    "type": "moss.phase2.operational-update.v1",
+    "ceremonyId": "bd40e300-5034-4139-9576-ce162da9aca3",
+    "manifestSha256": "1d0372caa754d78da75d439bab0a84db53d6b3c349512d976e20c21d345d2a92",
+    "sequence": 2,
+    "previousUpdateSha256": "373d7731a173fd7860200d3f982c1df6c72c1476053fc138dce1c02c41f50da9",
+    "authorizedAt": "2026-10-26T16:15:24.127Z"
+  },
+  "signature": "NLv7rbrX_j1qHZDox-UEVxRbGz55-OJC_i_zwUIEN7fXgH1E0ilZCjph82EpsLFErTUgrA6N2-OGtoCww9s6AQ"
+}

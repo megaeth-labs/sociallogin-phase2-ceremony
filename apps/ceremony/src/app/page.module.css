@@ -1,0 +1,91 @@
+.page {
+  min-height: 100vh;
+  background: var(--color-bg);
+}
+
+.content {
+  position: relative;
+}
+
+.main {
+  max-width: 51rem;
+  margin: 0 auto;
+  padding: 3rem 1.5rem;
+}
+
+.loader {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding-top: 8rem;
+  gap: 1rem;
+  animation: fadeIn var(--duration-settle) var(--ease-out-soft) both;
+}
+
+.spinner {
+  width: 2.25rem;
+  height: 2.25rem;
+  border: 2px solid var(--color-border);
+  border-top-color: var(--color-accent);
+  border-right-color: var(--color-accent-light);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+.loaderText {
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+  letter-spacing: 0.025em;
+}
+
+/* Status failure and the signed-out activity prompt: night plates in a
+ * hairline tray, crossfading in like the rest of the state swaps. */
+.statusError, .prompt {
+  display: grid;
+  gap: .875rem;
+  margin-top: 1.5rem;
+  padding: clamp(1.5rem, 4vw, 2.25rem);
+  border-radius: var(--radius-panel);
+  background: var(--color-night);
+  color: var(--color-night-text);
+  box-shadow: 0 0 0 .375rem color-mix(in oklch, var(--color-text) 4%, transparent), 0 0 0 calc(.375rem + 1px) color-mix(in oklch, var(--color-text) 7%, transparent);
+  animation: fadeIn var(--duration-settle) var(--ease-out-soft) both;
+}
+.statusError h2, .prompt h2 { font-size: clamp(1.5rem, 3vw, 2rem); font-weight: 500; line-height: 1.15; letter-spacing: -.035em; }
+.statusError h2 { display: flex; align-items: center; gap: .75rem; }
+.statusError h2::before {
+  content: "";
+  flex-shrink: 0;
+  width: .625rem;
+  height: .625rem;
+  border-radius: 50%;
+  background: var(--color-warning);
+  box-shadow: 0 0 0 .25rem color-mix(in oklch, var(--color-warning) 20%, transparent);
+}
+.statusError p { max-width: 62ch; font-size: .9375rem; line-height: 1.6; color: var(--color-night-muted); overflow-wrap: anywhere; }
+.statusError a { width: fit-content; color: var(--color-neon); text-underline-offset: .25rem; }
+.statusError a:focus-visible { outline: 2px solid var(--color-neon); outline-offset: 3px; }
+.prompt {
+  --button-accent-bg: var(--color-frost);
+  --button-accent-bg-hover: var(--color-surface);
+  --button-accent-fg: var(--color-text);
+}
+.prompt > button { width: fit-content; }
+
+.inlineAlert { font-size: .875rem; line-height: 1.6; color: var(--color-error); }
+.inlineAlert button { margin-left: .25rem; min-height: 24px; color: var(--color-accent); text-decoration: underline; text-underline-offset: .2rem; }
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.wide { max-width: 78rem; padding-block: clamp(2rem, 5vw, 4rem); }
+
+/* The lobby lays out its own full-bleed hero, container and footer. */
+.landing { max-width: none; padding: 0; }

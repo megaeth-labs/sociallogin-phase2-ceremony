@@ -1,0 +1,21 @@
+{
+  "chainId": 6343,
+  "network": "MegaETH testnet",
+  "contractAddress": "0xffb913aa10a735ecc8fb2433a34f1b81323a80d2",
+  "transactionHash": "0x74a3b1e2421ef12d2c6b8283d01c3215f6563a0022943bf88eb89479dab058e5",
+  "blockNumber": "31166287",
+  "ceremonyId": "bf4e9f78-441b-4a24-96c1-b7990e77e150",
+  "ceremonyIdHash": "0xe87c5c6d36531187267b6ccbfd898ec0d94efad402c1f0a6f48ee04ad701867b",
+  "claimSigner": "0x7d4cF5DB733Ee4f04B84AfDaC1cBf98Df1E33EF7",
+  "owner": "0x4Da38f00E572ACf11bDd94Dc42Aa882492353029",
+  "transferable": false,
+  "runtimeKeccak256": "0xbf435da09b252f0b1b695aab30a06125095e7c619f0c64f12af0717c851e8130",
+  "feeETH": "0.000103656419",
+  "runtimeMatchesCompiledSource": true,
+  "contractSourceKeccak256": "0xbe3a8d417e9df78efac24e14a0733c395d32dc825c7ce80d1fcad1b596621c9a",
+  "sourceVerification": {
+    "provider": "Sourcify",
+    "status": "exact_match",
+    "jobId": "b4f506ff-cb4c-4b01-b23e-85048e7460d1"
+  }
+}

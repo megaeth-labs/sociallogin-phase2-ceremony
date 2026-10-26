@@ -1,0 +1,24 @@
+name: Publish Release
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  publish-crypto:
+    uses: ./.github/workflows/publish-crypto.yml
+
+  publish-create-cabure-ceremony:
+    needs: publish-crypto
+    uses: ./.github/workflows/publish-create-cabure-ceremony.yml
+
+  publish-cli:
+    needs:
+      - publish-crypto
+      - publish-create-cabure-ceremony
+    uses: ./.github/workflows/publish-cli.yml

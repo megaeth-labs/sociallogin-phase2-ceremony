@@ -1,0 +1,13 @@
+{
+  "checkedAt": "2026-10-08T21:41:43.679Z",
+  "result": "passed",
+  "origin": "https://zklogin-phase2-ceremony-mega-eth.vercel.app",
+  "checks": [
+    "real seven-contribution history in walkthrough",
+    "five cards then two with pagination",
+    "expanded receipt and verifier details",
+    "signed receipt download works",
+    "artifact download link present",
+    "mobile overflow and no runtime errors"
+  ]
+}

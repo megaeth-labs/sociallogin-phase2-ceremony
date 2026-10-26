@@ -1,0 +1,61 @@
+{
+  "schemaVersion": 1,
+  "keyId": "moss-rehearsal-root-2026-09",
+  "payload": {
+    "schemaVersion": 1,
+    "type": "moss.phase2.rehearsal-finalization.v1",
+    "ceremonyId": "bf4e9f78-441b-4a24-96c1-b7990e77e150",
+    "manifestSha256": "b6fd9543e3ebacfb8fab7b43ccdbb3670d1e16552bf6a8b494c44efdc65a6289",
+    "sealedHeadSha256": "68b6997ed5aec31231f0e162d132ec9bf84dc8a316a342e5466e9870eb3beb3d",
+    "sealedHeadByteLength": 368443036,
+    "sealedEventHash": "c01736255ecaabd85476e55dc7efaa411011ec26936ab860b9ded07298f04251",
+    "sealedEventSequence": 7,
+    "ordinaryContributions": 7,
+    "beaconContributions": 1,
+    "beacon": {
+      "blockNumber": 26108000,
+      "blockHash": "bca265b71ca14baf3c2e384b817ddab64e3d4a302e32a24424e208a123b231a2",
+      "numIterationsExp": 32
+    },
+    "completedAt": "2026-10-04T16:49:58.729Z",
+    "publicInputs": 20,
+    "proofTests": {
+      "fixtures": 1,
+      "validProofs": 2,
+      "solidityTests": 4
+    },
+    "artifacts": {
+      "finalZkey": {
+        "sha256": "eb73e75d9e1108e7a1b6323431ef5d7cf23b0b1ada6eeda5784343fc1c647f69",
+        "byteLength": 567405389,
+        "versionId": "deaag2F6NiF8t7jHM_fh1MnvRCo1z5.3",
+        "url": "https://d1lqbpxesw1yqu.cloudfront.net/finalization/bf4e9f78-441b-4a24-96c1-b7990e77e150/2026-10-03/sha256/eb73e75d9e1108e7a1b6323431ef5d7cf23b0b1ada6eeda5784343fc1c647f69/final.zkey?versionId=deaag2F6NiF8t7jHM_fh1MnvRCo1z5.3"
+      },
+      "verificationKey": {
+        "sha256": "0237be207eb911e56863c1a5dbe0bbcb9e7f2b22f221e95f1f74b687c9ad1ac7",
+        "byteLength": 5735,
+        "versionId": "wLhQuQgS09FNo929wyhTJSmq8RO4kk5F",
+        "url": "https://d1lqbpxesw1yqu.cloudfront.net/finalization/bf4e9f78-441b-4a24-96c1-b7990e77e150/2026-10-03/sha256/0237be207eb911e56863c1a5dbe0bbcb9e7f2b22f221e95f1f74b687c9ad1ac7/verification_key.json?versionId=wLhQuQgS09FNo929wyhTJSmq8RO4kk5F"
+      },
+      "solidityVerifier": {
+        "sha256": "976fb734167755e4affd8c0d0afb4253c184eac51c8b86af22a3f877e63063ca",
+        "byteLength": 14499,
+        "versionId": "8FXSnLHy6o32TN9VjSdC4.vi_.8FekFQ",
+        "url": "https://d1lqbpxesw1yqu.cloudfront.net/finalization/bf4e9f78-441b-4a24-96c1-b7990e77e150/2026-10-03/sha256/976fb734167755e4affd8c0d0afb4253c184eac51c8b86af22a3f877e63063ca/Verifier.sol?versionId=8FXSnLHy6o32TN9VjSdC4.vi_.8FekFQ"
+      },
+      "artifactIndex": {
+        "sha256": "69146a214e9338b22835a47b6819d4549dbb0770d4121e5c8265a4cabad0826c",
+        "byteLength": 6339,
+        "versionId": "M6JS2vPpab4vtY8j8S3JcZ1GX9Ntnmr2",
+        "url": "https://d1lqbpxesw1yqu.cloudfront.net/finalization/bf4e9f78-441b-4a24-96c1-b7990e77e150/2026-10-03/sha256/69146a214e9338b22835a47b6819d4549dbb0770d4121e5c8265a4cabad0826c/publication-index.json?versionId=M6JS2vPpab4vtY8j8S3JcZ1GX9Ntnmr2"
+      },
+      "proofEvidence": {
+        "sha256": "1ca59abd5720f8722dea1c61a2dd77bf0c0dd8c198a4350e4c7887bc2496a7b3",
+        "byteLength": 2927,
+        "versionId": "el07syxnuZe4ZAQprsPm38dVaTTGNWIO",
+        "url": "https://d1lqbpxesw1yqu.cloudfront.net/finalization/bf4e9f78-441b-4a24-96c1-b7990e77e150/2026-10-03/sha256/1ca59abd5720f8722dea1c61a2dd77bf0c0dd8c198a4350e4c7887bc2496a7b3/proof-verification-index.json?versionId=el07syxnuZe4ZAQprsPm38dVaTTGNWIO"
+      }
+    }
+  },
+  "signature": "xVIBLI2uofu-vJ5BmT-RRg7Ot2xik7f7UhlLkx0W2vEphyEK1h3WlL9J_Sd7demCSJbxBy3GIcZYUtMEDMmXDg"
+}

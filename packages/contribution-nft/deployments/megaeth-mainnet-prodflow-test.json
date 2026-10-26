@@ -1,0 +1,22 @@
+{
+  "chainId": 4326,
+  "network": "MegaETH mainnet",
+  "purpose": "Production-flow test ceremony (throwaway); not the mainnet ceremony's collectible",
+  "contractAddress": "0x6E83C1577B486cB748f3768fb48BacafdaB047De",
+  "transactionHash": "0xca0af3e845f8151c6a07034697cfbfff17259af195673d4ef6c3449d6ed451b1",
+  "blockNumber": "30197886",
+  "renderer": "0x758fb181EE8e78CdE48b2C7c305C0152f55e6578",
+  "rendererTransactionHash": "0x9f8430a8b56820da5b5324e31662541d20292eb4c6e3966d67972987d4b3ea6a",
+  "rendererBlockNumber": "30197884",
+  "faceRenderer": "0x7523fcA1bdc588e41D6F95EB916CC305bE6C671d",
+  "ceremonyId": "bd40e300-5034-4139-9576-ce162da9aca3",
+  "ceremonyIdHash": "0x6509b011e7dc4dc69ba70a09974123e36e105e5f7769fffc75c8eebf3a5412c8",
+  "claimSigner": "0xe79cBD8A9d5475D133C8E06F714438Bf68906D73",
+  "owner": "0x4Da38f00E572ACf11bDd94Dc42Aa882492353029",
+  "deployer": "0x4Da38f00E572ACf11bDd94Dc42Aa882492353029",
+  "transferable": false,
+  "gasUsed": { "renderer": 410422086, "badge": 97961377, "total": 508383463 },
+  "feeETH": { "renderer": "0.000410442495463552", "badge": "0.000097969408863027", "total": "0.000508411904326579" },
+  "sourceVerification": "not submitted (owner decision 2026-10-26)",
+  "renderCheck": "renderer svg() and attributes() byte-identical to apps/ceremony/src/lib/nft/badge-svg.ts for 32 receipt hashes, including all-zero and all-ff"
+}

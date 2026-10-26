@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 1,
+  "keyId": "moss-rehearsal-root-2026-09",
+  "payload": {
+    "schemaVersion": 1,
+    "type": "moss.phase2.rehearsal-web-release.v1",
+    "ceremonyId": "bf4e9f78-441b-4a24-96c1-b7990e77e150",
+    "manifestSha256": "b6fd9543e3ebacfb8fab7b43ccdbb3670d1e16552bf6a8b494c44efdc65a6289",
+    "originalWebReleaseSha256": "32e22d25e63e20afca5c9aea8f490af5c645f3cc7463ed6e89ee6d3dc52d8fb5",
+    "authorizedAt": "2026-10-01T17:52:51.166Z",
+    "release": {
+      "sha256": "48c687eb65c296bd657ee2f37283bf41f665488ae7ea24a2fb0e238077f1cfc9",
+      "byteLength": 7230,
+      "urls": [
+        "https://d1lqbpxesw1yqu.cloudfront.net/inputs/sha256/48c687eb65c296bd657ee2f37283bf41f665488ae7ea24a2fb0e238077f1cfc9/web-release.json?versionId=3kYTftMMfdyD6ZJ0PqGRO1O1jZ0iQxdp"
+      ],
+      "sourceCommit": "a4068174c3497b5fbccbae771a560d7c389b89c7"
+    }
+  },
+  "signature": "myHmMGGOPH8tRFJKOWwvoLbLlE6R853r1gJQnQUEyPIdNIrMxhcTiBhErlVx_R-1Is0zKdll3HJBVY0Kfg66DQ"
+}

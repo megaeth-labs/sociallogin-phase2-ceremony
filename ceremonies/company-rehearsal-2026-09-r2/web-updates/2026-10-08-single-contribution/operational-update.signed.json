@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "keyId": "moss-rehearsal-root-2026-09",
+  "payload": {
+    "reason": "Clarify single-contribution receipt and artifact verification, with a pinned source checkout and explicit downloads. No contribution, beacon or acceptance policy changes.",
+    "webRelease": {
+      "sha256": "269b93cb876d8bd931406fc28de29bd275fb4352b8c45c51ecde91592ebc3d2d",
+      "byteLength": 7962,
+      "urls": [
+        "https://d1lqbpxesw1yqu.cloudfront.net/inputs/sha256/269b93cb876d8bd931406fc28de29bd275fb4352b8c45c51ecde91592ebc3d2d/web-release.json?versionId=0QPcN52_8j5nofImTxgoc5i._MyY49sm"
+      ],
+      "sourceCommit": "d8c01b7059d6ecb10d426b2b6de0b5eff844ad87"
+    },
+    "schemaVersion": 1,
+    "type": "moss.phase2.operational-update.v1",
+    "ceremonyId": "bf4e9f78-441b-4a24-96c1-b7990e77e150",
+    "manifestSha256": "b6fd9543e3ebacfb8fab7b43ccdbb3670d1e16552bf6a8b494c44efdc65a6289",
+    "sequence": 5,
+    "previousUpdateSha256": "db1fdf86901b26468755136440038dfa2cc951b550798d3d64f466612cba73ce",
+    "authorizedAt": "2026-10-08T20:42:10.545Z"
+  },
+  "signature": "cyaIMuZpL1PsXfWtvanReltgotnx3WaOtpFvRSCHl5raIkJ9PDfc49A24bdr25mANefY5igoZmelOxn_9UqkCg"
+}
