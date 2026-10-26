@@ -1,0 +1,98 @@
+{
+  "_README": [
+    "MOSS social login Phase 2 mainnet ceremony.",
+    "Schedule, beacon and web release are filled at signing time (owner go-ahead).",
+    "Root key moss-social-login-root-2026-10, SPKI SHA-256 71e1eafb6cfed35c2278d7eb1dc9a7c8d57127bec5dc6e983f8fb06b2129865d."
+  ],
+  "purpose": "production",
+  "slug": "moss-social-login-phase2",
+  "operationalPolicy": {
+    "minHeartbeatGraceSeconds": 30,
+    "maxHeartbeatGraceSeconds": 600,
+    "allowWebReleaseUpdates": true,
+    "allowCliReleaseUpdates": true
+  },
+  "primaryPublication": {
+    "archiveBaseUrl": "https://d1xydbco3b83a0.cloudfront.net"
+  },
+  "ceremonyId": "38200f3f-58a7-4054-a29d-91fa89dc1f22",
+  "schedule": {
+    "opensAt": "2026-10-26T20:20:00.000Z",
+    "sealsAt": "2026-11-05T04:59:00.000Z"
+  },
+  "beacon": {
+    "source": "ethereum-block",
+    "chainId": 1,
+    "blockNumber": 26346911,
+    "expectedAt": "2026-11-05T05:59:11.000Z",
+    "numIterationsExp": 10,
+    "contributionName": "final",
+    "_note": "Committed from Ethereum head at signing; 26346911 cannot arrive before 2026-11-05T05:59:11.000Z (12 s slots)."
+  },
+  "genesisBellman": {
+    "sha256": "600950f4831a93c7907cca96c8e722c4d319401925c353f4ad2ed6aae82d173e",
+    "byteLength": 368440348,
+    "urls": [
+      "https://d1xydbco3b83a0.cloudfront.net/inputs/sha256/600950f4831a93c7907cca96c8e722c4d319401925c353f4ad2ed6aae82d173e/genesis.params?versionId=6XHF2OBn0LXLKfJWQM6A2q3jLbbW1C9I"
+    ]
+  },
+  "artifactUrls": {
+    "r1cs": [
+      "https://d1xydbco3b83a0.cloudfront.net/inputs/sha256/173eba6b9b7883bb8e761f69f902c334b14cea61a094eba7466f0f548d601692/circuit.r1cs?versionId=NSqeKG.vaZcg9QnQSp_OaJEcpcPDPRZw"
+    ],
+    "ptau": [
+      "https://d1xydbco3b83a0.cloudfront.net/inputs/sha256/032647abe127f4562f8118dd5f866ab595c1f2bbd03d0a85ff3739a4a967d9be/powersoftau.ptau?versionId=7loKBCkcC4D3OWLmrKdWClX1yU4bc8MH"
+    ],
+    "genesisZkey": [
+      "https://d1xydbco3b83a0.cloudfront.net/inputs/sha256/f23c5dadb27613ec3d819c3cb59060804a0dc506fb6d873ab6d3ca5f8357090d/genesis.zkey?versionId=n8WbeAChgauldwbbBZ3.C8c3PkpGl5Tm"
+    ]
+  },
+  "coordinatorKeys": [
+    {
+      "keyId": "coordinator-1",
+      "publicKeyFile": "../../../moss-phase2-secrets/mainnet-2026-10/coordinator-1.pub"
+    }
+  ],
+  "verifierKeys": [
+    {
+      "keyId": "verifier-a",
+      "publicKeyFile": "../../../moss-phase2-secrets/mainnet-2026-10/verifier-a.pub",
+      "verifierImageDigest": "sha256:87d4d980849476bfe583baf0786c3ff63ff65296c70a8c8ed66d770a1f308643"
+    }
+  ],
+  "verifierPolicy": {
+    "verificationMethod": "bellman-transition-v1",
+    "requiredOperators": 1,
+    "passesPerOperator": 1
+  },
+  "contributionPolicy": {
+    "targetContributions": 100000,
+    "maxArtifactByteLength": 620000000,
+    "requirePinnedClientRelease": true,
+    "lease": {
+      "offerSeconds": 120,
+      "heartbeatSeconds": 300,
+      "absoluteSeconds": 1800
+    },
+    "verifierJobSeconds": 1800,
+    "verifierMaxAttempts": 3
+  },
+  "webRelease": {
+    "sha256": "f5f11f323a9e5b0998ca7d2b38cb7eb441bc0b9cc99370fda83e4f2974c70a01",
+    "byteLength": 8701,
+    "urls": [
+      "https://d1xydbco3b83a0.cloudfront.net/inputs/sha256/f5f11f323a9e5b0998ca7d2b38cb7eb441bc0b9cc99370fda83e4f2974c70a01/web-release.json?versionId=qCDRXJtnUp3BYfzPSyD2Y15IRhJZoxM9"
+    ],
+    "sourceCommit": "e827b61f581c721f71628c4cd89dfbad4c8cb9d8"
+  },
+  "cliReleases": [
+    {
+      "sha256": "62bcd42a3e9a28e8e0d1adcfba3000710c758d7b2eb961f2a8520abaf53722da",
+      "byteLength": 261681,
+      "urls": [
+        "https://d1xydbco3b83a0.cloudfront.net/inputs/sha256/62bcd42a3e9a28e8e0d1adcfba3000710c758d7b2eb961f2a8520abaf53722da/moss-phase2-cli.js?versionId=5B8J1E8wvLhY04IOnrR7KVUV5gjICLfk"
+      ],
+      "sourceCommit": "e827b61f581c721f71628c4cd89dfbad4c8cb9d8"
+    }
+  ]
+}
