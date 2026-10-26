@@ -32,14 +32,12 @@ export function ReceiptDetails({ item }: { item: VerifiedPublicReceipt }) {
         <dt>Receipt signing key</dt><dd>{envelope.keyId}</dd>
       </dl>
       <h3>Server acceptance checks</h3>
-      <p>The manifest requires {item.policy.requiredOperators} verifier {item.policy.requiredOperators === 1 ? "operator" : "operators"}, with {item.policy.passesPerOperator} complete {item.policy.passesPerOperator === 1 ? "pass" : "passes"} per operator and unanimous approval.</p>
       <ul>
         <li>Upload SHA-256 and byte length checked against the submitted bytes.</li>
         <li>Exact predecessor preserved, with exactly one new contribution.</li>
         <li>{bellman ? "Checked Bellman proof-of-knowledge and parameter-transition verification against the exact accepted predecessor." : "Full snarkjs verification against the pinned genesis and PTAU."}</li>
         <li>Signed verifier reports checked before transactional head acceptance.</li>
       </ul>
-      <p>Required verifier identities: {item.policy.operatorKeyIds.join(", ")}. These checks describe the acceptance policy; this card is not an independent replay of verifier reports.</p>
       <div className={styles.actions}>
         <button className={styles.download} onClick={download}>Download signed receipt</button>
         {item.artifactDownloadUrl && <a className={styles.download} href={item.artifactDownloadUrl} download={`contribution-${receipt.contributionIndex}.${bellman ? "params" : "zkey"}`}>Download contribution {bellman ? "parameters" : "zkey"}</a>}
