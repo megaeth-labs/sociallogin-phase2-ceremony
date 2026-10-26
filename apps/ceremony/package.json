@@ -17,7 +17,7 @@
     "@tanstack/react-query": "5.91.0",
     "@upstash/redis": "1.36.2",
     "@wonderland/cabure-crypto": "workspace:*",
-    "next": "15.5.24",
+    "next": "15.5.28",
     "next-auth": "4.24.15",
     "react": "19.2.4",
     "react-dom": "19.2.4",
@@ -31,8 +31,8 @@
     "jsdom": "28.1.0",
     "playwright-core": "1.59.1",
     "postcss": "8.5.25",
-    "tsx": "4.21.0",
+    "tsx": "4.23.15",
     "typescript": "5.9.3",
-    "vitest": "4.1.2"
+    "vitest": "4.1.12"
   }
 }
