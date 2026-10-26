@@ -180,7 +180,6 @@ function CheckList() {
   // Page 0 is the lobby's query too, so visiting both pages costs one request.
   const { data, isError } = useContributionHistory();
   const latest = data?.items[0];
-  const policy = latest?.policy;
   return (
     <div className={styles.checkPanel}>
       <ul className={styles.checklist} aria-label="Acceptance checks">
@@ -195,14 +194,6 @@ function CheckList() {
             <code title={latest.receipt.successor.sha256}>{shortHash(latest.receipt.successor.sha256)}</code>
           ) : isError ? "Couldn’t load the latest record. Retrying." : data ? "Appears after the first acceptance" : "Loading…"}
         </dd>
-        {policy && (
-          <>
-            <dt>Verifier policy</dt>
-            <dd>
-              {policy.requiredOperators} {policy.requiredOperators === 1 ? "operator" : "operators"}, {policy.passesPerOperator} {policy.passesPerOperator === 1 ? "pass" : "passes"} each, unanimous
-            </dd>
-          </>
-        )}
       </dl>
     </div>
   );
