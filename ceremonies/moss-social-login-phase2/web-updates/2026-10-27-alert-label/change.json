@@ -1,0 +1,11 @@
+{
+  "reason": "Label the turn alert for both the chime and the notification.",
+  "webRelease": {
+    "sha256": "447f14d6a595971389e7215173f6c34402455cc50d22f976efb13db4b1330019",
+    "byteLength": 8701,
+    "urls": [
+      "https://d1xydbco3b83a0.cloudfront.net/inputs/sha256/447f14d6a595971389e7215173f6c34402455cc50d22f976efb13db4b1330019/web-release.json?versionId=dySyfYG54TKIRgBjcbC3Ntq.1R3TPNpP"
+    ],
+    "sourceCommit": "89642e333821d712a74a13d150064debd8a81a5b"
+  }
+}

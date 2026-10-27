@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "keyId": "moss-social-login-root-2026-10",
+  "payload": {
+    "reason": "Label the turn alert for both the chime and the notification.",
+    "webRelease": {
+      "sha256": "447f14d6a595971389e7215173f6c34402455cc50d22f976efb13db4b1330019",
+      "byteLength": 8701,
+      "urls": [
+        "https://d1xydbco3b83a0.cloudfront.net/inputs/sha256/447f14d6a595971389e7215173f6c34402455cc50d22f976efb13db4b1330019/web-release.json?versionId=dySyfYG54TKIRgBjcbC3Ntq.1R3TPNpP"
+      ],
+      "sourceCommit": "89642e333821d712a74a13d150064debd8a81a5b"
+    },
+    "schemaVersion": 1,
+    "type": "moss.phase2.operational-update.v1",
+    "ceremonyId": "38200f3f-58a7-4054-a29d-91fa89dc1f22",
+    "manifestSha256": "441ccbe64b84b22c3e443c6d67e7f6f2f6186910c4d47cea61817540359cfa58",
+    "sequence": 10,
+    "previousUpdateSha256": "c7b4b0fa52f5498af710b206948a2b025200264a573e08deb5459ca6da924a77",
+    "authorizedAt": "2026-10-27T04:56:50.288Z"
+  },
+  "signature": "zJ-4UpwzomODjP4kp_9hcTqVJzayF7-IGoOflT1l9ddJiFwES9TFiZGuWWdVSx6k8WqOn4f69qtJLzYuGLDHCQ"
+}
