@@ -1,0 +1,11 @@
+{
+  "reason": "Name the beacon block and link the signed manifest on the how-it-works page.",
+  "webRelease": {
+    "sha256": "4b922b8766aab8d68cefa1ff0ebf1848dae64264c1a3474a937a0145b33bcb5b",
+    "byteLength": 8701,
+    "urls": [
+      "https://d1xydbco3b83a0.cloudfront.net/inputs/sha256/4b922b8766aab8d68cefa1ff0ebf1848dae64264c1a3474a937a0145b33bcb5b/web-release.json?versionId=ig8GZzMS9L7uSLqYxi4ZVVJ.ytVUy_82"
+    ],
+    "sourceCommit": "60622630c48fb92e81cbf524e6b0156c8aa5ca47"
+  }
+}

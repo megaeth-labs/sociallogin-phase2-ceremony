@@ -45,10 +45,12 @@ export function ParticipantActivityCard({ activity, abandoned = null, closedNoti
           ? "Your slot is still held by an earlier attempt, which may be running in another tab or browser. If it isn’t, the slot is released within about 5 minutes and you can join the queue again."
           : "Checking your earlier attempt…"}
     </p>}
-    {stage === "queued" && <>
-      <p>You have a place in the queue.</p>
-      <Button onClick={onContinue}>Return to the queue</Button>
-    </>}
+    {stage === "queued" && (abandoned === "running"
+      ? <p role="status">Your place in the queue is open in another tab. Switch to that tab and keep it open; closing it gives up your place.</p>
+      : <>
+        <p>You have a place in the queue.</p>
+        <Button onClick={onContinue}>Return to the queue</Button>
+      </>)}
     {activity.receipts.map((receipt) => <div key={receipt.receiptId} className={styles.receipt}>
       <h3>Contribution #{receipt.contributionIndex}</h3>
       <p>Accepted <time dateTime={new Date(receipt.timestamp).toISOString()}>{new Date(receipt.timestamp).toUTCString()}</time></p>

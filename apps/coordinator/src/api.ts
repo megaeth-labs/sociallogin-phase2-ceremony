@@ -9,6 +9,7 @@ import type {
   VerificationReportV1,
 } from "@moss/phase2-protocol";
 import type { UploadGrant } from "@moss/phase2-storage";
+import type { LeaseProgress } from "./lease-progress.js";
 
 import type { ParticipantPrincipal } from "./auth.js";
 
@@ -85,7 +86,7 @@ export interface CoordinatorOperations {
    * parameter carrying unvalidated client input invites someone to start
    * trusting it.
    */
-  heartbeat(leaseId: string, participantId: string): Promise<void>;
+  heartbeat(leaseId: string, participantId: string, progress?: LeaseProgress | null): Promise<void>;
   createUpload(leaseId: string, participantId: string): Promise<UploadGrant>;
   getUpload(uploadId: string, participantId: string): Promise<{
     uploadId: string;

@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "keyId": "moss-social-login-root-2026-10",
+  "payload": {
+    "reason": "Start the contribution when a turn is offered, add an opt-in chime, and explain slow downloads and queue places held by another tab.",
+    "webRelease": {
+      "sha256": "fbac766d5a71ddffb94c54edb013c2e551ee16b2c8c9363f5e319c25b12d7bfa",
+      "byteLength": 8701,
+      "urls": [
+        "https://d1xydbco3b83a0.cloudfront.net/inputs/sha256/fbac766d5a71ddffb94c54edb013c2e551ee16b2c8c9363f5e319c25b12d7bfa/web-release.json?versionId=24dWj5TLDZNzhwvnrVUTHzASysebUlSQ"
+      ],
+      "sourceCommit": "4d0a1ae89616ebd1e9dfbe9efb75a93b4276f211"
+    },
+    "schemaVersion": 1,
+    "type": "moss.phase2.operational-update.v1",
+    "ceremonyId": "38200f3f-58a7-4054-a29d-91fa89dc1f22",
+    "manifestSha256": "441ccbe64b84b22c3e443c6d67e7f6f2f6186910c4d47cea61817540359cfa58",
+    "sequence": 9,
+    "previousUpdateSha256": "7ea577c4d574d643cec375f0128833e91233e281c75cb6131400093872c93e75",
+    "authorizedAt": "2026-10-27T04:48:04.669Z"
+  },
+  "signature": "wHqayOzYyzHCtfHW3_haJ5N_H8cWw9OF7ujIjAEgvv9JW67VEs50SX79MKpv-EtXQX_DcxSgwqxPOzhSG8VoCg"
+}

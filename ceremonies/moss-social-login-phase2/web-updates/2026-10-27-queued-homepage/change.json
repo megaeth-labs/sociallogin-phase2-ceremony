@@ -1,0 +1,11 @@
+{
+  "reason": "Show only the welcome and queue card while queued, and alert only after this page's opt-in.",
+  "webRelease": {
+    "sha256": "a3076a735056d443d238ab7ab41e818b981353203fc9371f297bf6b6fdbf59f9",
+    "byteLength": 8701,
+    "urls": [
+      "https://d1xydbco3b83a0.cloudfront.net/inputs/sha256/a3076a735056d443d238ab7ab41e818b981353203fc9371f297bf6b6fdbf59f9/web-release.json?versionId=W.MxPOtC1LdnqboF1D8Bwk66kwRdcxLX"
+    ],
+    "sourceCommit": "7e02555ce9190cd8249dac1796486a1e1279338a"
+  }
+}

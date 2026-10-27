@@ -1,0 +1,11 @@
+{
+  "reason": "Start the contribution when a turn is offered, add an opt-in chime, and explain slow downloads and queue places held by another tab.",
+  "webRelease": {
+    "sha256": "fbac766d5a71ddffb94c54edb013c2e551ee16b2c8c9363f5e319c25b12d7bfa",
+    "byteLength": 8701,
+    "urls": [
+      "https://d1xydbco3b83a0.cloudfront.net/inputs/sha256/fbac766d5a71ddffb94c54edb013c2e551ee16b2c8c9363f5e319c25b12d7bfa/web-release.json?versionId=24dWj5TLDZNzhwvnrVUTHzASysebUlSQ"
+    ],
+    "sourceCommit": "4d0a1ae89616ebd1e9dfbe9efb75a93b4276f211"
+  }
+}

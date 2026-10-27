@@ -208,10 +208,21 @@ function Deadline() {
   );
 }
 
+/** The public repository folder holding the signed manifest, root key and signed updates. */
+const SIGNED_MANIFEST_URL =
+  "https://github.com/megaeth-labs/sociallogin-phase2-ceremony/tree/main/ceremonies/moss-social-login-phase2";
+
+/** The signed beacon block, named in the Beacon step once status is known. */
+function BeaconBlock() {
+  const { status } = useCeremonyStatus();
+  if (!status?.beaconBlock) return <>A future Ethereum block</>;
+  return <>Ethereum block {status.beaconBlock.toLocaleString("en-US")}</>;
+}
+
 const stations: Station[] = [
   {
     ...walkthroughStep("join"),
-    body: "Sign in with GitHub and check that your browser is ready. Only one contribution runs at a time, so you wait in a queue until it’s your turn. Signing in doesn’t claim a slot; when your turn comes, claim the offer before it expires.",
+    body: "Sign in with GitHub and check that your browser is ready. Only one contribution runs at a time, so you wait in a queue until it’s your turn. When your turn comes, your contribution starts automatically, so keep the tab open and your computer awake.",
     art: <QueueArt />,
   },
   {
@@ -246,12 +257,12 @@ const stations: Station[] = [
   },
   {
     ...walkthroughStep("close"),
-    body: <>At the deadline in the signed manifest, the coordinator seals the chain and stops accepting contributions.<Deadline /></>,
+    body: <>At the deadline in the <a href={SIGNED_MANIFEST_URL}>signed manifest</a>, the coordinator seals the chain and stops accepting contributions.<Deadline /></>,
     art: <SealArt />,
   },
   {
     ...walkthroughStep("beacon"),
-    body: "A future Ethereum block, named in the signed manifest before contributions open, supplies one final contribution after the chain is sealed. Its hash isn’t known in advance, so no participant or organizer can choose the final result.",
+    body: <><BeaconBlock />, named in the signed manifest before contributions opened, supplies one final contribution after the chain is sealed. Its hash isn’t known in advance, so no participant or organizer can choose the final result.</>,
     art: <BeaconArt />,
   },
   {

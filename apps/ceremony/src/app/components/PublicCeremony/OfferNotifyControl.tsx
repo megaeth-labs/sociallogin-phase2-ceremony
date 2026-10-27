@@ -1,30 +1,44 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 import { Button } from "@/app/components/Button";
 import {
   offerNotificationPermission,
+  optInToTurnAlerts,
   requestOfferNotifications,
-  type OfferNotificationPermission,
 } from "@/lib/offer-alert";
+import { enableTurnChime, turnChimeEnabled } from "@/lib/turn-chime";
 
-/** Opt-in only: the permission prompt opens from this button, never on its own. */
+/**
+ * Opt-in only: the click turns on the chime and, where the browser has not
+ * been asked yet, requests notification permission. Neither happens on its own.
+ */
 export function OfferNotifyControl() {
-  const [permission, setPermission] = useState<OfferNotificationPermission | null>(null);
-  useEffect(() => setPermission(offerNotificationPermission()), []);
-  if (permission === "default") {
+  const [enabled, setEnabled] = useState(() => turnChimeEnabled());
+  const [notifying, setNotifying] = useState(() => offerNotificationPermission() === "granted");
+  if (enabled) {
     return (
-      <Button
-        variant="secondary"
-        size="small"
-        onClick={() => void requestOfferNotifications().then(setPermission, () => undefined)}
-      >
-        Notify me when it’s my turn
-      </Button>
+      <p role="status">
+        {notifying
+          ? "We’ll play a sound and show a notification when your contribution starts."
+          : "We’ll play a sound when your contribution starts."}
+      </p>
     );
   }
-  if (permission === "granted") {
-    return <p role="status">We’ll notify you when it’s your turn, even if this tab is in the background.</p>;
-  }
-  return null;
+  return (
+    <Button
+      variant="secondary"
+      size="small"
+      onClick={() => {
+        optInToTurnAlerts();
+        setEnabled(enableTurnChime());
+        if (offerNotificationPermission() === "default") {
+          void requestOfferNotifications()
+            .then((permission) => setNotifying(permission === "granted"), () => undefined);
+        }
+      }}
+    >
+      Alert me when my turn starts
+    </Button>
+  );
 }

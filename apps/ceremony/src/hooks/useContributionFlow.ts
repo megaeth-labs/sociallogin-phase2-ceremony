@@ -37,6 +37,7 @@ import { describeBrowserCapabilityFailure } from "@/lib/capability-messages";
 import type { ClientCircuitConfig } from "@/lib/ceremony-config";
 import { runContribution } from "@/lib/worker-client";
 import {
+  DOWNLOAD_SLOT_RELEASED,
   workerProgress,
   type WorkerProgress,
 } from "@/lib/contribution-progress";
@@ -73,6 +74,8 @@ export interface ContributionFlowState {
   offerClaimed: boolean;
   /** The contribution was handed to the server for verification; it can no longer be cancelled. */
   submitted: boolean;
+  /** The queue place ended, usually an offer that lapsed unclaimed; rejoining takes a click. */
+  turnMissed: boolean;
 }
 
 /** The attempt in flight: its claimed slot, and whether it was handed over. */
@@ -95,6 +98,8 @@ export interface ContributionFlowActions {
   joinAndStart: (options: JoinOptions, circuits: ClientCircuitConfig[]) => Promise<void>;
   claim: () => void;
   retry: () => void;
+  /** Take a new place at the end of the queue after a missed turn. */
+  rejoin: () => void;
   cancel: () => Promise<CancelOutcome>;
   detach: () => void;
   reset: () => void;
@@ -109,12 +114,15 @@ export function useContributionFlow(options: {
   selectedCircuitIds: string[];
   circuits: ClientCircuitConfig[];
   active: boolean;
+  /** Start as soon as a slot is offered, without waiting for a click. Defaults to true. */
+  autoClaim?: boolean;
 }): ContributionFlowState & ContributionFlowActions {
   const {
     entropySeed,
     selectedCircuitIds,
     circuits,
     active: flowActive,
+    autoClaim = true,
   } = options;
 
   const queryClient = useQueryClient();
@@ -149,6 +157,11 @@ export function useContributionFlow(options: {
   const cancelOnClose = useRef(false);
   // The slot release after a failed attempt, which a retry waits for.
   const releaseRef = useRef<Promise<unknown> | null>(null);
+  // An ended queue place waits for a click to rejoin, so an unattended tab
+  // drops out after one missed offer instead of cycling through the queue.
+  const [turnMissed, setTurnMissed] = useState(false);
+  // Set by "Try again", the one case where an ended place rejoins by itself.
+  const rejoinWhenTicketEnds = useRef(false);
 
   const activeCircuitIds =
     resolvedCircuitIds.length > 0 ? resolvedCircuitIds : selectedCircuitIds;
@@ -281,7 +294,13 @@ export function useContributionFlow(options: {
         });
       } catch (error) {
         stopHeartbeat();
-        throw heartbeatError ?? error;
+        // Assigned by the heartbeat callback, which control-flow narrowing cannot see.
+        const lost = heartbeatError as Error | null;
+        if (lost && heartbeatPhase === "downloading"
+          && /lease is unavailable or expired/i.test(lost.message)) {
+          throw new Error(DOWNLOAD_SLOT_RELEASED);
+        }
+        throw lost ?? error;
       }
 
       try {
@@ -421,6 +440,7 @@ export function useContributionFlow(options: {
     flowActive &&
     circuitRuns.length > 0 &&
     !contributionError &&
+    !turnMissed &&
     !!currentCircuitId &&
     !contributeMutation.isPending &&
     !finalizeReady;
@@ -456,7 +476,9 @@ export function useContributionFlow(options: {
     setQueueError(queueQuery.data.offerClaimed ? SLOT_IN_USE_ELSEWHERE : null);
   }, [queueQuery.data, currentCircuitId, updateCircuitRun]);
 
-  // A queue offer never starts computation without an explicit user claim.
+  // Claims the offered slot. Joining already required the participant's
+  // randomness and consent, so an offer is claimed automatically; this action
+  // stays as the fallback button if that automatic claim did not go through.
   const claim = () => {
     const offer = queueQuery.data?.offer;
     if (!offer || !currentCircuitId || !entropySeed || finalizeReady ||
@@ -466,6 +488,19 @@ export function useContributionFlow(options: {
     claimInFlight.current = true;
     contributeMutation.mutate({ circuitId: currentCircuitId, offer });
   };
+
+  // Each offer is claimed automatically once, so a tab left in the background
+  // contributes when its turn comes instead of letting the offer lapse.
+  const autoClaimedLeaseId = useRef<string | null>(null);
+  useEffect(() => {
+    const offer = queueQuery.data?.offer;
+    if (!autoClaim || !offer || queueQuery.data?.offerClaimed || contributionError) return;
+    if (autoClaimedLeaseId.current === offer.leaseId) return;
+    autoClaimedLeaseId.current = offer.leaseId;
+    claim();
+    // claim reads the latest state itself; this runs once per new offer.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [autoClaim, queueQuery.data, contributionError]);
 
   useEffect(() => {
     if (!contributeMutation.isPending || contributionPhase === "verifying") return;
@@ -502,7 +537,8 @@ export function useContributionFlow(options: {
     };
   }, []);
 
-  // Handle "not in queue" errors by rejoining.
+  // A "not in queue" answer means the place ended, usually an offer that lapsed
+  // unclaimed. Rejoin only after "Try again"; otherwise wait for a click.
   // isPending is intentionally omitted: including it would cause infinite
   // rejoin attempts when the rejoin itself fails with the error still present.
   useEffect(() => {
@@ -513,7 +549,12 @@ export function useContributionFlow(options: {
       !finalizeReady &&
       !rejoinMutation.isPending
     ) {
-      rejoinMutation.mutate();
+      if (rejoinWhenTicketEnds.current) {
+        rejoinWhenTicketEnds.current = false;
+        rejoinMutation.mutate();
+      } else {
+        setTurnMissed(true);
+      }
     } else if (
       queueQuery.error &&
       !msg.toLowerCase().includes("not in queue") &&
@@ -557,6 +598,8 @@ export function useContributionFlow(options: {
     attemptRef.current = null;
     setSubmitted(false);
     setLeaseExpiresAt(null);
+    setTurnMissed(false);
+    rejoinWhenTicketEnds.current = false;
     setCircuitRuns([]);
     setResolvedCircuitIds([]);
     setQueueError(null);
@@ -613,6 +656,9 @@ export function useContributionFlow(options: {
     setQueueError(null);
     contributeMutation.reset();
     cancelOnClose.current = true;
+    // The released place no longer exists; this explicit retry rejoins it.
+    rejoinWhenTicketEnds.current = true;
+    setTurnMissed(false);
     // Poll only once the release has landed, so the old slot is not seen again.
     void Promise.resolve(releaseRef.current).then(() => {
       releaseRef.current = null;
@@ -620,6 +666,15 @@ export function useContributionFlow(options: {
         queryKey: queuePositionQueryKey,
       });
     });
+  };
+
+  /** After a missed turn: take a new place at the end of the queue. */
+  const rejoin = () => {
+    if (!turnMissed || rejoinMutation.isPending) return;
+    setQueueError(null);
+    queryClient.removeQueries({ queryKey: queuePositionQueryKey });
+    // Polling resumes only once the new place exists.
+    rejoinMutation.mutate(undefined, { onSuccess: () => setTurnMissed(false) });
   };
 
   /** Stop locally without touching the coordinator. */
@@ -648,6 +703,8 @@ export function useContributionFlow(options: {
   const resetState = () => {
     attemptRef.current = null;
     cancelOnClose.current = false;
+    rejoinWhenTicketEnds.current = false;
+    setTurnMissed(false);
     lockRef.current?.release();
     lockRef.current = null;
     setSubmitted(false);
@@ -684,9 +741,11 @@ export function useContributionFlow(options: {
     claiming: contributeMutation.isPending,
     offerClaimed: queueQuery.data?.offerClaimed === true,
     submitted,
+    turnMissed,
     joinAndStart,
     claim,
     retry,
+    rejoin,
     cancel,
     detach,
     reset: resetState,

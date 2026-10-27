@@ -42,7 +42,8 @@ import {
   type UploadGrant,
 } from "@moss/phase2-storage";
 import { Pool } from "pg";
-import { OperationalUpdates, expireParticipantLeases } from "./operational-updates.js";
+import { OperationalUpdates, expireParticipantLeases, releaseHopelessDownloads } from "./operational-updates.js";
+import { DOWNLOAD_RELEASE_POLICY, type LeaseProgress } from "./lease-progress.js";
 import { authorizedCliReleases, type OperationalUpdate } from "@moss/phase2-protocol";
 import { heartbeatGraceSeconds } from "./heartbeat-policy.js";
 
@@ -324,7 +325,8 @@ export class PostgresCoordinatorOperations implements CoordinatorOperations {
 
   async getMyQueue(slug: string, participantId: string): Promise<unknown> {
     this.assertSlug(slug);
-    await this.offerNext();
+    // A read: every waiting page polls this, so it must not lock the ceremony
+    // row. maintain() expires slots and offers the next one every few seconds.
     return await this.queueView(participantId);
   }
 
@@ -407,9 +409,9 @@ export class PostgresCoordinatorOperations implements CoordinatorOperations {
     return await this.leaseView(leaseId, participantId);
   }
 
-  async heartbeat(leaseId: string, participantId: string): Promise<void> {
+  async heartbeat(leaseId: string, participantId: string, progress: LeaseProgress | null = null): Promise<void> {
     await this.expireLeases();
-    await this.database.heartbeat({ leaseId, participantId });
+    await this.database.heartbeat({ leaseId, participantId, progress });
   }
 
   async createUpload(leaseId: string, participantId: string): Promise<UploadGrant> {
@@ -1067,6 +1069,10 @@ export class PostgresCoordinatorOperations implements CoordinatorOperations {
 
   private async expireLeases(): Promise<void> {
     await expireParticipantLeases(this.options.pool, this.manifest.ceremonyId, heartbeatGraceSeconds(this.manifest, this.options.allowRehearsal));
+    for (const released of await releaseHopelessDownloads(this.options.pool, this.manifest.ceremonyId, DOWNLOAD_RELEASE_POLICY)) {
+      // Lease id and rates only; nothing here identifies the participant.
+      process.stdout.write(`${JSON.stringify({ level: 30, msg: "released a slot whose download cannot finish", ...released })}\n`);
+    }
   }
 
   private async expireVerifierJobsAndRejectImpossible(): Promise<void> {

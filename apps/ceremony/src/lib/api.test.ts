@@ -216,6 +216,9 @@ describe("abandonedAttemptPlan", () => {
     const queued = { ...active, lease: null, queue: { ticketId: "t", status: "QUEUED", position: 2, offer: null } };
     expect(abandonedAttemptPlan({ state: queued, claimedLeaseId: "lease-1", lock: "free" }))
       .toEqual({ cancel: false, discard: false, outcome: "none" });
+    // Another tab of this browser is waiting in that place.
+    expect(abandonedAttemptPlan({ state: queued, claimedLeaseId: null, lock: "held" }))
+      .toEqual({ cancel: false, discard: false, outcome: "running" });
     expect(abandonedAttemptPlan({ state: { ...active, lease: null }, claimedLeaseId: null, lock: "free" }))
       .toEqual({ cancel: false, discard: false, outcome: "none" });
   });

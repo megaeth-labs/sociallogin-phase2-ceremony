@@ -257,6 +257,7 @@ export default function CeremonyPage({ collectiblesEnabled = false }: { collecti
                 onBegin={handleBeginContribution}
                 onVerify={() => setStep("verify")}
                 hasPendingContribution={["pending", "active", "unconfirmed"].includes(activityStage)}
+                hasQueuePlace={activityStage === "queued"}
                 activityStatus={activity.data ? "ready" : activity.error ? "error" : "loading"}
                 activity={activity.isAuthenticated && <>
                   {activity.data && <ParticipantActivityCard activity={activity.data}
@@ -303,6 +304,8 @@ export default function CeremonyPage({ collectiblesEnabled = false }: { collecti
                   contribution.contributionError ||
                   contribution.queueError
                     ? "error"
+                    : contribution.turnMissed
+                      ? "missed"
                     : isJoining || contribution.circuitRuns.length === 0
                       ? "joining"
                       : contribution.finalizeReady
@@ -332,6 +335,7 @@ export default function CeremonyPage({ collectiblesEnabled = false }: { collecti
                 }
                 busy={isJoining || contribution.claiming}
                 onClaim={contribution.claim}
+                onRejoin={contribution.rejoin}
                 onReceipt={() => setStep("complete")}
                 onRetry={() => {
                   if (joinError) void handleJoinQueue();

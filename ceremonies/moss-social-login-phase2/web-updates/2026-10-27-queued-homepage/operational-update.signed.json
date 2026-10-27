@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "keyId": "moss-social-login-root-2026-10",
+  "payload": {
+    "reason": "Show only the welcome and queue card while queued, and alert only after this page's opt-in.",
+    "webRelease": {
+      "sha256": "a3076a735056d443d238ab7ab41e818b981353203fc9371f297bf6b6fdbf59f9",
+      "byteLength": 8701,
+      "urls": [
+        "https://d1xydbco3b83a0.cloudfront.net/inputs/sha256/a3076a735056d443d238ab7ab41e818b981353203fc9371f297bf6b6fdbf59f9/web-release.json?versionId=W.MxPOtC1LdnqboF1D8Bwk66kwRdcxLX"
+      ],
+      "sourceCommit": "7e02555ce9190cd8249dac1796486a1e1279338a"
+    },
+    "schemaVersion": 1,
+    "type": "moss.phase2.operational-update.v1",
+    "ceremonyId": "38200f3f-58a7-4054-a29d-91fa89dc1f22",
+    "manifestSha256": "441ccbe64b84b22c3e443c6d67e7f6f2f6186910c4d47cea61817540359cfa58",
+    "sequence": 11,
+    "previousUpdateSha256": "88fdbd7af3d270476bf068b17cd8d2f7656183c7ea61ad2e2ebbf63e4391b9d4",
+    "authorizedAt": "2026-10-27T05:00:52.866Z"
+  },
+  "signature": "d7fIE_E0LJAO3Fhz-MB9Q1U-xQ8twdwAWjYGx49bvZUgYQNAqw0_KVDIC6wzXzMsB_L9ZlGpx4dYt9Mt9hWrBA"
+}
