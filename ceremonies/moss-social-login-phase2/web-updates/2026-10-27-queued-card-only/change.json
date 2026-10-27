@@ -1,0 +1,11 @@
+{
+  "reason": "Show only the queue card on the homepage while queued.",
+  "webRelease": {
+    "sha256": "82af864c16774914d9f0662baec76e530e78ae71f441c6e07e427875343b413b",
+    "byteLength": 8701,
+    "urls": [
+      "https://d1xydbco3b83a0.cloudfront.net/inputs/sha256/82af864c16774914d9f0662baec76e530e78ae71f441c6e07e427875343b413b/web-release.json?versionId=vIUDK6qaBeoXElaukixDiMvbHUmq85dL"
+    ],
+    "sourceCommit": "45d8af9ec5ff286436ca8835641393d9ca81ddd9"
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "keyId": "moss-social-login-root-2026-10",
+  "payload": {
+    "reason": "Show only the queue card on the homepage while queued.",
+    "webRelease": {
+      "sha256": "82af864c16774914d9f0662baec76e530e78ae71f441c6e07e427875343b413b",
+      "byteLength": 8701,
+      "urls": [
+        "https://d1xydbco3b83a0.cloudfront.net/inputs/sha256/82af864c16774914d9f0662baec76e530e78ae71f441c6e07e427875343b413b/web-release.json?versionId=vIUDK6qaBeoXElaukixDiMvbHUmq85dL"
+      ],
+      "sourceCommit": "45d8af9ec5ff286436ca8835641393d9ca81ddd9"
+    },
+    "schemaVersion": 1,
+    "type": "moss.phase2.operational-update.v1",
+    "ceremonyId": "38200f3f-58a7-4054-a29d-91fa89dc1f22",
+    "manifestSha256": "441ccbe64b84b22c3e443c6d67e7f6f2f6186910c4d47cea61817540359cfa58",
+    "sequence": 12,
+    "previousUpdateSha256": "74692cddc124dbf77ffc5cbd848065fd8af9d2b7f0a5018530efc687e19088ef",
+    "authorizedAt": "2026-10-27T05:09:14.911Z"
+  },
+  "signature": "2lon_m-3MsphTew1AWcLRVa3UHw5kHg1l3_ebKpQ8xwfx5Lcnq22HOWWJvxpDA2o50OoLSaz8Xmc4k3RI-GLBg"
+}
