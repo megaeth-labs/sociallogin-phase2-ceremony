@@ -1,5 +1,13 @@
 import type { ContributionStage } from "./worker-client";
 
+/**
+ * Shown when the coordinator released the slot during the download: it frees a
+ * slot whose download cannot finish in time, and a sleeping or offline computer
+ * stops the heartbeats that keep it.
+ */
+export const DOWNLOAD_SLOT_RELEASED =
+  "Your slot was released while the contribution file was downloading. This happens when the download is too slow to finish within the slot, or when the computer sleeps or loses its connection. Try again on a faster connection, or contribute with the command-line client from a server.";
+
 export interface WorkerProgress {
   phase: "downloading" | "computing";
   label: string;

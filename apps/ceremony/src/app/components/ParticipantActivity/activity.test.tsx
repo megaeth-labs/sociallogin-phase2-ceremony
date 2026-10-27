@@ -76,4 +76,12 @@ describe("participant contribution view", () => {
     expect(render(queued, { closedNotice: true })).not.toContain(CLOSED_ATTEMPT_NOTICE);
     expect(render(queued, { closedNotice: true })).toContain("Return to the queue");
   });
+  it("points to the other tab instead of offering to rejoin a place it holds", () => {
+    const base = state("REJECTED");
+    const queued: ParticipantActivity = { ...base, state: { ...base.state, submission: null,
+      queue: { ticketId: "t", status: "QUEUED", position: 3, offer: null } } };
+    const html = render(queued, { abandoned: "running" });
+    expect(html).toContain("open in another tab");
+    expect(html).not.toContain("Return to the queue");
+  });
 });

@@ -1,6 +1,7 @@
 // @vitest-environment jsdom
 import { act, fireEvent, render, renderHook, screen } from "@testing-library/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
+import { resetTurnChimeForTests } from "./turn-chime";
 
 import { useOfferAlert } from "@/hooks/useOfferAlert";
 import { OfferNotifyControl } from "@/app/components/PublicCeremony/OfferNotifyControl";
@@ -26,7 +27,7 @@ describe("slot offer alerts", () => {
     const { rerender, unmount } = renderHook(({ offered }) => useOfferAlert(offered), { initialProps: { offered: false } });
     expect(document.title).toBe("MOSS ceremony");
     rerender({ offered: true });
-    expect(document.title).toBe("Your slot is ready · MOSS ceremony");
+    expect(document.title).toBe("Your turn has started · MOSS ceremony");
     rerender({ offered: false });
     expect(document.title).toBe("MOSS ceremony");
     rerender({ offered: true });
@@ -58,17 +59,26 @@ describe("slot offer alerts", () => {
 });
 
 describe("OfferNotifyControl", () => {
-  it("asks for permission only when the participant clicks", async () => {
+  class FakeAudioContext {
+    resume = vi.fn(async () => undefined);
+  }
+  afterEach(() => resetTurnChimeForTests());
+
+  it("turns on the chime and asks for notifications only when the participant clicks", async () => {
     const { Fake } = stubNotification("default");
+    vi.stubGlobal("AudioContext", FakeAudioContext);
     render(<OfferNotifyControl />);
     expect(Fake.requestPermission).not.toHaveBeenCalled();
-    await act(async () => { fireEvent.click(screen.getByRole("button", { name: "Notify me when it’s my turn" })); });
+    await act(async () => { fireEvent.click(screen.getByRole("button", { name: "Play a sound when my turn starts" })); });
     expect(Fake.requestPermission).toHaveBeenCalledTimes(1);
-    expect(screen.getByRole("status").textContent).toContain("We’ll notify you");
+    expect(screen.getByRole("status").textContent).toContain("We’ll play a sound");
   });
-  it("renders nothing where notifications are blocked or unsupported", () => {
-    stubNotification("denied");
-    const { container } = render(<OfferNotifyControl />);
-    expect(container.innerHTML).toBe("");
+  it("still offers the chime where notifications are blocked", async () => {
+    const { Fake } = stubNotification("denied");
+    vi.stubGlobal("AudioContext", FakeAudioContext);
+    render(<OfferNotifyControl />);
+    await act(async () => { fireEvent.click(screen.getByRole("button", { name: "Play a sound when my turn starts" })); });
+    expect(Fake.requestPermission).not.toHaveBeenCalled();
+    expect(screen.getByRole("status").textContent).toContain("We’ll play a sound");
   });
 });

@@ -604,7 +604,7 @@ export type AbandonedAttempt =
   | "none"
   /** A slot this browser claimed was given up because its page closed. */
   | "cancelled"
-  /** Another tab in this browser is running the attempt. */
+  /** Another tab in this browser is running the attempt or holds its queue place. */
   | "running"
   /** A slot is active but this browser cannot tell whether it is running. */
   | "unknown";
@@ -622,8 +622,11 @@ export function abandonedAttemptPlan(input: {
 }): { cancel: boolean; discard: boolean; outcome: AbandonedAttempt } {
   const { state, claimedLeaseId, lock } = input;
   const none = { cancel: false, discard: false, outcome: "none" as const };
+  // Another tab holds the lock from joining the queue until the attempt ends.
+  const runningElsewhere = state.lease?.state === "ACTIVE"
+    || (!!state.queue && ACTIVE_QUEUE_STATES.has(state.queue.status));
   if (lock === "held") {
-    return { ...none, outcome: state.lease?.state === "ACTIVE" ? "running" : "none" };
+    return { ...none, outcome: runningElsewhere ? "running" : "none" };
   }
   // Submitted, being verified or accepted: never cancelled from here.
   if (state.submission && !TERMINAL_SUBMISSION_STATES.has(state.submission.state)) return none;
@@ -676,7 +679,8 @@ export async function settleAbandonedAttempt(
     await discardLocalAttempt(ceremonyId, participant.participantId, { sweep: lock === "free" });
     return plan.outcome;
   });
-  return settled ?? (state.lease?.state === "ACTIVE" ? "running" : "none");
+  return settled ?? (state.lease?.state === "ACTIVE"
+    || (!!state.queue && ACTIVE_QUEUE_STATES.has(state.queue.status)) ? "running" : "none");
 }
 
 export async function getMyCoordinatorState(

@@ -39,6 +39,7 @@ vi.mock("@wonderland/cabure-crypto/browser", () => ({
 vi.mock("@/lib/worker-client", () => worker);
 
 import { ALREADY_OPEN_ELSEWHERE, useContributionFlow } from "./useContributionFlow";
+import { DOWNLOAD_SLOT_RELEASED } from "@/lib/contribution-progress";
 
 const circuits = [{ id: "relation", label: "Relation" }] as ClientCircuitConfig[];
 const offer = {
@@ -63,7 +64,8 @@ function queue(offerClaimed = false) {
   return { participantId: "participant-1", circuitId: "relation", position: 1, estimatedWaitSeconds: 0, offer, offerClaimed };
 }
 
-function render() {
+// Most tests drive the claim by hand; the auto-claim tests opt in.
+function render({ autoClaim = false } = {}) {
   const client = new QueryClient({ defaultOptions: { queries: { retry: false } } });
   const wrapper = ({ children }: { children: ReactNode }) => (
     <QueryClientProvider client={client}>{children}</QueryClientProvider>
@@ -75,6 +77,7 @@ function render() {
       selectedCircuitIds: ["relation"],
       circuits,
       active: true,
+      autoClaim,
     }),
     { wrapper },
   );
@@ -158,6 +161,58 @@ describe("closing the page cancels the attempt", () => {
     expect(api.joinQueue).not.toHaveBeenCalled();
     closePage();
     expect(api.abandonAttemptOnUnload).not.toHaveBeenCalled();
+  });
+});
+
+describe("claiming a slot automatically", () => {
+  it("starts the contribution as soon as a slot is offered", async () => {
+    worker.runContribution.mockImplementation(never);
+    const { result, unmount } = render({ autoClaim: true });
+    await act(async () => {
+      await result.current.joinAndStart({ circuitIds: ["relation"] }, circuits);
+    });
+    await waitFor(() => expect(api.claimOffer).toHaveBeenCalledTimes(1));
+    await waitFor(() => expect(worker.runContribution).toHaveBeenCalled());
+    expect(result.current.claiming).toBe(true);
+    unmount();
+  });
+
+  it("does not claim a slot another tab or browser already holds", async () => {
+    api.joinQueue.mockResolvedValue({ positions: [queue(true)] });
+    api.getQueuePosition.mockResolvedValue(queue(true));
+    const { result, unmount } = render({ autoClaim: true });
+    await joinAndWaitForOffer(result);
+    await new Promise((resolve) => setTimeout(resolve, 200));
+    expect(api.claimOffer).not.toHaveBeenCalled();
+    unmount();
+  });
+
+  it("claims each offer once, and never again after that attempt fails", async () => {
+    api.uploadZkey.mockRejectedValueOnce(new Error("Upload interrupted"));
+    const { result, unmount } = render({ autoClaim: true });
+    await act(async () => {
+      await result.current.joinAndStart({ circuitIds: ["relation"] }, circuits);
+    });
+    await waitFor(() => expect(result.current.contributionError).toBe("Upload interrupted"));
+    await new Promise((resolve) => setTimeout(resolve, 200));
+    expect(api.claimOffer).toHaveBeenCalledTimes(1);
+    unmount();
+  });
+});
+
+describe("a slot released during the download", () => {
+  it("explains a slot lost while the file was downloading", async () => {
+    api.getHeartbeatIntervalMs.mockResolvedValue(10);
+    api.heartbeatLease
+      .mockResolvedValueOnce(undefined)
+      .mockRejectedValue(new Error("lease is unavailable or expired"));
+    worker.runContribution.mockImplementation(({ signal }: { signal: AbortSignal }) =>
+      new Promise((_resolve, reject) => signal.addEventListener("abort", () => reject(signal.reason))));
+    const { result, unmount } = render();
+    await joinAndWaitForOffer(result);
+    act(() => result.current.claim());
+    await waitFor(() => expect(result.current.contributionError).toBe(DOWNLOAD_SLOT_RELEASED));
+    unmount();
   });
 });
 

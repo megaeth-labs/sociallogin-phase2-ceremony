@@ -222,7 +222,7 @@ function BeaconBlock() {
 const stations: Station[] = [
   {
     ...walkthroughStep("join"),
-    body: "Sign in with GitHub and check that your browser is ready. Only one contribution runs at a time, so you wait in a queue until it’s your turn. Signing in doesn’t claim a slot; when your turn comes, claim the offer before it expires.",
+    body: "Sign in with GitHub and check that your browser is ready. Only one contribution runs at a time, so you wait in a queue until it’s your turn. When your turn comes, your contribution starts automatically, so keep the tab open and your computer awake.",
     art: <QueueArt />,
   },
   {

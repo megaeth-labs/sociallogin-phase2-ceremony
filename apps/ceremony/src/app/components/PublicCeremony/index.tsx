@@ -1,7 +1,7 @@
 "use client";
 import { FinalizedCeremony } from "@/app/components/FinalizedCeremony";
 import { finalBeacon, isRehearsalFinalization } from "@/lib/finalization";
-import type { WorkerProgress } from "@/lib/contribution-progress";
+import { DOWNLOAD_SLOT_RELEASED, type WorkerProgress } from "@/lib/contribution-progress";
 
 import { useEffect, useId, useRef, useState } from "react";
 import type { StatusResponse } from "@/lib/api";
@@ -247,15 +247,15 @@ const content: Record<JourneyStage, [string, string]> = {
   ],
   waiting: [
     "You’re in the queue.",
-    "Only one contribution can run at a time. Keep this tab open to see your slot offer; there is no reliable waiting-time estimate yet.",
+    "Only one contribution can run at a time. When your turn comes, your contribution starts automatically, so keep this tab open and your computer awake. There is no reliable waiting-time estimate yet.",
   ],
   missed: [
     "You missed your turn.",
-    "Your slot was offered but not claimed within two minutes, so it passed to the next person. Rejoin to take a new place at the end of the queue.",
+    "Your turn came while this page couldn’t start it, for example because the computer was asleep or offline, so it passed to the next person. Rejoin to take a new place at the end of the queue.",
   ],
   offered: [
     "Your turn is ready.",
-    "Claim this offer before it expires. Download and computation begin only after you confirm.",
+    "Starting your contribution. If it doesn’t start on its own, claim the slot before the offer expires.",
   ],
   downloading: [
     "Downloading the contribution file",
@@ -338,7 +338,8 @@ export function ContributionJourney({
     "verifying",
   ];
   const index = stage === "accepted" ? 4 : computeStages.indexOf(stage);
-  const slotExpired = stage === "error" && /lease is unavailable or expired/i.test(error ?? "");
+  const slotExpired = stage === "error"
+    && (/lease is unavailable or expired/i.test(error ?? "") || error === DOWNLOAD_SLOT_RELEASED);
   const detail = progressDetail?.phase === stage ? progressDetail : null;
   const label = detail?.label ?? steps[index];
   const percent = detail
@@ -407,7 +408,7 @@ export function ContributionJourney({
             )}
             {stage !== "accepted" && stage !== "error" && stage !== "missed" && stage !== "uploading" && stage !== "verifying" && !expiredOffer && (
               <p className={journey.timeNote}>
-                Allow about 5–10 minutes after claiming a slot, plus queue time.
+                Allow about 5–10 minutes once your turn starts, plus queue time.
                 Slower devices or connections may take longer.
               </p>
             )}
@@ -429,7 +430,7 @@ export function ContributionJourney({
                   <p>Your slot will be offered as soon as the current contributor is finished.</p>
                 )}
                 <p>
-                  Your contribution starts after you claim your slot.
+                  Your contribution starts automatically when your turn comes.
                 </p>
                 {!preview && <OfferNotifyControl />}
               </>

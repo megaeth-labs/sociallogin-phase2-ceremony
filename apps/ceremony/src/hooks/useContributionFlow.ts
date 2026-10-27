@@ -37,6 +37,7 @@ import { describeBrowserCapabilityFailure } from "@/lib/capability-messages";
 import type { ClientCircuitConfig } from "@/lib/ceremony-config";
 import { runContribution } from "@/lib/worker-client";
 import {
+  DOWNLOAD_SLOT_RELEASED,
   workerProgress,
   type WorkerProgress,
 } from "@/lib/contribution-progress";
@@ -113,12 +114,15 @@ export function useContributionFlow(options: {
   selectedCircuitIds: string[];
   circuits: ClientCircuitConfig[];
   active: boolean;
+  /** Start as soon as a slot is offered, without waiting for a click. Defaults to true. */
+  autoClaim?: boolean;
 }): ContributionFlowState & ContributionFlowActions {
   const {
     entropySeed,
     selectedCircuitIds,
     circuits,
     active: flowActive,
+    autoClaim = true,
   } = options;
 
   const queryClient = useQueryClient();
@@ -290,7 +294,13 @@ export function useContributionFlow(options: {
         });
       } catch (error) {
         stopHeartbeat();
-        throw heartbeatError ?? error;
+        // Assigned by the heartbeat callback, which control-flow narrowing cannot see.
+        const lost = heartbeatError as Error | null;
+        if (lost && heartbeatPhase === "downloading"
+          && /lease is unavailable or expired/i.test(lost.message)) {
+          throw new Error(DOWNLOAD_SLOT_RELEASED);
+        }
+        throw lost ?? error;
       }
 
       try {
@@ -466,7 +476,9 @@ export function useContributionFlow(options: {
     setQueueError(queueQuery.data.offerClaimed ? SLOT_IN_USE_ELSEWHERE : null);
   }, [queueQuery.data, currentCircuitId, updateCircuitRun]);
 
-  // A queue offer never starts computation without an explicit user claim.
+  // Claims the offered slot. Joining already required the participant's
+  // randomness and consent, so an offer is claimed automatically; this action
+  // stays as the fallback button if that automatic claim did not go through.
   const claim = () => {
     const offer = queueQuery.data?.offer;
     if (!offer || !currentCircuitId || !entropySeed || finalizeReady ||
@@ -476,6 +488,19 @@ export function useContributionFlow(options: {
     claimInFlight.current = true;
     contributeMutation.mutate({ circuitId: currentCircuitId, offer });
   };
+
+  // Each offer is claimed automatically once, so a tab left in the background
+  // contributes when its turn comes instead of letting the offer lapse.
+  const autoClaimedLeaseId = useRef<string | null>(null);
+  useEffect(() => {
+    const offer = queueQuery.data?.offer;
+    if (!autoClaim || !offer || queueQuery.data?.offerClaimed || contributionError) return;
+    if (autoClaimedLeaseId.current === offer.leaseId) return;
+    autoClaimedLeaseId.current = offer.leaseId;
+    claim();
+    // claim reads the latest state itself; this runs once per new offer.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [autoClaim, queueQuery.data, contributionError]);
 
   useEffect(() => {
     if (!contributeMutation.isPending || contributionPhase === "verifying") return;
