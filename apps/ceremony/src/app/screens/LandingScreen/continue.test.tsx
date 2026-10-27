@@ -62,13 +62,13 @@ it("leaves someone who already contributed on the homepage", () => {
   expect(onBegin).not.toHaveBeenCalled();
   expect(window.location.search).toBe("");
 });
-it("shows only the welcome and the queue card to someone already in the queue", () => {
+it("shows only the queue card to someone already in the queue", () => {
   state.eligibility = { hasEligibleCircuits: true, contributedCircuitIds: [] };
   const onBegin = vi.fn();
   const { container } = renderLanding(onBegin, "ready", true);
   expect(onBegin).not.toHaveBeenCalled();
   const text = container.textContent ?? "";
+  expect(text).toContain("Your queue card");
   expect(text).not.toContain("Contribute now");
-  expect(text.indexOf("Welcome, alice.")).toBeGreaterThanOrEqual(0);
-  expect(text.indexOf("Welcome, alice.")).toBeLessThan(text.indexOf("Your queue card"));
+  expect(text).not.toContain("Welcome");
 });

@@ -26,7 +26,7 @@ export function LandingScreen({
   onVerify: () => void;
   activity?: ReactNode;
   hasPendingContribution?: boolean;
-  /** Waiting in the queue: the queue card is the only action, under the welcome. */
+  /** Waiting in the queue: the queue card is all that shows. */
   hasQueuePlace?: boolean;
   /** Whether the participant's existing attempts have loaded yet. */
   activityStatus?: "loading" | "ready" | "error";
@@ -89,7 +89,6 @@ export function LandingScreen({
   const queued = hasQueuePlace && !hasPendingContribution && isAuthenticated;
   const participation = (
     <>
-      {queued && <h2>Welcome{participantName ? `, ${participantName}` : " back"}.</h2>}
       {activity}
       {stage === "finalized" ? (
         status?.finalization ? <DownloadFinalButton /> : <Button onClick={onVerify}>Open verification guide</Button>
