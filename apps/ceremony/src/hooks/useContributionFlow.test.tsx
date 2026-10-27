@@ -161,6 +161,48 @@ describe("closing the page cancels the attempt", () => {
   });
 });
 
+describe("an ended queue place", () => {
+  const ended = () => new Error("queue ticket not found");
+  // The place stays gone until the participant joins again.
+  const endPlaceUntilJoin = () => {
+    api.getQueuePosition.mockRejectedValue(ended());
+    api.joinQueue.mockImplementation(async () => {
+      api.getQueuePosition.mockResolvedValue(queue());
+      return { positions: [queue()] };
+    });
+  };
+
+  it("waits for a click to rejoin after a missed turn, instead of cycling", async () => {
+    const { result, unmount } = render();
+    await joinAndWaitForOffer(result);
+    endPlaceUntilJoin();
+    await waitFor(() => expect(result.current.turnMissed).toBe(true), { timeout: 5_000 });
+    await new Promise((resolve) => setTimeout(resolve, 3_500));
+    expect(api.joinQueue).toHaveBeenCalledTimes(1);
+
+    act(() => result.current.rejoin());
+    await waitFor(() => expect(result.current.turnMissed).toBe(false));
+    expect(api.joinQueue).toHaveBeenCalledTimes(2);
+    await waitFor(() => expect(result.current.offer).not.toBeNull());
+    unmount();
+  }, 15_000);
+
+  it("rejoins by itself only after an explicit retry of a failed attempt", async () => {
+    api.uploadZkey.mockRejectedValueOnce(new Error("Upload interrupted"));
+    const { result, unmount } = render();
+    await joinAndWaitForOffer(result);
+    act(() => result.current.claim());
+    await waitFor(() => expect(result.current.contributionError).toBe("Upload interrupted"));
+    expect(api.joinQueue).toHaveBeenCalledTimes(1);
+
+    endPlaceUntilJoin();
+    act(() => result.current.retry());
+    await waitFor(() => expect(api.joinQueue).toHaveBeenCalledTimes(2));
+    expect(result.current.turnMissed).toBe(false);
+    unmount();
+  });
+});
+
 describe("failed and cancelled attempts", () => {
   it("releases a failed claimed slot and rejoins the queue on retry, never resuming it", async () => {
     api.uploadZkey.mockRejectedValueOnce(new Error("Upload interrupted"));

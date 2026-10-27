@@ -238,6 +238,7 @@ export type JourneyStage =
   | "uploading"
   | "verifying"
   | "accepted"
+  | "missed"
   | "error";
 const content: Record<JourneyStage, [string, string]> = {
   joining: [
@@ -247,6 +248,10 @@ const content: Record<JourneyStage, [string, string]> = {
   waiting: [
     "You’re in the queue.",
     "Only one contribution can run at a time. Keep this tab open to see your slot offer; there is no reliable waiting-time estimate yet.",
+  ],
+  missed: [
+    "You missed your turn.",
+    "Your slot was offered but not claimed within two minutes, so it passed to the next person. Rejoin to take a new place at the end of the queue.",
   ],
   offered: [
     "Your turn is ready.",
@@ -291,6 +296,7 @@ export function ContributionJourney({
   onClaim,
   onCancel,
   onRetry,
+  onRejoin,
   onReceipt,
   busy = false,
   preview = false,
@@ -308,6 +314,8 @@ export function ContributionJourney({
   onClaim?: () => void;
   onCancel?: () => void;
   onRetry?: () => void;
+  /** After a missed turn: take a new place at the end of the queue. */
+  onRejoin?: () => void;
   onReceipt?: () => void;
   busy?: boolean;
   preview?: boolean;
@@ -397,7 +405,7 @@ export function ContributionJourney({
                   : content[stage][1]}
               </p>
             )}
-            {stage !== "accepted" && stage !== "error" && stage !== "uploading" && stage !== "verifying" && !expiredOffer && (
+            {stage !== "accepted" && stage !== "error" && stage !== "missed" && stage !== "uploading" && stage !== "verifying" && !expiredOffer && (
               <p className={journey.timeNote}>
                 Allow about 5–10 minutes after claiming a slot, plus queue time.
                 Slower devices or connections may take longer.
@@ -450,11 +458,7 @@ export function ContributionJourney({
                   </div>
                 )}
                 {now !== null && !canClaim && (
-                  <p>
-                    You’ll be added back to the end of the queue automatically.
-                    Keep this tab open and we’ll offer you a new slot when it’s
-                    your turn.
-                  </p>
+                  <p>The slot has passed to the next person.</p>
                 )}
               </>
             )}
@@ -540,6 +544,11 @@ export function ContributionJourney({
         />
       ) : (
         <div ref={actionsRef} className={journey.actions}>
+          {stage === "missed" && (
+            <Button onClick={onRejoin} disabled={busy}>
+              Rejoin the queue
+            </Button>
+          )}
           {stage === "error" && !slotExpired && (
             <Button onClick={onRetry}>
               {submitted ? "Check contribution status" : "Try again"}
@@ -553,7 +562,7 @@ export function ContributionJourney({
               disabled={stage === "joining" && busy}
               data-cancel-attempt
             >
-              {slotExpired
+              {slotExpired || stage === "missed"
                 ? "Back to homepage"
                 : stage === "waiting" || stage === "offered"
                 ? "Leave queue"

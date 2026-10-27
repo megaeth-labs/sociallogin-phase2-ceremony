@@ -87,6 +87,7 @@ const screens: [Screen, string][] = [
   ["entropy", "Randomness"],
   ["waiting", "Queue"],
   ["offered", "Slot offer"],
+  ["missed", "Missed turn"],
   ["downloading", "Download"],
   ["computing", "Compute"],
   ["uploading", "Upload"],
