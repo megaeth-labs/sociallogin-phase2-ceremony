@@ -10,6 +10,7 @@ import {
 } from "@moss/phase2-protocol";
 
 import type { Authenticator } from "./auth.js";
+import { parseLeaseProgress } from "./lease-progress.js";
 import type { InternalVerifierPrincipal } from "./auth.js";
 import type { CoordinatorOperations, FastifyLike, RouteReply, RouteRequest } from "./api.js";
 
@@ -126,7 +127,7 @@ export function registerCoordinatorRoutes(app: FastifyLike, dependencies: {
   });
   route("POST", "/v1/leases/:leaseId/heartbeat", async (request, reply) => {
     const principal = await dependencies.participantAuth.authenticate(request);
-    await dependencies.operations.heartbeat(request.params.leaseId, principal.participantId);
+    await dependencies.operations.heartbeat(request.params.leaseId, principal.participantId, parseLeaseProgress(request.body));
     return reply.code(204).send();
   });
   route("POST", "/v1/leases/:leaseId/uploads", async (request, reply) => {

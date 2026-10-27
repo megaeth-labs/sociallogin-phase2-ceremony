@@ -231,6 +231,41 @@ describe("participant-scoped lease recovery", () => {
     await app.close();
   });
 
+  it("passes heartbeat progress from browsers, the CLI and bodyless clients", async () => {
+    const calls: unknown[] = [];
+    const app = buildCoordinatorServer({
+      operations: {
+        async heartbeat(leaseId: string, participantId: string, progress?: unknown) {
+          calls.push({ leaseId, participantId, progress });
+        },
+      } as CoordinatorOperations,
+      participantAuth: {
+        async authenticate() {
+          return { participantId: "22222222-2222-4222-8222-222222222222", pseudonym: "alice", authSubjectHash: "a".repeat(64) };
+        },
+      },
+      authenticateInternal() { throw new Error("not used"); },
+      verifierPublicKeys: new Map(),
+      maxArtifactByteLength: 1_000,
+      corsAllowedOrigins: new Set(),
+    });
+    const leaseId = "33333333-3333-4333-8333-333333333333";
+    const send = (payload?: unknown) => app.inject({
+      method: "POST",
+      url: `/v1/leases/${leaseId}/heartbeat`,
+      ...(payload === undefined ? {} : { payload: payload as object, headers: { "content-type": "application/json" } }),
+    });
+    expect((await send({ phase: "downloading", percent: 3 })).statusCode).toBe(204);
+    expect((await send({ stage: "DOWNLOADING", receivedBytes: 50, totalBytes: 100 })).statusCode).toBe(204);
+    expect((await send()).statusCode).toBe(204);
+    expect(calls.map((call) => (call as { progress: unknown }).progress)).toEqual([
+      { stage: "downloading", downloadFraction: 0.2 },
+      { stage: "downloading", downloadFraction: 0.5 },
+      null,
+    ]);
+    await app.close();
+  });
+
   it("passes only the authenticated participant ID to lease lookup", async () => {
     let lookup: { leaseId: string; participantId: string } | undefined;
     const app = buildCoordinatorServer({
@@ -424,6 +459,7 @@ describe("coordinator upload identity boundary", () => {
         }
         if (text.includes("SELECT * FROM ceremonies")) return { rows: [{ state: "OPEN" }], rowCount: 1 };
         if (text.includes("WITH expired AS")) return { rows: [], rowCount: 0 };
+        if (text.includes("WITH released AS")) return { rows: [], rowCount: 0 };
         if (text.includes("SELECT id,store_grant FROM artifact_uploads")) return { rows: [], rowCount: 0 };
         if (text.includes("SELECT ceremony_id,expires_at FROM leases")) {
           return { rows: [{

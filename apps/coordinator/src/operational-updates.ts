@@ -17,6 +17,42 @@ export async function expireParticipantLeases(db: Reader, ceremonyId: string, fa
   ) UPDATE queue_tickets SET status='EXPIRED' WHERE id IN (SELECT ticket_id FROM expired)`, [ceremonyId, fallback]);
 }
 
+export interface ReleasedDownload {
+  leaseId: string;
+  reason: "download-too-slow" | "download-stalled";
+  downloadFraction: number | null;
+  elapsedSeconds: number;
+}
+
+/**
+ * Release claimed slots whose download visibly cannot finish, so the next
+ * participant is offered the slot within minutes instead of at the 30-minute
+ * limit. Uses only the progress contributors report with their heartbeats.
+ */
+export async function releaseHopelessDownloads(
+  db: Reader,
+  ceremonyId: string,
+  policy: { graceSeconds: number; projectedDownloadLimitSeconds: number; stallSeconds: number },
+): Promise<ReleasedDownload[]> {
+  const result = await db.query<{ id: string; released_reason: ReleasedDownload["reason"];
+    progress_fraction: number | null; elapsed: string }>(`WITH released AS (
+    UPDATE leases SET state='EXPIRED', released_reason = CASE
+        WHEN progress_advanced_at <= now()-($3 * interval '1 second') THEN 'download-stalled'
+        ELSE 'download-too-slow' END
+      WHERE ceremony_id=$1 AND state='ACTIVE' AND progress_stage='downloading'
+        AND claimed_at <= now()-($2 * interval '1 second')
+        AND (progress_advanced_at <= now()-($3 * interval '1 second')
+          OR extract(epoch FROM now()-claimed_at) > $4 * COALESCE(progress_fraction, 0))
+      RETURNING id, ticket_id, released_reason, progress_fraction,
+        extract(epoch FROM now()-claimed_at)::text AS elapsed
+  ), tickets AS (
+    UPDATE queue_tickets SET status='EXPIRED' WHERE id IN (SELECT ticket_id FROM released)
+  ) SELECT id, released_reason, progress_fraction, elapsed FROM released`,
+  [ceremonyId, policy.graceSeconds, policy.stallSeconds, policy.projectedDownloadLimitSeconds]);
+  return result.rows.map((row) => ({ leaseId: row.id, reason: row.released_reason,
+    downloadFraction: row.progress_fraction, elapsedSeconds: Math.round(Number(row.elapsed)) }));
+}
+
 /** Database-backed, root-authenticated updates. Never replaces the ceremony manifest. */
 export class OperationalUpdates {
   constructor(private readonly options: {
