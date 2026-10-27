@@ -48,7 +48,11 @@ export function phasePercent(
   phase: "downloading" | "computing" | "uploading" | "verifying",
   overall: number,
 ): number | null {
-  // The current upload API reports no byte progress, and verification is asynchronous.
+  // Uploads report bytes as points 85–92 of the overall progress.
+  if (phase === "uploading" && Number.isFinite(overall) && overall > 85) {
+    return Math.max(0, Math.min(100, Math.floor(((overall - 85) / 7) * 100)));
+  }
+  // Computation reports no byte progress, and verification is asynchronous.
   if (
     phase === "computing" ||
     phase === "uploading" ||

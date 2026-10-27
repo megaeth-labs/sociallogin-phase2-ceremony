@@ -39,7 +39,7 @@ vi.mock("@wonderland/cabure-crypto/browser", () => ({
 vi.mock("@/lib/worker-client", () => worker);
 
 import { ALREADY_OPEN_ELSEWHERE, useContributionFlow } from "./useContributionFlow";
-import { DOWNLOAD_SLOT_RELEASED } from "@/lib/contribution-progress";
+import { DOWNLOAD_SLOT_RELEASED, UPLOAD_SLOT_RELEASED, UPLOAD_TOO_SLOW } from "@/lib/contribution-progress";
 
 const circuits = [{ id: "relation", label: "Relation" }] as ClientCircuitConfig[];
 const offer = {
@@ -212,6 +212,57 @@ describe("a slot released during the download", () => {
     await joinAndWaitForOffer(result);
     act(() => result.current.claim());
     await waitFor(() => expect(result.current.contributionError).toBe(DOWNLOAD_SLOT_RELEASED));
+    unmount();
+  });
+});
+
+describe("uploads", () => {
+  it("reports upload bytes with each heartbeat", async () => {
+    api.getHeartbeatIntervalMs.mockResolvedValue(10);
+    let finishUpload: (value: string) => void = () => undefined;
+    api.uploadZkey.mockImplementation(({ onProgress }: { onProgress: (uploaded: number, total: number) => void }) => {
+      onProgress(50, 200);
+      return new Promise((resolve) => { finishUpload = resolve; });
+    });
+    const { result, unmount } = render();
+    await joinAndWaitForOffer(result);
+    act(() => result.current.claim());
+    await waitFor(() => expect(api.heartbeatLease).toHaveBeenCalledWith(
+      "lease-1", expect.objectContaining({ phase: "uploading", uploadedBytes: 50, totalBytes: 200 }), expect.anything()));
+    expect(result.current.contributionProgress).toBeCloseTo(86.75);
+    finishUpload("upload-1");
+    unmount();
+  });
+
+  it("stops an upload that cannot finish before the slot's deadline", async () => {
+    let now = Date.now();
+    const clock = vi.spyOn(Date, "now").mockImplementation(() => now);
+    api.uploadZkey.mockImplementation(({ onProgress, signal }: { onProgress: (uploaded: number, total: number) => void; signal: AbortSignal }) => {
+      now += 10 * 60_000;
+      onProgress(1, 1_000);
+      return Promise.reject(signal.reason);
+    });
+    const { result, unmount } = render();
+    await joinAndWaitForOffer(result);
+    act(() => result.current.claim());
+    await waitFor(() => expect(result.current.contributionError).toBe(UPLOAD_TOO_SLOW));
+    expect(api.cancelAttempt).toHaveBeenCalled();
+    clock.mockRestore();
+    unmount();
+  });
+
+  it("explains a slot lost while uploading", async () => {
+    api.getHeartbeatIntervalMs.mockResolvedValue(10);
+    api.heartbeatLease
+      .mockResolvedValueOnce(undefined)
+      .mockResolvedValueOnce(undefined)
+      .mockRejectedValue(new Error("lease is unavailable or expired"));
+    api.uploadZkey.mockImplementation(({ signal }: { signal: AbortSignal }) =>
+      new Promise((_resolve, reject) => signal.addEventListener("abort", () => reject(signal.reason))));
+    const { result, unmount } = render();
+    await joinAndWaitForOffer(result);
+    act(() => result.current.claim());
+    await waitFor(() => expect(result.current.contributionError).toBe(UPLOAD_SLOT_RELEASED));
     unmount();
   });
 });

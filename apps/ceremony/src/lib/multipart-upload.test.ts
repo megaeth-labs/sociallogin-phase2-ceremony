@@ -1,4 +1,4 @@
-import { describe, expect, it, vi } from "vitest";
+import { afterEach, describe, expect, it, vi } from "vitest";
 import { parseMultipartParts, uploadBrowserParts } from "./multipart-upload";
 
 const base = () => ({ payload: new Blob(["candidate"]), expiresAt: new Date(Date.now() + 60000).toISOString(),
@@ -32,5 +32,44 @@ describe("browser multipart upload", () => {
   });
   it("rejects malformed completion journals", () => {
     for (const value of [[], [{ partNumber: 2, etag: "x" }], [{ partNumber: 1, etag: "\r\n" }]]) expect(() => parseMultipartParts(value)).toThrow();
+  });
+});
+
+describe("byte progress through XMLHttpRequest", () => {
+  class FakeRequest {
+    static sent: { url: string; headers: Record<string, string>; credentials: boolean }[] = [];
+    upload: { onprogress: ((event: { loaded: number }) => void) | null } = { onprogress: null };
+    onload: (() => void) | null = null;
+    onerror: (() => void) | null = null;
+    onabort: (() => void) | null = null;
+    status = 0;
+    responseURL = "";
+    withCredentials = true;
+    private url = "";
+    private headers: Record<string, string> = {};
+    open(_method: string, url: string) { this.url = url; }
+    setRequestHeader(name: string, value: string) { this.headers[name] = value; }
+    getResponseHeader(name: string) { return name === "etag" ? '"part-1"' : null; }
+    abort() { this.onabort?.(); }
+    send(body: Blob) {
+      FakeRequest.sent.push({ url: this.url, headers: this.headers, credentials: this.withCredentials });
+      this.upload.onprogress?.({ loaded: Math.floor(body.size / 2) });
+      this.upload.onprogress?.({ loaded: body.size });
+      this.status = 200;
+      this.responseURL = this.url;
+      this.onload?.();
+    }
+  }
+  afterEach(() => { vi.unstubAllGlobals(); FakeRequest.sent = []; });
+
+  it("reports bytes as they are sent and returns the part's ETag", async () => {
+    vi.stubGlobal("XMLHttpRequest", FakeRequest);
+    const progress: number[] = [];
+    const parts = await uploadBrowserParts({ ...base(), onProgress: (uploaded) => progress.push(uploaded) });
+    expect(parts).toEqual([{ partNumber: 1, etag: '"part-1"' }]);
+    // Mid-part progress, then the completed total (reported again as the part completes).
+    expect(progress[0]).toBe(4);
+    expect(progress.at(-1)).toBe(9);
+    expect(FakeRequest.sent[0]).toMatchObject({ credentials: false });
   });
 });
