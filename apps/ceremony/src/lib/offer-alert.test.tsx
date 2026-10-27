@@ -69,16 +69,17 @@ describe("OfferNotifyControl", () => {
     vi.stubGlobal("AudioContext", FakeAudioContext);
     render(<OfferNotifyControl />);
     expect(Fake.requestPermission).not.toHaveBeenCalled();
-    await act(async () => { fireEvent.click(screen.getByRole("button", { name: "Play a sound when my turn starts" })); });
+    await act(async () => { fireEvent.click(screen.getByRole("button", { name: "Alert me when my turn starts" })); });
     expect(Fake.requestPermission).toHaveBeenCalledTimes(1);
-    expect(screen.getByRole("status").textContent).toContain("We’ll play a sound");
+    expect(screen.getByRole("status").textContent)
+      .toBe("We’ll play a sound and show a notification when your contribution starts.");
   });
   it("still offers the chime where notifications are blocked", async () => {
     const { Fake } = stubNotification("denied");
     vi.stubGlobal("AudioContext", FakeAudioContext);
     render(<OfferNotifyControl />);
-    await act(async () => { fireEvent.click(screen.getByRole("button", { name: "Play a sound when my turn starts" })); });
+    await act(async () => { fireEvent.click(screen.getByRole("button", { name: "Alert me when my turn starts" })); });
     expect(Fake.requestPermission).not.toHaveBeenCalled();
-    expect(screen.getByRole("status").textContent).toContain("We’ll play a sound");
+    expect(screen.getByRole("status").textContent).toBe("We’ll play a sound when your contribution starts.");
   });
 });

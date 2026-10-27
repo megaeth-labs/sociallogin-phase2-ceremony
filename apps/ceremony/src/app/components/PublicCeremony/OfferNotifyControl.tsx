@@ -14,8 +14,15 @@ import { enableTurnChime, turnChimeEnabled } from "@/lib/turn-chime";
  */
 export function OfferNotifyControl() {
   const [enabled, setEnabled] = useState(() => turnChimeEnabled());
+  const [notifying, setNotifying] = useState(() => offerNotificationPermission() === "granted");
   if (enabled) {
-    return <p role="status">We’ll play a sound when your contribution starts, even if this tab is in the background.</p>;
+    return (
+      <p role="status">
+        {notifying
+          ? "We’ll play a sound and show a notification when your contribution starts."
+          : "We’ll play a sound when your contribution starts."}
+      </p>
+    );
   }
   return (
     <Button
@@ -23,10 +30,13 @@ export function OfferNotifyControl() {
       size="small"
       onClick={() => {
         setEnabled(enableTurnChime());
-        if (offerNotificationPermission() === "default") void requestOfferNotifications().catch(() => undefined);
+        if (offerNotificationPermission() === "default") {
+          void requestOfferNotifications()
+            .then((permission) => setNotifying(permission === "granted"), () => undefined);
+        }
       }}
     >
-      Play a sound when my turn starts
+      Alert me when my turn starts
     </Button>
   );
 }
