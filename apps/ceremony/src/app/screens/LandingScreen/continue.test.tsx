@@ -33,10 +33,11 @@ beforeEach(() => {
 });
 afterEach(() => { cleanup(); vi.unstubAllEnvs(); });
 
-function renderLanding(onBegin: () => void, activityStatus: "loading" | "ready" = "ready") {
+function renderLanding(onBegin: () => void, activityStatus: "loading" | "ready" = "ready", queued = false) {
   return render(
     <QueryClientProvider client={new QueryClient()}>
-      <LandingScreen onAuth={vi.fn()} onBegin={onBegin} onVerify={vi.fn()} activityStatus={activityStatus} />
+      <LandingScreen onAuth={vi.fn()} onBegin={onBegin} onVerify={vi.fn()} activityStatus={activityStatus}
+        hasQueuePlace={queued} activity={queued ? <p>Your queue card</p> : undefined} />
     </QueryClientProvider>,
   );
 }
@@ -60,4 +61,14 @@ it("leaves someone who already contributed on the homepage", () => {
   renderLanding(onBegin);
   expect(onBegin).not.toHaveBeenCalled();
   expect(window.location.search).toBe("");
+});
+it("shows only the welcome and the queue card to someone already in the queue", () => {
+  state.eligibility = { hasEligibleCircuits: true, contributedCircuitIds: [] };
+  const onBegin = vi.fn();
+  const { container } = renderLanding(onBegin, "ready", true);
+  expect(onBegin).not.toHaveBeenCalled();
+  const text = container.textContent ?? "";
+  expect(text).not.toContain("Contribute now");
+  expect(text.indexOf("Welcome, alice.")).toBeGreaterThanOrEqual(0);
+  expect(text.indexOf("Welcome, alice.")).toBeLessThan(text.indexOf("Your queue card"));
 });

@@ -15,8 +15,23 @@ export async function requestOfferNotifications(): Promise<OfferNotificationPerm
   return await Notification.requestPermission();
 }
 
-/** Notify only when the participant opted in and is not already looking at the tab. */
+// Set by this page load's opt-in click, so a permission granted on an earlier
+// visit never alerts on its own: the same rule as the chime.
+let optedIn = false;
+
+/** Call from the opt-in click. */
+export function optInToTurnAlerts(): void {
+  optedIn = true;
+}
+
+/** Test seam: forget the opt-in. */
+export function resetTurnAlertOptInForTests(): void {
+  optedIn = false;
+}
+
+/** Notify only when the participant opted in on this page and is not already looking at the tab. */
 export function notifyOffer(): boolean {
+  if (!optedIn) return false;
   if (offerNotificationPermission() !== "granted") return false;
   if (typeof document !== "undefined" && document.visibilityState === "visible") return false;
   new Notification("Your contribution has started", {

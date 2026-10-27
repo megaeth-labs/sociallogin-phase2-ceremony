@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Button } from "@/app/components/Button";
 import {
   offerNotificationPermission,
+  optInToTurnAlerts,
   requestOfferNotifications,
 } from "@/lib/offer-alert";
 import { enableTurnChime, turnChimeEnabled } from "@/lib/turn-chime";
@@ -29,6 +30,7 @@ export function OfferNotifyControl() {
       variant="secondary"
       size="small"
       onClick={() => {
+        optInToTurnAlerts();
         setEnabled(enableTurnChime());
         if (offerNotificationPermission() === "default") {
           void requestOfferNotifications()

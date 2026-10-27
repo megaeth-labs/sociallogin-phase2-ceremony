@@ -257,6 +257,7 @@ export default function CeremonyPage({ collectiblesEnabled = false }: { collecti
                 onBegin={handleBeginContribution}
                 onVerify={() => setStep("verify")}
                 hasPendingContribution={["pending", "active", "unconfirmed"].includes(activityStage)}
+                hasQueuePlace={activityStage === "queued"}
                 activityStatus={activity.data ? "ready" : activity.error ? "error" : "loading"}
                 activity={activity.isAuthenticated && <>
                   {activity.data && <ParticipantActivityCard activity={activity.data}

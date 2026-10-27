@@ -17,6 +17,7 @@ export function LandingScreen({
   onVerify,
   activity,
   hasPendingContribution = false,
+  hasQueuePlace = false,
   activityStatus = "ready",
   collectiblesEnabled = false,
 }: {
@@ -25,6 +26,8 @@ export function LandingScreen({
   onVerify: () => void;
   activity?: ReactNode;
   hasPendingContribution?: boolean;
+  /** Waiting in the queue: the queue card is the only action, under the welcome. */
+  hasQueuePlace?: boolean;
   /** Whether the participant's existing attempts have loaded yet. */
   activityStatus?: "loading" | "ready" | "error";
   collectiblesEnabled?: boolean;
@@ -49,12 +52,13 @@ export function LandingScreen({
       eligibilityLoading,
       eligibilityError: !!eligibilityError,
       activity: activityStatus,
-      hasPendingContribution,
+      // A place in the queue is already an attempt; don't start another.
+      hasPendingContribution: hasPendingContribution || hasQueuePlace,
     });
     if (next === "wait") return;
     window.history.replaceState(window.history.state, "", withoutContinueMarker(window.location.href));
     if (next === "begin") onBegin();
-  }, [isAuthenticated, stage, browserEnabled, statusError, eligibility, eligibilityLoading, eligibilityError, activityStatus, hasPendingContribution, onBegin]);
+  }, [isAuthenticated, stage, browserEnabled, statusError, eligibility, eligibilityLoading, eligibilityError, activityStatus, hasPendingContribution, hasQueuePlace, onBegin]);
   const [receiptBusy, setReceiptBusy] = useState(false);
   const [receiptError, setReceiptError] = useState<string | null>(null);
   async function downloadReceipts() {
@@ -82,8 +86,10 @@ export function LandingScreen({
   // receipt card, which already links to each receipt.
   const contributed = !!activity && isAuthenticated && !hasPendingContribution && !eligibilityLoading &&
     !eligibilityError && !!eligibility && !eligibility.hasEligibleCircuits;
+  const queued = hasQueuePlace && !hasPendingContribution && isAuthenticated;
   const participation = (
     <>
+      {queued && <h2>Welcome{participantName ? `, ${participantName}` : " back"}.</h2>}
       {activity}
       {stage === "finalized" ? (
         status?.finalization ? <DownloadFinalButton /> : <Button onClick={onVerify}>Open verification guide</Button>
@@ -131,7 +137,7 @@ export function LandingScreen({
             Contribute now
           </ContributeButton>
         </>
-      ) : contributed || hasPendingContribution ? null : (
+      ) : contributed || hasPendingContribution || queued ? null : (
         <>
           <h2>Welcome{participantName ? `, ${participantName}` : " back"}.</h2>
           {/* Eligible and ready: the welcome and the button say enough. */}
@@ -181,7 +187,7 @@ export function LandingScreen({
       collectiblesEnabled={collectiblesEnabled}
       status={status}
       participation={participation}
-      hideHeroLink={contributed || hasPendingContribution}
+      hideHeroLink={contributed || hasPendingContribution || queued}
       history={<ContributionHistory />}
       onVerify={onVerify}
       details={process.env.NODE_ENV === "development" ? (

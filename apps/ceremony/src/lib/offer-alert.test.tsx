@@ -5,7 +5,7 @@ import { resetTurnChimeForTests } from "./turn-chime";
 
 import { useOfferAlert } from "@/hooks/useOfferAlert";
 import { OfferNotifyControl } from "@/app/components/PublicCeremony/OfferNotifyControl";
-import { notifyOffer, offerNotificationPermission, requestOfferNotifications } from "./offer-alert";
+import { notifyOffer, offerNotificationPermission, optInToTurnAlerts, requestOfferNotifications, resetTurnAlertOptInForTests } from "./offer-alert";
 
 function stubNotification(permission: NotificationPermission) {
   const created: unknown[][] = [];
@@ -19,7 +19,7 @@ function visibility(state: DocumentVisibilityState) {
   vi.spyOn(document, "visibilityState", "get").mockReturnValue(state);
 }
 
-afterEach(() => { vi.unstubAllGlobals(); vi.restoreAllMocks(); document.title = ""; document.body.innerHTML = ""; });
+afterEach(() => { resetTurnAlertOptInForTests(); vi.unstubAllGlobals(); vi.restoreAllMocks(); document.title = ""; document.body.innerHTML = ""; });
 
 describe("slot offer alerts", () => {
   it("flags the tab title while an offer waits and restores it afterwards", () => {
@@ -35,8 +35,16 @@ describe("slot offer alerts", () => {
     expect(document.title).toBe("MOSS ceremony");
   });
 
+  it("never notifies without this page's opt-in click, even with permission from an earlier visit", () => {
+    visibility("hidden");
+    const stub = stubNotification("granted");
+    expect(notifyOffer()).toBe(false);
+    expect(stub.created).toHaveLength(0);
+  });
+
   it("notifies only an opted-in participant whose tab is in the background", () => {
     visibility("hidden");
+    optInToTurnAlerts();
     let stub = stubNotification("default");
     expect(notifyOffer()).toBe(false);
     stub = stubNotification("granted");
