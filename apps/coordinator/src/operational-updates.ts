@@ -17,11 +17,18 @@ export async function expireParticipantLeases(db: Reader, ceremonyId: string, fa
   ) UPDATE queue_tickets SET status='EXPIRED' WHERE id IN (SELECT ticket_id FROM expired)`, [ceremonyId, fallback]);
 }
 
-export interface ReleasedDownload {
+export interface ReleasedTransfer {
   leaseId: string;
-  reason: "download-too-slow" | "download-stalled";
-  downloadFraction: number | null;
+  reason: "download-too-slow" | "download-stalled" | "upload-too-slow" | "upload-stalled";
+  fraction: number | null;
   elapsedSeconds: number;
+}
+
+type ReleasedRow = { id: string; released_reason: ReleasedTransfer["reason"]; progress_fraction: number | null; elapsed: string };
+
+function released(rows: ReleasedRow[]): ReleasedTransfer[] {
+  return rows.map((row) => ({ leaseId: row.id, reason: row.released_reason,
+    fraction: row.progress_fraction, elapsedSeconds: Math.round(Number(row.elapsed)) }));
 }
 
 /**
@@ -33,9 +40,8 @@ export async function releaseHopelessDownloads(
   db: Reader,
   ceremonyId: string,
   policy: { graceSeconds: number; projectedDownloadLimitSeconds: number; stallSeconds: number },
-): Promise<ReleasedDownload[]> {
-  const result = await db.query<{ id: string; released_reason: ReleasedDownload["reason"];
-    progress_fraction: number | null; elapsed: string }>(`WITH released AS (
+): Promise<ReleasedTransfer[]> {
+  const result = await db.query<ReleasedRow>(`WITH released AS (
     UPDATE leases SET state='EXPIRED', released_reason = CASE
         WHEN progress_advanced_at <= now()-($3 * interval '1 second') THEN 'download-stalled'
         ELSE 'download-too-slow' END
@@ -49,8 +55,36 @@ export async function releaseHopelessDownloads(
     UPDATE queue_tickets SET status='EXPIRED' WHERE id IN (SELECT ticket_id FROM released)
   ) SELECT id, released_reason, progress_fraction, elapsed FROM released`,
   [ceremonyId, policy.graceSeconds, policy.stallSeconds, policy.projectedDownloadLimitSeconds]);
-  return result.rows.map((row) => ({ leaseId: row.id, reason: row.released_reason,
-    downloadFraction: row.progress_fraction, elapsedSeconds: Math.round(Number(row.elapsed)) }));
+  return released(result.rows);
+}
+
+/**
+ * Release claimed slots whose upload cannot finish before the slot's deadline,
+ * at its average rate since the upload began, or that stopped advancing. Only
+ * uploads that report byte progress are judged.
+ */
+export async function releaseHopelessUploads(
+  db: Reader,
+  ceremonyId: string,
+  policy: { graceSeconds: number; stallSeconds: number },
+): Promise<ReleasedTransfer[]> {
+  const result = await db.query<ReleasedRow>(`WITH released AS (
+    UPDATE leases SET state='EXPIRED', released_reason = CASE
+        WHEN progress_advanced_at <= now()-($3 * interval '1 second') THEN 'upload-stalled'
+        ELSE 'upload-too-slow' END
+      WHERE ceremony_id=$1 AND state='ACTIVE' AND progress_stage='uploading'
+        AND progress_fraction IS NOT NULL AND progress_fraction < 1
+        AND progress_stage_started_at <= now()-($2 * interval '1 second')
+        AND (progress_advanced_at <= now()-($3 * interval '1 second')
+          OR progress_fraction <= 0
+          OR progress_stage_started_at + (now()-progress_stage_started_at) / progress_fraction > expires_at)
+      RETURNING id, ticket_id, released_reason, progress_fraction,
+        extract(epoch FROM now()-progress_stage_started_at)::text AS elapsed
+  ), tickets AS (
+    UPDATE queue_tickets SET status='EXPIRED' WHERE id IN (SELECT ticket_id FROM released)
+  ) SELECT id, released_reason, progress_fraction, elapsed FROM released`,
+  [ceremonyId, policy.graceSeconds, policy.stallSeconds]);
+  return released(result.rows);
 }
 
 /** Database-backed, root-authenticated updates. Never replaces the ceremony manifest. */

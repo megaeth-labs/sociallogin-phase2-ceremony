@@ -3,8 +3,8 @@ import { readFile, readdir } from "node:fs/promises";
 import { Pool } from "pg";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
 import { PgCeremonyStore } from "@moss/phase2-db";
-import { DOWNLOAD_RELEASE_POLICY } from "../src/lease-progress.js";
-import { releaseHopelessDownloads } from "../src/operational-updates.js";
+import { DOWNLOAD_RELEASE_POLICY, UPLOAD_RELEASE_POLICY } from "../src/lease-progress.js";
+import { releaseHopelessDownloads, releaseHopelessUploads } from "../src/operational-updates.js";
 
 const url = process.env.CEREMONY_TEST_DATABASE_URL;
 const hash = () => createHash("sha256").update(randomUUID()).digest("hex");
@@ -43,8 +43,8 @@ describe.skipIf(!url)("releasing slots whose download cannot finish", () => {
     await admin?.end();
   });
 
-  const report = (stage: string, downloadFraction: number | null) =>
-    store.heartbeat({ leaseId, participantId, progress: { stage, downloadFraction } });
+  const report = (stage: string, fraction: number | null) =>
+    store.heartbeat({ leaseId, participantId, progress: { stage, fraction } });
   // Moves the claim and the last progress into the past to simulate elapsed time.
   const age = (claimedSecondsAgo: number, advancedSecondsAgo = 0) => pool.query(
     `UPDATE leases SET claimed_at=now()-($2 * interval '1 second'),
@@ -80,7 +80,7 @@ describe.skipIf(!url)("releasing slots whose download cannot finish", () => {
     await age(200);
     const released = await release();
     expect(released).toHaveLength(1);
-    expect(released[0]).toMatchObject({ leaseId, reason: "download-too-slow", downloadFraction: 0.1 });
+    expect(released[0]).toMatchObject({ leaseId, reason: "download-too-slow", fraction: 0.1 });
     expect(await state()).toMatchObject({ state: "EXPIRED", released_reason: "download-too-slow", status: "EXPIRED" });
   });
 
@@ -112,6 +112,54 @@ describe.skipIf(!url)("releasing slots whose download cannot finish", () => {
     await report("uploading", null);
     await age(1_000, 900);
     expect(await release()).toEqual([]);
+    expect(await state()).toMatchObject({ state: "ACTIVE" });
+  });
+
+  // Starts the upload stage some seconds ago with the given fraction done.
+  const uploading = async (fraction: number | null, startedSecondsAgo: number, advancedSecondsAgo = 0) => {
+    await report("uploading", fraction);
+    await pool.query(
+      `UPDATE leases SET progress_stage_started_at=now()-($2 * interval '1 second'),
+         progress_advanced_at=now()-($3 * interval '1 second') WHERE id=$1`,
+      [leaseId, startedSecondsAgo, advancedSecondsAgo]);
+  };
+  const releaseUploads = () => releaseHopelessUploads(pool, ceremonyId, UPLOAD_RELEASE_POLICY);
+
+  it("records when each stage started", async () => {
+    await report("downloading", 0.5);
+    await pool.query("UPDATE leases SET progress_stage_started_at=now()-interval '5 minutes' WHERE id=$1", [leaseId]);
+    await report("downloading", 0.6);
+    const same = (await pool.query("SELECT extract(epoch FROM now()-progress_stage_started_at) AS age FROM leases WHERE id=$1", [leaseId])).rows[0];
+    expect(Number(same.age)).toBeGreaterThan(290);
+    await report("uploading", 0);
+    const moved = (await pool.query("SELECT extract(epoch FROM now()-progress_stage_started_at) AS age FROM leases WHERE id=$1", [leaseId])).rows[0];
+    expect(Number(moved.age)).toBeLessThan(5);
+  });
+
+  it("releases an upload that cannot finish before the slot's deadline", async () => {
+    // 10% in 5 minutes projects 50 minutes; the slot ends 30 minutes after the claim.
+    await uploading(0.1, 300);
+    const released = await releaseUploads();
+    expect(released[0]).toMatchObject({ leaseId, reason: "upload-too-slow", fraction: 0.1 });
+    expect(await state()).toMatchObject({ state: "EXPIRED", released_reason: "upload-too-slow", status: "EXPIRED" });
+  });
+
+  it("keeps an upload that will finish in time, and never judges one inside its grace", async () => {
+    await uploading(0.5, 120);
+    expect(await releaseUploads()).toEqual([]);
+    await uploading(0.01, 30);
+    expect(await releaseUploads()).toEqual([]);
+    expect(await state()).toMatchObject({ state: "ACTIVE" });
+  });
+
+  it("releases an upload that stopped advancing", async () => {
+    await uploading(0.8, 600, 300);
+    expect((await releaseUploads())[0]).toMatchObject({ reason: "upload-stalled" });
+  });
+
+  it("leaves uploads without byte progress to the existing limits", async () => {
+    await uploading(null, 1_000, 900);
+    expect(await releaseUploads()).toEqual([]);
     expect(await state()).toMatchObject({ state: "ACTIVE" });
   });
 
