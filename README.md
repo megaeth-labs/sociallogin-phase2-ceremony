@@ -82,6 +82,13 @@ memory, used once and wiped; it is never written to disk. The downloaded file
 and your result are kept under `~/.moss-phase2-ceremony/work/` until the
 contribution is accepted, then deleted.
 
+If you contribute from a server or virtual machine, create a fresh one rather
+than restoring it from a snapshot, cloning it or building it from a template:
+a copied machine can repeat another machine's random state, producing a
+contribution that verifies but adds no randomness. While the contribution is
+being computed your secret is in memory, so don't snapshot or suspend the
+machine until your receipt is saved, and delete the machine afterwards.
+
 The manifest names the commit the CLI release was built from,
 `e827b61f581c721f71628c4cd89dfbad4c8cb9d8`; building that commit gives the same
 hash. The published copy of the release is at
