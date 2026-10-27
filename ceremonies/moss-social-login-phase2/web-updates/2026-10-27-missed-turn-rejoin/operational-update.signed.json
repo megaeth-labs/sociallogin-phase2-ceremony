@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "keyId": "moss-social-login-root-2026-10",
+  "payload": {
+    "reason": "Wait for a click to rejoin the queue after a missed turn, instead of rejoining automatically.",
+    "webRelease": {
+      "sha256": "68e7d85c42de1777dd41b376b591d1cf67e3deed2539763134acd691f8cd478a",
+      "byteLength": 8701,
+      "urls": [
+        "https://d1xydbco3b83a0.cloudfront.net/inputs/sha256/68e7d85c42de1777dd41b376b591d1cf67e3deed2539763134acd691f8cd478a/web-release.json?versionId=0CgyGehxRW6Ofkv2xrFZdvq1WwOCGlSo"
+      ],
+      "sourceCommit": "5086f74457e23637ea31549bf0892e75f8b29fdb"
+    },
+    "schemaVersion": 1,
+    "type": "moss.phase2.operational-update.v1",
+    "ceremonyId": "38200f3f-58a7-4054-a29d-91fa89dc1f22",
+    "manifestSha256": "441ccbe64b84b22c3e443c6d67e7f6f2f6186910c4d47cea61817540359cfa58",
+    "sequence": 8,
+    "previousUpdateSha256": "b1ed962bbc178c2e75561ec6e8d4390565baef89554de1690c32176da1bf2cf3",
+    "authorizedAt": "2026-10-27T03:48:37.746Z"
+  },
+  "signature": "ANj1ziblflxcsDC8thP1Ch2iVaQaTMlqtWHnNnjTKyWoX-kCFIsctSvP7DD8GX3XMZse9P_wbAJiFdZDNUDdAw"
+}

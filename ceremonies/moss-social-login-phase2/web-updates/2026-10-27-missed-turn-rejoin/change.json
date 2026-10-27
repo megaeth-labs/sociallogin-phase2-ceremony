@@ -1,0 +1,11 @@
+{
+  "reason": "Wait for a click to rejoin the queue after a missed turn, instead of rejoining automatically.",
+  "webRelease": {
+    "sha256": "68e7d85c42de1777dd41b376b591d1cf67e3deed2539763134acd691f8cd478a",
+    "byteLength": 8701,
+    "urls": [
+      "https://d1xydbco3b83a0.cloudfront.net/inputs/sha256/68e7d85c42de1777dd41b376b591d1cf67e3deed2539763134acd691f8cd478a/web-release.json?versionId=0CgyGehxRW6Ofkv2xrFZdvq1WwOCGlSo"
+    ],
+    "sourceCommit": "5086f74457e23637ea31549bf0892e75f8b29fdb"
+  }
+}
