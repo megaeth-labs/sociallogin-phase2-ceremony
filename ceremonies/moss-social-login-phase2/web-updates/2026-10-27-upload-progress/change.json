@@ -1,0 +1,11 @@
+{
+  "reason": "Show upload progress, stop uploads that cannot finish before the slot's deadline, and drop the command-line advice from slot messages.",
+  "webRelease": {
+    "sha256": "a0b3395d38f99765832774a2268156473bc099c77a4da8ebe4b652e5655f62f8",
+    "byteLength": 8701,
+    "urls": [
+      "https://d1xydbco3b83a0.cloudfront.net/inputs/sha256/a0b3395d38f99765832774a2268156473bc099c77a4da8ebe4b652e5655f62f8/web-release.json?versionId=jnALeMGuhFJT7jsyajh6H.DHeDkCRkAV"
+    ],
+    "sourceCommit": "76173b99dc34bacd96c07259aba2da3313aa62f6"
+  }
+}
