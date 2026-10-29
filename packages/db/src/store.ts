@@ -239,12 +239,12 @@ export class PgCeremonyStore {
     leaseId: string;
     participantId: string;
     /** Self-reported progress; recorded only to release a slot that cannot finish. */
-    progress?: { stage: string; downloadFraction: number | null } | null;
+    progress?: { stage: string; fraction: number | null } | null;
   }): Promise<void> {
     const stage = input.progress?.stage ?? null;
-    const fraction = input.progress?.downloadFraction ?? null;
-    // progress_advanced_at moves when the stage changes or the download grows,
-    // so a download that stops reporting new bytes can be told from a slow one.
+    const fraction = input.progress?.fraction ?? null;
+    // progress_advanced_at moves when the stage changes or its transfer grows,
+    // so a transfer that stops reporting new bytes can be told from a slow one.
     const result = await this.pool.query(
       `UPDATE leases SET heartbeat_at = now(),
          progress_advanced_at = CASE
@@ -253,6 +253,10 @@ export class PgCeremonyStore {
              OR ($4::double precision IS NOT NULL
                AND $4::double precision > COALESCE(progress_fraction, -1)) THEN now()
            ELSE progress_advanced_at END,
+         progress_stage_started_at = CASE
+           WHEN $3::text IS NULL THEN progress_stage_started_at
+           WHEN progress_stage IS DISTINCT FROM $3::text THEN now()
+           ELSE progress_stage_started_at END,
          progress_stage = COALESCE($3::text, progress_stage),
          progress_fraction = CASE WHEN $3::text IS NULL THEN progress_fraction
            ELSE $4::double precision END

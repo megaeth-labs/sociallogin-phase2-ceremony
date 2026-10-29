@@ -259,8 +259,8 @@ describe("participant-scoped lease recovery", () => {
     expect((await send({ stage: "DOWNLOADING", receivedBytes: 50, totalBytes: 100 })).statusCode).toBe(204);
     expect((await send()).statusCode).toBe(204);
     expect(calls.map((call) => (call as { progress: unknown }).progress)).toEqual([
-      { stage: "downloading", downloadFraction: 0.2 },
-      { stage: "downloading", downloadFraction: 0.5 },
+      { stage: "downloading", fraction: 0.2 },
+      { stage: "downloading", fraction: 0.5 },
       null,
     ]);
     await app.close();

@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "keyId": "moss-social-login-root-2026-10",
+  "payload": {
+    "reason": "Show upload progress, stop uploads that cannot finish before the slot's deadline, and drop the command-line advice from slot messages.",
+    "webRelease": {
+      "sha256": "a0b3395d38f99765832774a2268156473bc099c77a4da8ebe4b652e5655f62f8",
+      "byteLength": 8701,
+      "urls": [
+        "https://d1xydbco3b83a0.cloudfront.net/inputs/sha256/a0b3395d38f99765832774a2268156473bc099c77a4da8ebe4b652e5655f62f8/web-release.json?versionId=jnALeMGuhFJT7jsyajh6H.DHeDkCRkAV"
+      ],
+      "sourceCommit": "76173b99dc34bacd96c07259aba2da3313aa62f6"
+    },
+    "schemaVersion": 1,
+    "type": "moss.phase2.operational-update.v1",
+    "ceremonyId": "38200f3f-58a7-4054-a29d-91fa89dc1f22",
+    "manifestSha256": "441ccbe64b84b22c3e443c6d67e7f6f2f6186910c4d47cea61817540359cfa58",
+    "sequence": 13,
+    "previousUpdateSha256": "cb901c0ee5b7c729a9afda9c38bf2b85cfd79dac251e003516868839a6cd8d63",
+    "authorizedAt": "2026-10-27T17:35:22.490Z"
+  },
+  "signature": "KlRyB8vZxXAfA1ZeGaJGHYphBIBZ-Iv4plyCFRzzQdok-ye9tpKhLMwfP-8BtzHGSMRMUwvKuB0cWCsZEIULBg"
+}

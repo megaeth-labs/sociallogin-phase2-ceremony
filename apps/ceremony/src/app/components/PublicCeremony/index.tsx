@@ -1,7 +1,7 @@
 "use client";
 import { FinalizedCeremony } from "@/app/components/FinalizedCeremony";
 import { finalBeacon, isRehearsalFinalization } from "@/lib/finalization";
-import { DOWNLOAD_SLOT_RELEASED, type WorkerProgress } from "@/lib/contribution-progress";
+import { DOWNLOAD_SLOT_RELEASED, UPLOAD_SLOT_RELEASED, UPLOAD_TOO_SLOW, type WorkerProgress } from "@/lib/contribution-progress";
 
 import { useEffect, useId, useRef, useState } from "react";
 import type { StatusResponse } from "@/lib/api";
@@ -339,7 +339,8 @@ export function ContributionJourney({
   ];
   const index = stage === "accepted" ? 4 : computeStages.indexOf(stage);
   const slotExpired = stage === "error"
-    && (/lease is unavailable or expired/i.test(error ?? "") || error === DOWNLOAD_SLOT_RELEASED);
+    && (/lease is unavailable or expired/i.test(error ?? "")
+      || error === DOWNLOAD_SLOT_RELEASED || error === UPLOAD_SLOT_RELEASED || error === UPLOAD_TOO_SLOW);
   const detail = progressDetail?.phase === stage ? progressDetail : null;
   const label = detail?.label ?? steps[index];
   const percent = detail

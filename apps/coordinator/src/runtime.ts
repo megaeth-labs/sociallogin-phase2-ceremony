@@ -42,8 +42,8 @@ import {
   type UploadGrant,
 } from "@moss/phase2-storage";
 import { Pool } from "pg";
-import { OperationalUpdates, expireParticipantLeases, releaseHopelessDownloads } from "./operational-updates.js";
-import { DOWNLOAD_RELEASE_POLICY, type LeaseProgress } from "./lease-progress.js";
+import { OperationalUpdates, expireParticipantLeases, releaseHopelessDownloads, releaseHopelessUploads } from "./operational-updates.js";
+import { DOWNLOAD_RELEASE_POLICY, UPLOAD_RELEASE_POLICY, type LeaseProgress } from "./lease-progress.js";
 import { authorizedCliReleases, type OperationalUpdate } from "@moss/phase2-protocol";
 import { heartbeatGraceSeconds } from "./heartbeat-policy.js";
 
@@ -1069,9 +1069,13 @@ export class PostgresCoordinatorOperations implements CoordinatorOperations {
 
   private async expireLeases(): Promise<void> {
     await expireParticipantLeases(this.options.pool, this.manifest.ceremonyId, heartbeatGraceSeconds(this.manifest, this.options.allowRehearsal));
-    for (const released of await releaseHopelessDownloads(this.options.pool, this.manifest.ceremonyId, DOWNLOAD_RELEASE_POLICY)) {
+    const releases = [
+      ...await releaseHopelessDownloads(this.options.pool, this.manifest.ceremonyId, DOWNLOAD_RELEASE_POLICY),
+      ...await releaseHopelessUploads(this.options.pool, this.manifest.ceremonyId, UPLOAD_RELEASE_POLICY),
+    ];
+    for (const released of releases) {
       // Lease id and rates only; nothing here identifies the participant.
-      process.stdout.write(`${JSON.stringify({ level: 30, msg: "released a slot whose download cannot finish", ...released })}\n`);
+      process.stdout.write(`${JSON.stringify({ level: 30, msg: "released a slot whose transfer cannot finish", ...released })}\n`);
     }
   }
 

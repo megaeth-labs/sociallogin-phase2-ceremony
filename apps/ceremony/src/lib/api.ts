@@ -885,7 +885,7 @@ export function activeLeaseFromState(
 
 export async function heartbeatLease(
   leaseId: string,
-  progress: { phase: string; percent: number },
+  progress: { phase: string; percent: number; uploadedBytes?: number; totalBytes?: number },
   signal?: AbortSignal,
 ): Promise<void> {
   await coordinatorFetch<void>(
@@ -926,6 +926,7 @@ export async function uploadZkey(options: {
   payload: Blob;
   expectedSha256: string;
   signal?: AbortSignal;
+  onProgress?: (uploaded: number, total: number) => void;
 }): Promise<string> {
   const [bootstrap, participant] = await Promise.all([
     getBootstrap(options.signal),
@@ -957,7 +958,7 @@ export async function uploadZkey(options: {
   let parts: MultipartPart[] | undefined;
   if (grant.method === "s3-multipart") {
     parts = await uploadBrowserParts({ payload: options.payload, expiresAt: grant.expiresAt,
-      allowedOrigins: bootstrap.artifactOrigins ?? [], signal: options.signal,
+      allowedOrigins: bootstrap.artifactOrigins ?? [], signal: options.signal, onProgress: options.onProgress,
       requestPart: (partNumber) => coordinatorFetch<{ parts: PartGrant[] }>(`/v1/uploads/${encodeURIComponent(grant.uploadId)}/parts`, {
         method: "POST", auth: true, signal: options.signal, headers: { "content-type": "application/json" }, body: JSON.stringify({ partNumbers: [partNumber] }),
       }),

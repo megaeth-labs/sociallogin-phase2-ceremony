@@ -38,6 +38,9 @@ import type { ClientCircuitConfig } from "@/lib/ceremony-config";
 import { runContribution } from "@/lib/worker-client";
 import {
   DOWNLOAD_SLOT_RELEASED,
+  UPLOAD_SLOT_RELEASED,
+  UPLOAD_TOO_SLOW,
+  projectedUploadMisses,
   workerProgress,
   type WorkerProgress,
 } from "@/lib/contribution-progress";
@@ -224,6 +227,8 @@ export function useContributionFlow(options: {
       let heartbeatTimer: ReturnType<typeof setInterval> | undefined;
       let heartbeatPhase: ContribPhase = "downloading";
       let heartbeatPercent = 0;
+      // Byte counts while uploading, so the coordinator can tell a slow upload.
+      let uploadBytes: { uploadedBytes: number; totalBytes: number } | null = null;
       const stopHeartbeat = () => {
         heartbeatStopped = true;
         clearInterval(heartbeatTimer);
@@ -235,7 +240,8 @@ export function useContributionFlow(options: {
         try {
           await heartbeatLease(
             lease.leaseId,
-            { phase: heartbeatPhase, percent: heartbeatPercent },
+            { phase: heartbeatPhase, percent: heartbeatPercent,
+              ...(heartbeatPhase === "uploading" && uploadBytes ? uploadBytes : {}) },
             controller.signal,
           );
           heartbeatFailures = 0;
@@ -324,11 +330,24 @@ export function useContributionFlow(options: {
           expectedZkeyByteLength: result.outputSize,
           signal: controller.signal,
         });
+        // Stop an upload that cannot finish before the slot's deadline: its
+        // submission would be refused anyway, and the next person can start.
+        const uploadStartedAt = Date.now();
+        const deadline = Date.parse(lease.expiresAt);
         const uploadId = await uploadZkey({
           leaseId: lease.leaseId,
           payload: output,
           expectedSha256: result.zkeyHash,
           signal: controller.signal,
+          onProgress: (uploaded, total) => {
+            uploadBytes = { uploadedBytes: uploaded, totalBytes: total };
+            heartbeatPercent = 85 + (7 * uploaded) / total;
+            setContributionProgress(heartbeatPercent);
+            const now = Date.now();
+            if (projectedUploadMisses({ startedAt: uploadStartedAt, now, uploaded, total, deadline })) {
+              controller.abort(new Error(UPLOAD_TOO_SLOW));
+            }
+          },
         });
 
         stopHeartbeat();
@@ -352,7 +371,15 @@ export function useContributionFlow(options: {
 
         return { ...receipt, clientHk: result.contributionHash };
       } catch (error) {
-        throw heartbeatError ?? error;
+        const reason = controller.signal.reason;
+        if (reason instanceof Error && reason.message === UPLOAD_TOO_SLOW) throw reason;
+        // Assigned by the heartbeat callback, which control-flow narrowing cannot see.
+        const lost = heartbeatError as Error | null;
+        if (lost && heartbeatPhase === "uploading"
+          && /lease is unavailable or expired/i.test(lost.message)) {
+          throw new Error(UPLOAD_SLOT_RELEASED);
+        }
+        throw lost ?? error;
       } finally {
         stopHeartbeat();
         // Nothing reuses the output once it is uploaded, or once the attempt

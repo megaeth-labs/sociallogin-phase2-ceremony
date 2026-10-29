@@ -80,8 +80,8 @@ describe("contribution status rendering", () => {
     );
     expect(html).toMatch(/<button[^>]*disabled=""[^>]*>Claim my slot/);
   });
-  it("leaves upload and verification percentages indeterminate", () => {
-    for (const stage of ["computing", "uploading", "verifying"] as const) {
+  it("leaves computation and verification percentages indeterminate", () => {
+    for (const stage of ["computing", "verifying"] as const) {
       const html = renderToStaticMarkup(
         <ContributionJourney stage={stage} progress={92} />,
       );
@@ -89,6 +89,14 @@ describe("contribution status rendering", () => {
       expect(html).not.toMatch(/<progress[^>]*value=/);
       expect(html).not.toContain("92%");
     }
+  });
+  it("shows the upload's byte progress once bytes are moving", () => {
+    // Points 85–92 of the overall progress are the upload.
+    expect(renderToStaticMarkup(<ContributionJourney stage="uploading" progress={85} />))
+      .not.toMatch(/<progress[^>]*value=/);
+    const html = renderToStaticMarkup(<ContributionJourney stage="uploading" progress={88.5} />);
+    expect(html).toMatch(/<progress[^>]*value="50"/);
+    expect(html).toContain("50%");
   });
   it("does not call an accepted contribution final ceremony inclusion", () => {
     const html = renderToStaticMarkup(<ContributionJourney stage="accepted" />);
