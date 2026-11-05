@@ -5,7 +5,7 @@ import { mkdir, mkdtemp, readFile, rm, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { spawnSync } from "node:child_process";
-import { canonicalSha256, CHECKPOINT_SIGNATURE_DOMAIN, MANIFEST_SIGNATURE_DOMAIN, signEnvelope } from "../packages/protocol/dist/index.js";
+import { canonicalize, canonicalSha256, CHECKPOINT_SIGNATURE_DOMAIN, MANIFEST_SIGNATURE_DOMAIN, signEnvelope } from "../packages/protocol/dist/index.js";
 
 const sha = (bytes) => createHash("sha256").update(bytes).digest("hex");
 
@@ -28,7 +28,8 @@ test("offline completion record is built from published outputs, root-signed and
     for (const [name, text] of Object.entries(outputs)) await writeFile(join(out, name), text);
     const pin = (name) => ({ fileName: name, sha256: sha(outputs[name]), byteLength: Buffer.byteLength(outputs[name]) });
     const summary = { schemaVersion: 1, type: "moss.phase2.final-artifacts.v1", ceremonyId: manifest.ceremonyId,
-      authority: { manifestCanonicalPayloadSha256: manifestSha256, sealedEventHash: checkpoint.eventHash, sealedEventSequence: 6, sealedGeneration: 3 },
+      // The finalizer pins the plain SHA-256 of the canonical payload (apps/finalizer/src/authority.ts).
+      authority: { manifestCanonicalPayloadSha256: sha(canonicalize(manifest)), sealedEventHash: checkpoint.eventHash, sealedEventSequence: 6, sealedGeneration: 3 },
       inputs: { sealedHead: { sha256: checkpoint.headSha256, byteLength: checkpoint.headByteLength, ordinaryContributionCount: 3 } },
       beacon: { source: "ethereum-block", chainId: 1, blockNumber: manifest.beacon.blockNumber, blockHash: "c".repeat(64), derivation: "MOSS_PHASE2_BEACON_V1",
         beaconHashHex: "d".repeat(64), numIterationsExp: manifest.beacon.numIterationsExp, contributionHashBlake2b512: "e".repeat(128) },
@@ -45,9 +46,9 @@ test("offline completion record is built from published outputs, root-signed and
     const proofs = JSON.stringify({ schemaVersion: 1, type: "moss.phase2.proof-tests.v1", expectedPublicInputs: 20,
       finalZkey: digest("final.zkey"), verificationKey: digest("verification_key.json"),
       fixtures: [{ witness: { satisfiesR1cs: true }, proofs: [{ verified: true }, { verified: true }],
-        rejected: { modifiedPublicInputs: 20, negatedProofA: true } }],
+        rejected: { modifiedPublicInputs: 40, negatedProofA: true } }],
       solidityTests: { verifier: digest("Verifier.sol"), tests: [1, 2, 3, 4].map((n) => ({ name: `t${n}`, passed: true })) },
-      results: { fixtures: 1, validProofs: 2, rejectedProofs: 21, solidityTests: 4 } });
+      results: { fixtures: 1, validProofs: 2, rejectedProofs: 42, solidityTests: 4 } });
     await writeFile(join(dir, "ceremony-audit.json"), audit);
     await writeFile(join(dir, "proof-verification-index.json"), proofs);
     const contents = { ...outputs, "final-artifacts.json": JSON.stringify(summary), "ceremony-audit.json": audit, "proof-verification-index.json": proofs };
@@ -106,5 +107,12 @@ test("offline completion record is built from published outputs, root-signed and
     delete noSolidity.solidityTests;
     await writeFile(join(dir, "proof-verification-index.json"), JSON.stringify(noSolidity));
     assert.match(run("build", buildArgs("payload-5.json")).stderr, /proof tests did not pass/);
+    // Every public input must be rejected for every proof, not just for one.
+    await writeFile(join(dir, "proof-verification-index.json"), proofs.replace('"modifiedPublicInputs":40', '"modifiedPublicInputs":20'));
+    assert.match(run("build", buildArgs("payload-6.json")).stderr, /proof tests did not pass/);
+    await writeFile(join(dir, "proof-verification-index.json"), proofs);
+    // A summary pinned to a different manifest is refused.
+    await writeFile(join(out, "final-artifacts.json"), JSON.stringify({ ...summary, authority: { ...summary.authority, manifestCanonicalPayloadSha256: manifestSha256 } }));
+    assert.match(run("build", buildArgs("payload-7.json")).stderr, /does not match the manifest/);
   } finally { await rm(dir, { recursive: true, force: true }); }
 });
