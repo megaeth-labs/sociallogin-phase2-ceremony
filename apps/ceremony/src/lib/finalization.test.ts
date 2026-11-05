@@ -80,3 +80,25 @@ describe("production finalization record", async () => {
     await expect(verifiedProductionFinalization(production, checkpoint, productionHash, verifyProduction, sign(mutable))).rejects.toThrow();
   });
 });
+
+describe("mainnet completion record", () => {
+  const dir = "../../../../ceremonies/moss-social-login-phase2/";
+  const read = (name: string) => JSON.parse(readFileSync(new URL(dir + name, import.meta.url), "utf8"));
+  const mainnet = read("manifest.signed.json") as SignedEnvelope<CeremonyManifestV1>;
+  const mainnetRoot = readFileSync(new URL(dir + "manifest-root.pub", import.meta.url), "utf8");
+  const sealed = (read("sealed-checkpoint.signed.json") as SignedEnvelope<HeadCheckpointV1>).payload;
+  const mainnetHash = canonicalSha256("MOSS_PHASE2_MANIFEST_PAYLOAD_V1", mainnet.payload as unknown as JsonValue);
+
+  it("is the same record in the site bundle, the public download and the ceremony directory", async () => {
+    const { default: shipped } = await import("@/lib/ceremony-finalization.json");
+    expect(read("finalization.signed.json")).toEqual(shipped);
+  });
+  it("verifies against the root-signed mainnet manifest and its sealed checkpoint", async () => {
+    const { verifiedFinalization, PRODUCTION_FINALIZATION_DOMAIN } = await import("./finalization");
+    const result = await verifiedFinalization(mainnet, sealed, mainnetHash, async (envelope, domain) => {
+      expect(domain).toBe(PRODUCTION_FINALIZATION_DOMAIN);
+      return verifyEnvelope(envelope as SignedEnvelope<JsonValue>, { publicKey: mainnetRoot, domain });
+    });
+    expect(result).toMatchObject({ ceremonyId: mainnet.payload.ceremonyId, ordinaryContributions: 357, beaconContributions: 1 });
+  });
+});
