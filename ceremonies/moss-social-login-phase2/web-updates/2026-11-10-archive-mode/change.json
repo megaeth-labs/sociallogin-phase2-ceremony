@@ -1,0 +1,11 @@
+{
+  "reason": "Serve the sealed ceremony from its signed archive so the coordinator can be retired: status, history and verification from the bundled signed records, downloads from the archive, and no sign-in.",
+  "webRelease": {
+    "sha256": "d07c4e443136782f6fcdda3862c28b5b240416d86e0742ec28bdec2df18f6456",
+    "byteLength": 8347,
+    "urls": [
+      "https://d1xydbco3b83a0.cloudfront.net/inputs/sha256/d07c4e443136782f6fcdda3862c28b5b240416d86e0742ec28bdec2df18f6456/web-release.json?versionId=f4D7ZSMHBww9EviXRzFdJFubVCITFD1h"
+    ],
+    "sourceCommit": "c1f27d06841e7c5ee58cbab1a7c7c0e29dba34f0"
+  }
+}
