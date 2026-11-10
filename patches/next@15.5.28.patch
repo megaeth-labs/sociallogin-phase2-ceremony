@@ -1,0 +1,26 @@
+diff --git a/dist/build/webpack/plugins/flight-client-entry-plugin.js b/dist/build/webpack/plugins/flight-client-entry-plugin.js
+index 43437e5559e1e0ffb8ab4a849246359573d5527a..ca24c92ac9c7058ea757d83a46d6ec96a0c071f4 100644
+--- a/dist/build/webpack/plugins/flight-client-entry-plugin.js
++++ b/dist/build/webpack/plugins/flight-client-entry-plugin.js
+@@ -506,7 +506,7 @@ class FlightClientEntryPlugin {
+     injectClientEntryAndSSRModules({ compiler, compilation, entryName, clientImports, bundlePath, absolutePagePath }) {
+         const bundler = (0, _getwebpackbundler.default)();
+         let shouldInvalidate = false;
+-        const modules = Object.keys(clientImports).sort((a, b)=>_utils.regexCSS.test(b) ? 1 : a.localeCompare(b)).map((clientImportPath)=>({
++        const modules = Object.keys(clientImports).map((key, index)=>[key, index]).sort(([a, ai], [b, bi])=>{ /* MOSS: a consistent order, whatever the sort implementation or locale: client components by code unit, then CSS in import order. */ const ac = _utils.regexCSS.test(a), bc = _utils.regexCSS.test(b); return ac !== bc ? (ac ? 1 : -1) : ac ? ai - bi : a < b ? -1 : a > b ? 1 : ai - bi; }).map(([key])=>key).map((clientImportPath)=>({
+                 request: clientImportPath,
+                 ids: [
+                     ...clientImports[clientImportPath]
+diff --git a/dist/esm/build/webpack/plugins/flight-client-entry-plugin.js b/dist/esm/build/webpack/plugins/flight-client-entry-plugin.js
+index 3d633aca60c9bac4d23f30b3a0728eff67447e32..ae2b3a9760b3658e60d174ffee33ed428fde434b 100644
+--- a/dist/esm/build/webpack/plugins/flight-client-entry-plugin.js
++++ b/dist/esm/build/webpack/plugins/flight-client-entry-plugin.js
+@@ -492,7 +492,7 @@ export class FlightClientEntryPlugin {
+     injectClientEntryAndSSRModules({ compiler, compilation, entryName, clientImports, bundlePath, absolutePagePath }) {
+         const bundler = getWebpackBundler();
+         let shouldInvalidate = false;
+-        const modules = Object.keys(clientImports).sort((a, b)=>regexCSS.test(b) ? 1 : a.localeCompare(b)).map((clientImportPath)=>({
++        const modules = Object.keys(clientImports).map((key, index)=>[key, index]).sort(([a, ai], [b, bi])=>{ /* MOSS: a consistent order, whatever the sort implementation or locale: client components by code unit, then CSS in import order. */ const ac = regexCSS.test(a), bc = regexCSS.test(b); return ac !== bc ? (ac ? 1 : -1) : ac ? ai - bi : a < b ? -1 : a > b ? 1 : ai - bi; }).map(([key])=>key).map((clientImportPath)=>({
+                 request: clientImportPath,
+                 ids: [
+                     ...clientImports[clientImportPath]
