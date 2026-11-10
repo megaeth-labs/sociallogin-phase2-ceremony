@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "keyId": "moss-social-login-root-2026-10",
+  "payload": {
+    "reason": "Show the completed ceremony: the root-signed completion record and links to the final proving key, verification key and Solidity verifier.",
+    "webRelease": {
+      "sha256": "60ade13c92d4c225569a9982abcf3360fbe3187d7e6fefd5f396c664424a19e8",
+      "byteLength": 8701,
+      "urls": [
+        "https://d1xydbco3b83a0.cloudfront.net/inputs/sha256/60ade13c92d4c225569a9982abcf3360fbe3187d7e6fefd5f396c664424a19e8/web-release.json?versionId=ymdSIKjM48RWLjIsnQlvqwte5di3GNh."
+      ],
+      "sourceCommit": "414dda444d7194226140e3f7eef54a8b038f8591"
+    },
+    "schemaVersion": 1,
+    "type": "moss.phase2.operational-update.v1",
+    "ceremonyId": "38200f3f-58a7-4054-a29d-91fa89dc1f22",
+    "manifestSha256": "441ccbe64b84b22c3e443c6d67e7f6f2f6186910c4d47cea61817540359cfa58",
+    "sequence": 14,
+    "previousUpdateSha256": "9c4152189d21d6318fb3a7ec095915aa7cd12524313bd84e8f4211dad0d3f7e1",
+    "authorizedAt": "2026-11-05T19:40:33.813Z"
+  },
+  "signature": "k_iV4gImhFDXRDuwvQe6oDFbm6DFqQNeAdl2AZuXB8i7tkWq3kjrj2LU9Vl2yF1j-Z_fHSkMBBbnMy8EI73OAQ"
+}

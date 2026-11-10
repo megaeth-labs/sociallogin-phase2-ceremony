@@ -1,0 +1,11 @@
+{
+  "reason": "Show the completed ceremony: the root-signed completion record and links to the final proving key, verification key and Solidity verifier.",
+  "webRelease": {
+    "sha256": "60ade13c92d4c225569a9982abcf3360fbe3187d7e6fefd5f396c664424a19e8",
+    "byteLength": 8701,
+    "urls": [
+      "https://d1xydbco3b83a0.cloudfront.net/inputs/sha256/60ade13c92d4c225569a9982abcf3360fbe3187d7e6fefd5f396c664424a19e8/web-release.json?versionId=ymdSIKjM48RWLjIsnQlvqwte5di3GNh."
+    ],
+    "sourceCommit": "414dda444d7194226140e3f7eef54a8b038f8591"
+  }
+}

@@ -28,7 +28,7 @@ import { readFile, writeFile } from "node:fs/promises";
 import { basename, join, resolve } from "node:path";
 import { parseArgs } from "node:util";
 import {
-  assertFinalizationRecord, assertManifest, canonicalSha256, CHECKPOINT_SIGNATURE_DOMAIN, FINALIZATION_ARTIFACT_FILES,
+  assertFinalizationRecord, assertManifest, canonicalize, canonicalSha256, CHECKPOINT_SIGNATURE_DOMAIN, FINALIZATION_ARTIFACT_FILES,
   FINALIZATION_RECORD_DOMAIN, MANIFEST_SIGNATURE_DOMAIN, signEnvelope, verifyEnvelope, verifyFinalizationRecord,
 } from "../packages/protocol/dist/index.js";
 
@@ -66,7 +66,10 @@ async function authority(values, need) {
   const checkpoint = verifyEnvelope(envelope, { publicKey: createPublicKey(key.publicKeyPem), domain: CHECKPOINT_SIGNATURE_DOMAIN });
   if (checkpoint.ceremonyId !== manifest.payload.ceremonyId || checkpoint.state !== "SEALED") throw new Error("checkpoint is not this ceremony's sealed checkpoint");
   const manifestSha256 = canonicalSha256("MOSS_PHASE2_MANIFEST_PAYLOAD_V1", manifest.payload);
-  return { manifest, root, checkpoint, manifestSha256 };
+  // The finalizer pins the manifest by the plain SHA-256 of its canonical payload
+  // (apps/finalizer/src/authority.ts), without the domain prefix used above.
+  const manifestPayloadSha256 = createHash("sha256").update(canonicalize(manifest.payload)).digest("hex");
+  return { manifest, root, checkpoint, manifestSha256, manifestPayloadSha256 };
 }
 
 // Record artifact keys whose publication-index role has a different name.
@@ -87,11 +90,11 @@ function publishedLocations(index, ceremonyId, summarySha256) {
 }
 
 async function build(values, need) {
-  const { manifest, checkpoint, manifestSha256 } = await authority(values, need);
+  const { manifest, checkpoint, manifestSha256, manifestPayloadSha256 } = await authority(values, need);
   const outputDir = resolve(need("finalizer-output"));
   const summary = await json(join(outputDir, FINALIZATION_ARTIFACT_FILES.finalizerSummary));
   if (summary.type !== "moss.phase2.final-artifacts.v1" || summary.ceremonyId !== manifest.payload.ceremonyId ||
-      summary.authority.manifestCanonicalPayloadSha256 !== manifestSha256 ||
+      summary.authority.manifestCanonicalPayloadSha256 !== manifestPayloadSha256 ||
       summary.authority.sealedEventHash !== checkpoint.eventHash || summary.authority.sealedEventSequence !== checkpoint.eventSequence ||
       summary.authority.sealedGeneration !== checkpoint.generation ||
       summary.inputs.sealedHead.sha256 !== checkpoint.headSha256 || summary.inputs.sealedHead.byteLength !== checkpoint.headByteLength)
@@ -111,14 +114,15 @@ async function build(values, need) {
   const proofs = await json(need("proof-index"));
   if (basename(need("proof-index")) !== FINALIZATION_ARTIFACT_FILES.proofEvidence) throw new Error(`proof index must be named ${FINALIZATION_ARTIFACT_FILES.proofEvidence}`);
   // The proof test only writes its index when every check passed; this
-  // re-checks that it ran against these outputs with the Solidity tests.
+  // re-checks that it ran against these outputs with the Solidity tests. It
+  // changes each public input once per proof, so 20 rejections per proof.
   const sameDigest = (a, b) => a?.sha256 === b?.sha256 && a?.byteLength === b?.byteLength;
   if (proofs.schemaVersion !== 1 || proofs.type !== "moss.phase2.proof-tests.v1" || proofs.expectedPublicInputs !== 20 ||
       !sameDigest(proofs.finalZkey, summary.outputs.finalZkey) || !sameDigest(proofs.verificationKey, summary.outputs.verificationKey) ||
       !Array.isArray(proofs.fixtures) || proofs.fixtures.length < 1 ||
       proofs.fixtures.some((fixture) => fixture.witness?.satisfiesR1cs !== true || fixture.proofs?.length < 1 ||
         fixture.proofs.some((proof) => proof.verified !== true) ||
-        fixture.rejected?.modifiedPublicInputs !== 20 || fixture.rejected.negatedProofA !== true) ||
+        fixture.rejected?.modifiedPublicInputs !== 20 * fixture.proofs.length || fixture.rejected.negatedProofA !== true) ||
       !sameDigest(proofs.solidityTests?.verifier, summary.outputs.solidityVerifier) ||
       !(proofs.solidityTests.tests?.length >= 1) || proofs.solidityTests.tests.some((test) => test.passed !== true))
     throw new Error("proof tests did not pass against this final key");

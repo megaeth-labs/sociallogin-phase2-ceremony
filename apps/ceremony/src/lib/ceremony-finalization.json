@@ -1,1 +1,97 @@
-null
+{
+  "schemaVersion": 1,
+  "keyId": "moss-social-login-root-2026-10",
+  "payload": {
+    "schemaVersion": 1,
+    "type": "moss.phase2.finalization.v1",
+    "ceremonyId": "38200f3f-58a7-4054-a29d-91fa89dc1f22",
+    "manifestSha256": "441ccbe64b84b22c3e443c6d67e7f6f2f6186910c4d47cea61817540359cfa58",
+    "sealedCheckpoint": {
+      "generation": 357,
+      "headSha256": "b62378eb2de4254e73e6e0f73404a554c3510aea4ddba77d5a946145cad62636",
+      "headByteLength": 368577436,
+      "eventHash": "8506e771e346077fc6fa7627f7c95365c664f7e639726891bad14ad2510dd480",
+      "eventSequence": 357
+    },
+    "ordinaryContributions": 357,
+    "beaconContributions": 1,
+    "beacon": {
+      "source": "ethereum-block",
+      "chainId": 1,
+      "blockNumber": 26346911,
+      "blockHash": "70cfe328b974961ecc68055c03dc761d2940e13b92cd2f8f80e52ab765026590",
+      "derivation": "MOSS_PHASE2_BEACON_V1",
+      "numIterationsExp": 10,
+      "beaconHash": "0204e71710b3a15b3ebdac2c67f38dbacaeba8718bae1e97a7f7770b60faba2e",
+      "contributionHashBlake2b512": "19726c8a55f75aeb5c4e238d1d60160be6e5f06fd04b7913284acce6f68dddefebbead50564af1faefd2d1da8adafe45c88567748e554c370fe1bbb115e47ee9"
+    },
+    "completedAt": "2026-11-05T19:28:18.878Z",
+    "publicInputs": 20,
+    "proofTests": {
+      "fixtures": 1,
+      "validProofs": 2,
+      "solidityTests": 4
+    },
+    "audit": {
+      "transitionsReplayed": 357,
+      "receiptsChecked": 357
+    },
+    "artifacts": {
+      "finalZkey": {
+        "sha256": "e89e7124021c5c770cb6009b6815aaa5de3d4b6b5b4a19adbc0afa53be7859f8",
+        "byteLength": 567542567,
+        "versionId": "X9i9aeni9TkjPwX9zb2._yvhY0D81xMX",
+        "url": "https://d1xydbco3b83a0.cloudfront.net/finalization/38200f3f-58a7-4054-a29d-91fa89dc1f22/2026-11-05/sha256/e89e7124021c5c770cb6009b6815aaa5de3d4b6b5b4a19adbc0afa53be7859f8/final.zkey?versionId=X9i9aeni9TkjPwX9zb2._yvhY0D81xMX"
+      },
+      "verificationKey": {
+        "sha256": "8d4878aa8c71fb48674f0cd037ef6acbfda7806589d22bfa6d4a2893c214bd5a",
+        "byteLength": 5734,
+        "versionId": "qNT5.moAGX06g.sN5ggAQeRV2EryT9qJ",
+        "url": "https://d1xydbco3b83a0.cloudfront.net/finalization/38200f3f-58a7-4054-a29d-91fa89dc1f22/2026-11-05/sha256/8d4878aa8c71fb48674f0cd037ef6acbfda7806589d22bfa6d4a2893c214bd5a/verification_key.json?versionId=qNT5.moAGX06g.sN5ggAQeRV2EryT9qJ"
+      },
+      "solidityVerifier": {
+        "sha256": "c89f5400deaab19898d2fc529e7ae25ee5c7b1803f635263753e3938e3e46fca",
+        "byteLength": 14498,
+        "versionId": "qEuFyijrolluwcShOHw4CnZSevL6iq5k",
+        "url": "https://d1xydbco3b83a0.cloudfront.net/finalization/38200f3f-58a7-4054-a29d-91fa89dc1f22/2026-11-05/sha256/c89f5400deaab19898d2fc529e7ae25ee5c7b1803f635263753e3938e3e46fca/Verifier.sol?versionId=qEuFyijrolluwcShOHw4CnZSevL6iq5k"
+      },
+      "sealedImport": {
+        "sha256": "46bac78ea398bbf632a49d5d5cf168aba7c552d98843890b3c35700fa946423d",
+        "byteLength": 567542132,
+        "versionId": "yrl0tEwr5Cy5XYuyyC3oG5Jr3EYarvtu",
+        "url": "https://d1xydbco3b83a0.cloudfront.net/finalization/38200f3f-58a7-4054-a29d-91fa89dc1f22/2026-11-05/sha256/46bac78ea398bbf632a49d5d5cf168aba7c552d98843890b3c35700fa946423d/sealed-import.zkey?versionId=yrl0tEwr5Cy5XYuyyC3oG5Jr3EYarvtu"
+      },
+      "beaconEvidence": {
+        "sha256": "82bcea53797b50a310984be89fcb8320047bb0104c8f659dc38569df0e9c19f7",
+        "byteLength": 477,
+        "versionId": "bX1N_qR0..PWyEkh88Nrj8Ei6uOhDN9n",
+        "url": "https://d1xydbco3b83a0.cloudfront.net/finalization/38200f3f-58a7-4054-a29d-91fa89dc1f22/2026-11-05/sha256/82bcea53797b50a310984be89fcb8320047bb0104c8f659dc38569df0e9c19f7/ethereum-block-evidence.json?versionId=bX1N_qR0..PWyEkh88Nrj8Ei6uOhDN9n"
+      },
+      "finalizerSummary": {
+        "sha256": "645d09b8d0774f3b343a198c56ee9e5f816c018d2da4f538e93d571d6052e45b",
+        "byteLength": 2901,
+        "versionId": "c8uD42.r3qdsDCp5ydHT5Kz9koFMUVfv",
+        "url": "https://d1xydbco3b83a0.cloudfront.net/finalization/38200f3f-58a7-4054-a29d-91fa89dc1f22/2026-11-05/sha256/645d09b8d0774f3b343a198c56ee9e5f816c018d2da4f538e93d571d6052e45b/final-artifacts.json?versionId=c8uD42.r3qdsDCp5ydHT5Kz9koFMUVfv"
+      },
+      "auditReport": {
+        "sha256": "10d24a0237f8cb5b4353b67cc0eb6b7d20b2a3cd7bd8f21407ae2f50edf9530d",
+        "byteLength": 196298,
+        "versionId": "Ryqf4NmJ_7vsHRLJ2.gVNVzQo4vBXWJO",
+        "url": "https://d1xydbco3b83a0.cloudfront.net/finalization/38200f3f-58a7-4054-a29d-91fa89dc1f22/2026-11-05/sha256/10d24a0237f8cb5b4353b67cc0eb6b7d20b2a3cd7bd8f21407ae2f50edf9530d/ceremony-audit.json?versionId=Ryqf4NmJ_7vsHRLJ2.gVNVzQo4vBXWJO"
+      },
+      "proofEvidence": {
+        "sha256": "42a5cdb30332fa3807e90c80bf6d4a8b30a2260d654b806a01ec0db5d4ef9d97",
+        "byteLength": 5103,
+        "versionId": "eOT.MZEsgTfUd.RyZMtuw.tcYRWmTRpY",
+        "url": "https://d1xydbco3b83a0.cloudfront.net/finalization/38200f3f-58a7-4054-a29d-91fa89dc1f22/2026-11-05/sha256/42a5cdb30332fa3807e90c80bf6d4a8b30a2260d654b806a01ec0db5d4ef9d97/proof-verification-index.json?versionId=eOT.MZEsgTfUd.RyZMtuw.tcYRWmTRpY"
+      },
+      "artifactIndex": {
+        "sha256": "518e6531dac908acacd36bcd418f5b69b85c2fc13569a445369cb57680ad7495",
+        "byteLength": 5435,
+        "versionId": "UnVlF0LOB6Ne7T7JddWCQ0OnY3NTsR6Y",
+        "url": "https://d1xydbco3b83a0.cloudfront.net/finalization/38200f3f-58a7-4054-a29d-91fa89dc1f22/2026-11-05/sha256/518e6531dac908acacd36bcd418f5b69b85c2fc13569a445369cb57680ad7495/publication-index.json?versionId=UnVlF0LOB6Ne7T7JddWCQ0OnY3NTsR6Y"
+      }
+    }
+  },
+  "signature": "Df5wZwv_wGQjLMCJBZlag5Oc5YiggSVnMy6hGieFCKsuAP_mql-wXgxcQqidzBHiShClY5n3OB9tCpYHA4TKBg"
+}
