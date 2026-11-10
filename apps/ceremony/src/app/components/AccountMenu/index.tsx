@@ -1,7 +1,9 @@
 "use client";
 
 import { signIn, signOut, useSession } from "next-auth/react";
+import { useQuery } from "@tanstack/react-query";
 import { useEffect, useRef, useState } from "react";
+import { isCeremonyArchived } from "@/lib/api";
 import styles from "./style.module.css";
 
 /** Identity stays visible in the header; authentication is independent of queue state. */
@@ -13,6 +15,16 @@ export function AccountMenu({ previewName, onPreviewSignIn }: { previewName?: st
   const root = useRef<HTMLDivElement>(null);
   const trigger = useRef<HTMLButtonElement>(null);
   const name = previewName || session?.participantName || session?.user?.name || "GitHub account";
+  // An archived ceremony has nothing to sign in for. If the check fails, the
+  // menu stays as it was rather than hiding on a guess.
+  const preview = !!previewName || !!onPreviewSignIn;
+  const archived = useQuery({
+    queryKey: ["ceremonyArchived"],
+    queryFn: ({ signal }) => isCeremonyArchived(signal),
+    enabled: !preview,
+    staleTime: Infinity,
+    retry: false,
+  });
 
   useEffect(() => {
     if (!open) return;
@@ -41,8 +53,9 @@ export function AccountMenu({ previewName, onPreviewSignIn }: { previewName?: st
     finally { setBusy(false); }
   }
 
+  if (!preview && archived.data) return null;
   if (onPreviewSignIn) return <button className={styles.signIn} onClick={onPreviewSignIn}>Sign in with GitHub</button>;
-  if (!previewName && status === "loading") return <span className={styles.loading} role="status">Checking sign-in…</span>;
+  if (!previewName && (status === "loading" || archived.isPending)) return <span className={styles.loading} role="status">Checking sign-in…</span>;
   if (!previewName && !session) return <button className={styles.signIn} onClick={() => void signIn("github")}>Sign in with GitHub</button>;
 
   return (

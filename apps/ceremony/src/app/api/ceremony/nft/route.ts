@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { getParticipant } from "@/lib/participant-auth";
+import { closedForArchive } from "@/lib/archived-routes";
 import {
   authorizeBadge,
   BadgeError,
@@ -26,6 +27,8 @@ function failure(error: unknown) {
   );
 }
 export async function GET(request: Request) {
+  const closed = closedForArchive();
+  if (closed) return closed;
   try {
     const participant = await getParticipant();
     if (!participant)
@@ -43,6 +46,8 @@ export async function GET(request: Request) {
   }
 }
 export async function POST(request: Request) {
+  const closed = closedForArchive();
+  if (closed) return closed;
   try {
     const trustedOrigin = new URL(process.env.NEXTAUTH_URL ?? "").origin;
     if (request.headers.get("origin") !== trustedOrigin)

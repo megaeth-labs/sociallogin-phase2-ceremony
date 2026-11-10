@@ -131,6 +131,11 @@ interface CoordinatorBootstrap {
   rootPublicKeyPem: string;
   rootSpkiSha256: string;
   manifest: SignedEnvelope<CeremonyManifestV1>;
+  /** Set once the ceremony is archived and its coordinator retired. */
+  archive?: {
+    checkpoint: SignedEnvelope<HeadCheckpointV1>;
+    receiptsUrl: string;
+  };
 }
 
 interface ParticipantToken {
@@ -230,6 +235,7 @@ export async function getVerificationGuide() {
 
 export async function getStatus(signal?: AbortSignal): Promise<StatusResponse> {
   const bootstrap = await getBootstrap(signal);
+  if (bootstrap.archive) return await archivedStatus(bootstrap, bootstrap.archive.checkpoint);
   const slug = bootstrap.manifest.payload.slug;
   const [status, checkpointEnvelope] = await Promise.all([
     coordinatorFetch<{
@@ -267,6 +273,53 @@ export async function getStatus(signal?: AbortSignal): Promise<StatusResponse> {
   if (Date.parse(checkpoint.expiresAt) <= Date.now()) {
     throw new Error("Coordinator checkpoint is expired.");
   }
+  return await statusFromCheckpoint(bootstrap, checkpoint, status.queueDepth);
+}
+
+/**
+ * Whether this deployment serves an archived ceremony: sealed, its records
+ * bundled with the site, and nothing left to join or sign in for.
+ */
+export async function isCeremonyArchived(signal?: AbortSignal): Promise<boolean> {
+  return !!(await getBootstrap(signal)).archive;
+}
+
+/**
+ * An archived ceremony's status, from its signed sealed checkpoint. The
+ * checkpoint's short expiry guarded a live head that could still move; a
+ * sealed head cannot, so it is accepted after expiry, and only when sealed.
+ */
+async function archivedStatus(
+  bootstrap: CoordinatorBootstrap,
+  envelope: SignedEnvelope<HeadCheckpointV1>,
+): Promise<StatusResponse> {
+  const checkpoint = await verifiedArchivedCheckpoint(bootstrap, envelope);
+  return await statusFromCheckpoint(bootstrap, checkpoint, 0);
+}
+
+async function verifiedArchivedCheckpoint(
+  bootstrap: CoordinatorBootstrap,
+  envelope: SignedEnvelope<HeadCheckpointV1>,
+): Promise<HeadCheckpointV1> {
+  const checkpoint = await verifyCoordinatorEnvelope<HeadCheckpointV1>(
+    envelope,
+    CHECKPOINT_DOMAIN,
+    bootstrap.manifest.payload,
+  );
+  assertCheckpoint(checkpoint);
+  if (checkpoint.ceremonyId !== bootstrap.manifest.payload.ceremonyId ||
+      !["SEALED", "FINALIZED"].includes(checkpoint.state) ||
+      checkpoint.generation > bootstrap.manifest.payload.contributionPolicy.maximumContributions) {
+    throw new Error("The archived checkpoint is not this ceremony's sealed head.");
+  }
+  return checkpoint;
+}
+
+async function statusFromCheckpoint(
+  bootstrap: CoordinatorBootstrap,
+  checkpoint: HeadCheckpointV1,
+  queueDepth: number,
+): Promise<StatusResponse> {
   const finalization = await verifiedFinalization(
     bootstrap.manifest, checkpoint,
     await canonicalSha256(MANIFEST_HASH_DOMAIN, bootstrap.manifest.payload),
@@ -282,7 +335,7 @@ export async function getStatus(signal?: AbortSignal): Promise<StatusResponse> {
     targetContributions: target,
     totalContributions: checkpoint.generation,
     currentParticipant: null,
-    queueLength: status.queueDepth,
+    queueLength: queueDepth,
     latestContributionHash: checkpoint.headSha256,
     chainHash: checkpoint.eventHash,
     isComplete: complete,
@@ -1285,7 +1338,9 @@ export interface ContributionHistoryPage {
  */
 export async function getContributionHistoryPage(page: number, signal?: AbortSignal): Promise<ContributionHistoryPage> {
   if (!Number.isSafeInteger(page) || page < 0) throw new Error("Invalid contribution history page.");
-  const { manifest, coordinatorBaseUrl } = await getBootstrap(signal);
+  const bootstrap = await getBootstrap(signal);
+  if (bootstrap.archive) return historyPageOf(await archivedHistory(bootstrap, signal), page);
+  const { manifest, coordinatorBaseUrl } = bootstrap;
   const path = `/v1/ceremonies/${encodeURIComponent(manifest.payload.slug)}`;
   const checkpoint = await verifyCoordinatorEnvelope<HeadCheckpointV1>(
     await coordinatorFetch(`${path}/checkpoint`, { signal }), CHECKPOINT_DOMAIN, manifest.payload,
@@ -1322,6 +1377,50 @@ export async function getContributionHistoryPage(page: number, signal?: AbortSig
     throw new Error("Contribution history does not reach the signed head.");
   }
   return { total, items: items.reverse() };
+}
+
+let archivedHistoryPromise: Promise<VerifiedPublicReceipt[]> | undefined;
+
+/**
+ * Every accepted contribution of an archived ceremony, newest first, checked
+ * once per page load: each receipt's signature, an unbroken chain from the
+ * pinned genesis, ending at the signed sealed head. Downloads use the archive
+ * URL each receipt was signed with.
+ */
+function archivedHistory(bootstrap: CoordinatorBootstrap, signal?: AbortSignal): Promise<VerifiedPublicReceipt[]> {
+  archivedHistoryPromise ??= (async () => {
+    const archive = bootstrap.archive!;
+    const checkpoint = await verifiedArchivedCheckpoint(bootstrap, archive.checkpoint);
+    const response = await fetch(archive.receiptsUrl, { credentials: "omit", redirect: "error", signal });
+    if (!response.ok) throw new Error(`The ceremony archive is unavailable (${response.status}).`);
+    const { receipts } = (await response.json()) as { receipts?: unknown[] };
+    if (!Array.isArray(receipts) || receipts.length !== checkpoint.generation) {
+      throw new Error("The ceremony archive does not hold every accepted contribution.");
+    }
+    const manifest = bootstrap.manifest.payload;
+    const manifestSha256 = await canonicalSha256(MANIFEST_HASH_DOMAIN, manifest);
+    let predecessor: { sha256: string; byteLength: number } = manifest.relation.genesisBellman ?? manifest.relation.genesisZkey;
+    const result: VerifiedPublicReceipt[] = [];
+    for (const item of receipts) {
+      const verified = await verifyPublicReceipt(item, manifest, manifestSha256);
+      const { receipt } = verified;
+      if (receipt.generation !== result.length + 1 ||
+          receipt.predecessor.sha256 !== predecessor.sha256 ||
+          receipt.predecessor.byteLength !== predecessor.byteLength) {
+        throw new Error("Contribution history contains a gap or a broken artifact chain.");
+      }
+      result.push({ ...verified, artifactDownloadUrl: receipt.successor.urls[0] });
+      predecessor = receipt.successor;
+    }
+    if (predecessor.sha256 !== checkpoint.headSha256 || predecessor.byteLength !== checkpoint.headByteLength) {
+      throw new Error("Contribution history does not reach the signed head.");
+    }
+    return result.reverse();
+  })().catch((error) => {
+    archivedHistoryPromise = undefined;
+    throw error;
+  });
+  return archivedHistoryPromise;
 }
 
 /** A page of an already verified list, newest first, for fixed records such as the rehearsal snapshot. */

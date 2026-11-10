@@ -6,9 +6,12 @@ import styles from "./Header.module.css";
 
 export function Header({
   onLogoClick,
+  account = true,
 }: {
   step: CeremonyStep;
   onLogoClick?: () => void;
+  /** Whether to offer GitHub sign-in; an archived ceremony has nothing to sign in for. */
+  account?: boolean;
 }) {
   return (
     <header className={styles.header}>
@@ -18,7 +21,7 @@ export function Header({
         <span className={styles.title}>Social login ceremony <span>PHASE 02</span></span>
       </button>
 
-      <AccountMenu />
+      {account && <AccountMenu />}
     </header>
   );
 }
