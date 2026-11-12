@@ -1,0 +1,221 @@
+{
+  "type": "moss.phase2.web-release.v1",
+  "buildId": "c1f27d06841e7c5ee58cbab1a7c7c0e29dba34f0",
+  "assets": [
+    {
+      "path": "/_next/static/c1f27d06841e7c5ee58cbab1a7c7c0e29dba34f0/_buildManifest.js",
+      "sha256": "45e0ebafe740453868f1a7e45a7642ba30b0b4e3f090ae54239f98ac4be42466",
+      "byteLength": 895
+    },
+    {
+      "path": "/_next/static/c1f27d06841e7c5ee58cbab1a7c7c0e29dba34f0/_ssgManifest.js",
+      "sha256": "678f6ce2cb80b1fe72fc67e7412be6e2ab6ada083111b64f7c40d35e3cba5e00",
+      "byteLength": 80
+    },
+    {
+      "path": "/_next/static/chunks/323-4fa40ef4d15a15cf.js",
+      "sha256": "62481b9fddc26803f43818363b059edf0e4c8d25d66717b8b381bd99ed2a523c",
+      "byteLength": 18691
+    },
+    {
+      "path": "/_next/static/chunks/35e29195.ad1184d499345973.js",
+      "sha256": "558cc48bcab96d1f79c5faef6288a2c6c9d82f30b7dfe624e895d706c74f3d33",
+      "byteLength": 202059
+    },
+    {
+      "path": "/_next/static/chunks/489-696199f9d81383d7.js",
+      "sha256": "e1d86c775528160e970129bb902ca08351fc1ccc047a114e884074485908be21",
+      "byteLength": 11696
+    },
+    {
+      "path": "/_next/static/chunks/500-63dd636ee41aee0e.js",
+      "sha256": "1179ee53a9cab3231ad6bdd3d4652bf193906eac979505ef12c885298feaf083",
+      "byteLength": 86100
+    },
+    {
+      "path": "/_next/static/chunks/639.0bb57cb5bdf0eb7b.js",
+      "sha256": "ffc9abc92b129ecb692e1f4fe32124abe94dd359f10555e958e7debd5527f7a6",
+      "byteLength": 13541
+    },
+    {
+      "path": "/_next/static/chunks/664-efc4d614a19c3852.js",
+      "sha256": "d7c5a33bab76d5eee4bf089eea35a2108104e472c280f4d4a19745bd590573d5",
+      "byteLength": 174574
+    },
+    {
+      "path": "/_next/static/chunks/6a9db6eb-76ed6583dab1760c.js",
+      "sha256": "e6597a2a558e569aeb5a7ed045205152b6610aeec5a1d02c1e28b30aaf8066da",
+      "byteLength": 173018
+    },
+    {
+      "path": "/_next/static/chunks/713-fbcc8dd50673be8d.js",
+      "sha256": "0a80c9fc72c493572105b3c13c561cf7613d21562a137e8a7a33248c7cef2698",
+      "byteLength": 68881
+    },
+    {
+      "path": "/_next/static/chunks/784-9989841cf7f0897c.js",
+      "sha256": "35e3322beaa550d5096440eaf2fb1be12a4358419e6b0cba40aa0877d860b0d8",
+      "byteLength": 46376
+    },
+    {
+      "path": "/_next/static/chunks/791-68e8cdcc272b579f.js",
+      "sha256": "4d73102d48c363c0f191b1f79e0e45cccec2e4ec2261b9de642df5691bf4f8b6",
+      "byteLength": 92607
+    },
+    {
+      "path": "/_next/static/chunks/857.382d9f6cb5a81548.js",
+      "sha256": "2488ec930e18620161e083d28415243442db5ea51771f20e99b929d082fde4b2",
+      "byteLength": 278650
+    },
+    {
+      "path": "/_next/static/chunks/app/_not-found/page-388a62d60f53a84c.js",
+      "sha256": "38a44a32071ec1712628bd2e1e8ef2a2330117327f4a49cd750c868ecc508170",
+      "byteLength": 2670
+    },
+    {
+      "path": "/_next/static/chunks/app/api/auth/[...nextauth]/route-8d1f4b32511a5353.js",
+      "sha256": "2bb79b84bef613684d014b9a510654174503527fe82a8245e4e86af10d1c5c89",
+      "byteLength": 144
+    },
+    {
+      "path": "/_next/static/chunks/app/api/ceremony/auth/cli/route-8d1f4b32511a5353.js",
+      "sha256": "2bb79b84bef613684d014b9a510654174503527fe82a8245e4e86af10d1c5c89",
+      "byteLength": 144
+    },
+    {
+      "path": "/_next/static/chunks/app/api/ceremony/auth/token/route-8d1f4b32511a5353.js",
+      "sha256": "2bb79b84bef613684d014b9a510654174503527fe82a8245e4e86af10d1c5c89",
+      "byteLength": 144
+    },
+    {
+      "path": "/_next/static/chunks/app/api/ceremony/bootstrap/route-8d1f4b32511a5353.js",
+      "sha256": "2bb79b84bef613684d014b9a510654174503527fe82a8245e4e86af10d1c5c89",
+      "byteLength": 144
+    },
+    {
+      "path": "/_next/static/chunks/app/api/ceremony/nft/route-8d1f4b32511a5353.js",
+      "sha256": "2bb79b84bef613684d014b9a510654174503527fe82a8245e4e86af10d1c5c89",
+      "byteLength": 144
+    },
+    {
+      "path": "/_next/static/chunks/app/collect/page-842d0742deb97af9.js",
+      "sha256": "1ebd88b5a9719749ac8a12545743b7ac5e154a7338a5b1d8ea05ef3e1b6914f6",
+      "byteLength": 202
+    },
+    {
+      "path": "/_next/static/chunks/app/how-it-works/page-24c758e13d76ecf8.js",
+      "sha256": "515da0ed654ec2a80117071c556cacd14f77b202db56a73ac2a2baff5f56e83b",
+      "byteLength": 21169
+    },
+    {
+      "path": "/_next/static/chunks/app/layout-c688f4719fcedb54.js",
+      "sha256": "bf3fbd5474e6254aeceb538f977666615edee420bb04c106034a90e43bc0c402",
+      "byteLength": 19770
+    },
+    {
+      "path": "/_next/static/chunks/app/page-d76ffbcd5137769e.js",
+      "sha256": "0838c04ef551e411c9129b3206fdbf34476ce64a4f010fa6b8f8b93197976fbb",
+      "byteLength": 32914
+    },
+    {
+      "path": "/_next/static/chunks/app/preview/page-58ee2d773a05d841.js",
+      "sha256": "8697623ba038ee7de2679e776af911eb652cdec5666dd1fc314a2906a7d10133",
+      "byteLength": 213
+    },
+    {
+      "path": "/_next/static/chunks/app/review/page-58ee2d773a05d841.js",
+      "sha256": "8697623ba038ee7de2679e776af911eb652cdec5666dd1fc314a2906a7d10133",
+      "byteLength": 213
+    },
+    {
+      "path": "/_next/static/chunks/b37c08f9.1bb14323c69e19fb.js",
+      "sha256": "80a59c475afce53a4c8bce647f89dff5bc98f45e102bac8617d660918d537020",
+      "byteLength": 239908
+    },
+    {
+      "path": "/_next/static/chunks/framework-be5b4e9bcebc42d6.js",
+      "sha256": "ec998a788d92231b94fd5987a973913bc001250fd0bb61767365da76fe2d98a1",
+      "byteLength": 189765
+    },
+    {
+      "path": "/_next/static/chunks/main-1d2a5409b831fd4f.js",
+      "sha256": "97ebf5488043dbf6fe73110353226e7b03c3178bcc169fd830374fa9868b9e0b",
+      "byteLength": 128960
+    },
+    {
+      "path": "/_next/static/chunks/main-app-6bae039e46f928e8.js",
+      "sha256": "ae04f88bdfffaae40ce46badfef544aa6338c2fefb26e73f84ee2446a18c3e1b",
+      "byteLength": 554
+    },
+    {
+      "path": "/_next/static/chunks/pages/_app-cde1736acc17a704.js",
+      "sha256": "11ebb053c878a41b9eabebc6739d942cbfa99234b4b04365b67477bf6e787e4e",
+      "byteLength": 236
+    },
+    {
+      "path": "/_next/static/chunks/pages/_error-ec865454e32cd0b8.js",
+      "sha256": "5f55c74fece348a6cbe867663ebaec537c5670e537cb1faf8a197550d1e4d887",
+      "byteLength": 218
+    },
+    {
+      "path": "/_next/static/chunks/polyfills-42372ed130431b0a.js",
+      "sha256": "0973c1d64c88adc8e3c950410cb58b288f72118d5965b78049438deb8f2f9683",
+      "byteLength": 112594
+    },
+    {
+      "path": "/_next/static/chunks/webpack-12fb77999f70c41b.js",
+      "sha256": "783f0cf98c44f46a415c7e9d733b8e5c250a10d44ffe2435d347c6f16c267780",
+      "byteLength": 3570
+    },
+    {
+      "path": "/_next/static/css/175e38ec9caa10b4.css",
+      "sha256": "1aeb7048ac8286bfde4490ff5d0ad3273cc5c69b32a5d7285296bce304bd4e1f",
+      "byteLength": 15839
+    },
+    {
+      "path": "/_next/static/css/5f327df7554f3885.css",
+      "sha256": "7f5b99f9f3f23a6735419b3131fa48639773e507d85496bc99e139644ff58b55",
+      "byteLength": 6277
+    },
+    {
+      "path": "/_next/static/css/600e4e577e3e93ec.css",
+      "sha256": "8a2a34a9982304f56d0f17bf510308855365305c79ebce3b9cc701e67d894dbc",
+      "byteLength": 2691
+    },
+    {
+      "path": "/_next/static/css/ca17de8126a78253.css",
+      "sha256": "947090b1fb681ec5fe3a5a25f34e26a303ef8c263d753d666484ac3151da75b8",
+      "byteLength": 79048
+    },
+    {
+      "path": "/_next/static/css/ce36d78129c57507.css",
+      "sha256": "7b59d532627dd3bb2b549a8261b48040cd293eeab99677a996b6e485751513d5",
+      "byteLength": 2639
+    },
+    {
+      "path": "/_next/static/css/d492aa0f1ad15e40.css",
+      "sha256": "271726c004d8c699a13687e658e85eaf1518e3b0cd5b27b9dbb9ec52eb434d06",
+      "byteLength": 30329
+    },
+    {
+      "path": "/_next/static/media/158a5b5cee324fb8-s.p.otf",
+      "sha256": "6168b124cc3601a2a72a1813a8f2a9f0fe40f8a91c420f15d29bff16e0a860b3",
+      "byteLength": 284108
+    },
+    {
+      "path": "/_next/static/media/70b75ad00960e9db-s.p.otf",
+      "sha256": "e4d3dbbc47526bd5956a39aedcf08d8a3ca4970d7a935b39ec99bb217d6035c3",
+      "byteLength": 630408
+    },
+    {
+      "path": "/_next/static/media/e1689dbe909aa6ef-s.p.otf",
+      "sha256": "38188783e8ad07d2de83d901d559354be45b355d5e360a22a82efd48fa4a6278",
+      "byteLength": 260488
+    },
+    {
+      "path": "/_next/static/media/e2542b709b225903-s.p.otf",
+      "sha256": "14928444e337995a7fe9bae85e20b83139f6e0c78416df87feaf68613d41e02e",
+      "byteLength": 609908
+    }
+  ]
+}

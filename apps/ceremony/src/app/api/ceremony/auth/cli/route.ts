@@ -1,4 +1,5 @@
 import { rehearsalReviewEnabled } from "@/lib/rehearsal-review";
+import { closedForArchive } from "@/lib/archived-routes";
 import { NextRequest, NextResponse } from "next/server";
 import { randomBytes } from "node:crypto";
 
@@ -34,6 +35,8 @@ const NO_STORE_HEADERS = {
  * Returns a user code for the participant to enter at github.com/login/device.
  */
 export async function POST(request: NextRequest): Promise<NextResponse> {
+  const closed = closedForArchive();
+  if (closed) return closed;
   if (rehearsalReviewEnabled()) {
     return NextResponse.json({ error: "Contributions are closed during rehearsal review." }, { status: 423, headers: NO_STORE_HEADERS });
   }

@@ -2,12 +2,20 @@ import { renderToStaticMarkup } from "react-dom/server";
 import { describe, expect, it, vi } from "vitest";
 const auth = vi.hoisted(() => ({ useSession: vi.fn(), signIn: vi.fn(), signOut: vi.fn() }));
 vi.mock("next-auth/react", () => auth);
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { AccountMenu } from "./index";
+
+/** Renders with the archive check already answered, or still pending. */
+function render(archived: boolean | "pending" = false) {
+  const client = new QueryClient();
+  if (archived !== "pending") client.setQueryData(["ceremonyArchived"], archived);
+  return renderToStaticMarkup(<QueryClientProvider client={client}><AccountMenu /></QueryClientProvider>);
+}
 
 describe("account identity", () => {
   it("shows the GitHub handle instead of an ambiguous connected state or display name", () => {
     auth.useSession.mockReturnValue({ status: "authenticated", data: { participantName: "github-handle", user: { name: "Display Name", email: "private@example.com" } } });
-    const html = renderToStaticMarkup(<AccountMenu />);
+    const html = render();
     expect(html).toContain("@github-handle");
     expect(html).toContain("Signed in with GitHub");
     expect(html).toContain('aria-expanded="false"');
@@ -16,12 +24,24 @@ describe("account identity", () => {
   });
   it("does not flash sign-in while the session loads", () => {
     auth.useSession.mockReturnValue({ status: "loading", data: null });
-    const html = renderToStaticMarkup(<AccountMenu />);
+    const html = render();
     expect(html).toContain("Checking sign-in");
     expect(html).not.toContain("Sign in with GitHub");
   });
   it("offers GitHub sign-in when signed out", () => {
     auth.useSession.mockReturnValue({ status: "unauthenticated", data: null });
-    expect(renderToStaticMarkup(<AccountMenu />)).toContain("Sign in with GitHub");
+    expect(render()).toContain("Sign in with GitHub");
+  });
+  it("offers nothing to sign in for once the ceremony is archived, even with a session", () => {
+    auth.useSession.mockReturnValue({ status: "unauthenticated", data: null });
+    expect(render(true)).toBe("");
+    auth.useSession.mockReturnValue({ status: "authenticated", data: { participantName: "github-handle" } });
+    expect(render(true)).toBe("");
+  });
+  it("does not flash sign-in while the archive check is pending", () => {
+    auth.useSession.mockReturnValue({ status: "unauthenticated", data: null });
+    const html = render("pending");
+    expect(html).toContain("Checking sign-in");
+    expect(html).not.toContain("Sign in with GitHub");
   });
 });

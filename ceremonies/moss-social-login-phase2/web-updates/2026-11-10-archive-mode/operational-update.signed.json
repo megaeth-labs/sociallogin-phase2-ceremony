@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "keyId": "moss-social-login-root-2026-10",
+  "payload": {
+    "reason": "Serve the sealed ceremony from its signed archive so the coordinator can be retired: status, history and verification from the bundled signed records, downloads from the archive, and no sign-in.",
+    "webRelease": {
+      "sha256": "d07c4e443136782f6fcdda3862c28b5b240416d86e0742ec28bdec2df18f6456",
+      "byteLength": 8347,
+      "urls": [
+        "https://d1xydbco3b83a0.cloudfront.net/inputs/sha256/d07c4e443136782f6fcdda3862c28b5b240416d86e0742ec28bdec2df18f6456/web-release.json?versionId=f4D7ZSMHBww9EviXRzFdJFubVCITFD1h"
+      ],
+      "sourceCommit": "c1f27d06841e7c5ee58cbab1a7c7c0e29dba34f0"
+    },
+    "schemaVersion": 1,
+    "type": "moss.phase2.operational-update.v1",
+    "ceremonyId": "38200f3f-58a7-4054-a29d-91fa89dc1f22",
+    "manifestSha256": "441ccbe64b84b22c3e443c6d67e7f6f2f6186910c4d47cea61817540359cfa58",
+    "sequence": 15,
+    "previousUpdateSha256": "37aa6d1aed15384d231aafd99c107b5a931c5fa17db9edf76fe5c8d93ba3da30",
+    "authorizedAt": "2026-11-10T20:04:57.901Z"
+  },
+  "signature": "8eiKwjdm3lBx45dIraH1ER_xaviGbPvqWpGc1wQiuvu78PRMs8D1xdk5KiXw9Ub8DChkwzdmvIuqfjfnakDcBA"
+}
